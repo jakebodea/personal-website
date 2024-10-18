@@ -1,0 +1,17 @@
+{
+    "color-highlight.markerType": "dot-before",
+    "color-highlight.matchWords": true,
+    "color-highlight.languages": [
+        "css",
+        "scss",
+        "sass",
+        "less",
+        "postcss"
+    ],
+    "color-highlight.customColors": [
+        {
+            "color": "hsl($1 $2% $3%)",
+            "regex": "(-?[\\d.]+)\\s+(-?[\\d.]+)%\\s+(-?[\\d.]+)%"
+        }
+    ]
+}
