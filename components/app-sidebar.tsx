@@ -2,22 +2,16 @@
 
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { GalleryVerticalEnd, Moon, Sun, ArrowUpRight } from "lucide-react"
+import { Moon, Sun, ArrowUpRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Link from 'next/link'
-
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarHeader,
-  SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
@@ -28,7 +22,7 @@ const data = {
       title: "Home",
       url: "/",
       icon: "🏠"
-    }, 
+    },
     {
       title: "Timeline",
       url: "/timeline",
@@ -38,24 +32,24 @@ const data = {
       title: "Projects",
       url: "/projects",
       icon: "💻"
-    }, 
+    },
     {
       title: "Events",
       url: "/events",
       icon: "🗓️"
     }
-  ], 
+  ],
   contact: [
     {
       title: "LinkedIn",
       url: "https://www.linkedin.com/in/jakebodea/",
       icon: "🖇"
-    }, 
+    },
     {
       title: "GitHub",
       url: "https://github.com/jakebodea",
       icon: "🐙"
-    }, 
+    },
     {
       title: "𝕏",
       url: "https://x.com/jakebodea",
@@ -63,7 +57,7 @@ const data = {
     }
   ]
 }
-  
+
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { theme, setTheme } = useTheme()
@@ -85,15 +79,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       window.removeEventListener("keydown", handleKeyPress)
     }
   }, [router])
-  
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 't') {
+        setTheme(theme === "light" ? "dark" : "light")
+      }
+    }
+    window.addEventListener("keydown", handleKeyPress)
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress)
+    }
+  }, [theme])
+
   if (!mounted) {
     return null // Return null on server-side and first render on client-side
   }
-  
+
   return (
     <Sidebar variant="inset" {...props}>
-      <SidebarHeader>
-        <span className="text-3xl text-primary p-4">Jake Bodea</span>
+      <SidebarHeader className="flex flex-col items-start">
+        <span className="text-3xl text-primary">Jake Bodea</span>
+        <span className="text-lg italic">AI Guy</span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -101,7 +108,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <Link href={item.url} className="font-medium">
               <SidebarMenuButton key={item.url} size="lg">
                 <span className="text-lg">{item.icon}</span>
-                <span>{item.title}</span>
+                <span className="text-primary">{item.title}</span>
                 <span className="ml-auto text-sm text-muted-foreground">{index + 1}</span>
               </SidebarMenuButton>
             </Link>
@@ -110,14 +117,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarHeader>Contact Me</SidebarHeader>
           {data.contact.map((item) => (
-             <Link 
-             href={item.url}
-             target="_blank"
-             rel="noopener noreferrer"
-             className="font-medium flex items-center justify-between w-full"
-           >
-            <SidebarMenuButton key={item.url} size="lg">
-             
+            <Link
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium flex items-center justify-between w-full"
+            >
+              <SidebarMenuButton key={item.url} size="lg">
+
                 <span className="text-lg">{item.icon}</span>
                 <span>{item.title}</span>
                 <ArrowUpRight className="ml-auto size-4" />
@@ -126,13 +133,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           ))}
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter> 
-        <div className="flex items-center justify-start">
-          <Button variant="ghost" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-            {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
-          </Button>
+      <SidebarFooter>
+        <div className="flex flex-col justify-start">
+          <span className="text-sm pb-2 italic">Navigate tabs with keyboard!</span>
+          <span className="flex items-center">
+            <Button variant="ghost" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+              {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
+           </Button>
+            <span className="text-sm pl-2 italic">or press `t`</span>
+          </span>
         </div>
       </SidebarFooter>
     </Sidebar>
-  ) 
+  )
 }
