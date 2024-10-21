@@ -1,5 +1,10 @@
+"use client"
+
 import * as React from "react"
+import { useEffect, useState } from "react"
 import { GalleryVerticalEnd, Moon, Sun, ArrowUpRight } from "lucide-react"
+import { useRouter } from "next/navigation"
+import Link from 'next/link'
 
 import {
   Sidebar,
@@ -17,100 +22,107 @@ import {
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 
-const pages = [
-  {
-    title: "Home",
-    url: "/",
-    icon: "🏠"
-  }, 
-  {
-    title: "About",
-    url: "/about",
-    icon: "👤"
-  },
-  {
-    title: "Education",
-    url: "/education",
-    icon: "🎓"
-  },
-  {
-    title: "Experience",
-    url: "/experience",
-    icon: "💼"
-  },
-  {
-    title: "Projects",
-    url: "/projects",
-    icon: "💻"
-  }, 
-  {
-    title: "Events",
-    url: "/events",
-    icon: "🗓️"
-  }
-]
-
-const contact = [
-  {
-    title: "LinkedIn",
-    url: "https://www.linkedin.com/in/jakebodea/",
-    icon: "🖇️"
-  }, 
-  {
-    title: "GitHub",
-    url: "https://github.com/jakebodea",
-    icon: "🐙"
-  }, 
-  {
-    title: "𝕏",
-    url: "https://x.com/jakebodea",
-    icon: "🐦"
-  }
-]
+const data = {
+  pages: [
+    {
+      title: "Home",
+      url: "/",
+      icon: "🏠"
+    }, 
+    {
+      title: "Timeline",
+      url: "/timeline",
+      icon: "⏳"
+    },
+    {
+      title: "Projects",
+      url: "/projects",
+      icon: "💻"
+    }, 
+    {
+      title: "Events",
+      url: "/events",
+      icon: "🗓️"
+    }
+  ], 
+  contact: [
+    {
+      title: "LinkedIn",
+      url: "https://www.linkedin.com/in/jakebodea/",
+      icon: "🖇"
+    }, 
+    {
+      title: "GitHub",
+      url: "https://github.com/jakebodea",
+      icon: "🐙"
+    }, 
+    {
+      title: "𝕏",
+      url: "https://x.com/jakebodea",
+      icon: "🐦"
+    }
+  ]
+}
   
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { theme, setTheme } = useTheme()
+  const router = useRouter()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    const handleKeyPress = (event: KeyboardEvent) => {
+      const key = parseInt(event.key)
+      if (!isNaN(key) && key > 0 && key <= data.pages.length) {
+        router.push(data.pages[key - 1].url)
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyPress)
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress)
+    }
+  }, [router])
+  
+  if (!mounted) {
+    return null // Return null on server-side and first render on client-side
+  }
   
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <div className="flex flex-col items-center gap-2 m-2"> 
-              <div className="flex aspect-square size-12 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <GalleryVerticalEnd className="size-8" />
-              </div>
-              <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-bold text-lg">Jake Bodea</span>
-              </div>  
-            </div>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <span className="text-3xl text-primary p-4">Jake Bodea</span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          {pages.map((item) => (
-            <SidebarMenuButton size="lg" asChild>
-              <a href={item.url} className="font-medium">
+          {data.pages.map((item, index) => (
+            <Link href={item.url} className="font-medium">
+              <SidebarMenuButton key={item.url} size="lg">
                 <span className="text-lg">{item.icon}</span>
                 <span>{item.title}</span>
-              </a>
-            </SidebarMenuButton>
+                <span className="ml-auto text-sm text-muted-foreground">{index + 1}</span>
+              </SidebarMenuButton>
+            </Link>
           ))}
         </SidebarGroup>
         <SidebarGroup>
           <SidebarHeader>Contact Me</SidebarHeader>
-          {contact.map((item) => (
-            <SidebarMenuButton size="lg" asChild>
-              <div className="flex items-center justify-between">
-                <a href={item.url} className="font-medium flex items-center gap-2">
-                  <span className="text-lg">{item.icon}</span>
-                  <span>{item.title}</span>
-                </a>
-                <ArrowUpRight className="size-4" />
-              </div>
-            </SidebarMenuButton>
+          {data.contact.map((item) => (
+             <Link 
+             href={item.url}
+             target="_blank"
+             rel="noopener noreferrer"
+             className="font-medium flex items-center justify-between w-full"
+           >
+            <SidebarMenuButton key={item.url} size="lg">
+             
+                <span className="text-lg">{item.icon}</span>
+                <span>{item.title}</span>
+                <ArrowUpRight className="ml-auto size-4" />
+              </SidebarMenuButton>
+            </Link>
           ))}
         </SidebarGroup>
       </SidebarContent>
