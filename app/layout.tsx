@@ -1,24 +1,32 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
-import "./globals.css"
+"use client"
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+import { AppSidebar } from "@/components/app-sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
         <SidebarProvider>
-          <div className="flex h-screen">
+          <div className="flex h-screen w-screen">
             <AppSidebar />
-            <div className="flex-1 flex flex-col">
-              <header className="bg-gray-100 p-4">
-                <SidebarTrigger />
-              </header>
-              <main className="flex-1 overflow-auto p-4">
-                {children}
-              </main>
+            <main className="flex-1">{children}</main>
             </div>
-          </div>
-        </SidebarProvider>
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
