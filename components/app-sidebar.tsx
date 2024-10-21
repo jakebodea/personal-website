@@ -1,5 +1,5 @@
 import * as React from "react"
-import { GalleryVerticalEnd, Moon, Sun } from "lucide-react"
+import { GalleryVerticalEnd, Moon, Sun, ArrowUpRight } from "lucide-react"
 
 import {
   Sidebar,
@@ -17,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 
-const data = [
+const pages = [
   {
     title: "Home",
     url: "/",
@@ -42,11 +42,29 @@ const data = [
     title: "Projects",
     url: "/projects",
     icon: "💻"
-  },
+  }, 
   {
-    title: "Contact",
-    url: "/contact",
-    icon: "💬"
+    title: "Events",
+    url: "/events",
+    icon: "🗓️"
+  }
+]
+
+const contact = [
+  {
+    title: "LinkedIn",
+    url: "https://www.linkedin.com/in/jakebodea/",
+    icon: "🖇️"
+  }, 
+  {
+    title: "GitHub",
+    url: "https://github.com/jakebodea",
+    icon: "🐙"
+  }, 
+  {
+    title: "𝕏",
+    url: "https://x.com/jakebodea",
+    icon: "🐦"
   }
 ]
   
@@ -72,12 +90,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          {data.map((item) => (
+          {pages.map((item) => (
             <SidebarMenuButton size="lg" asChild>
               <a href={item.url} className="font-medium">
                 <span className="text-lg">{item.icon}</span>
                 <span>{item.title}</span>
               </a>
+            </SidebarMenuButton>
+          ))}
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarHeader>Contact Me</SidebarHeader>
+          {contact.map((item) => (
+            <SidebarMenuButton size="lg" asChild>
+              <div className="flex items-center justify-between">
+                <a href={item.url} className="font-medium flex items-center gap-2">
+                  <span className="text-lg">{item.icon}</span>
+                  <span>{item.title}</span>
+                </a>
+                <ArrowUpRight className="size-4" />
+              </div>
             </SidebarMenuButton>
           ))}
         </SidebarGroup>
