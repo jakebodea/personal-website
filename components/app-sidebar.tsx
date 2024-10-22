@@ -105,8 +105,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           {data.pages.map((item, index) => (
-            <Link href={item.url} className="font-medium">
-              <SidebarMenuButton key={item.url} size="lg">
+            <Link href={item.url} className="font-medium" key={item.url}>
+              <SidebarMenuButton size="lg">
                 <span className="text-lg">{item.icon}</span>
                 <span className="text-primary">{item.title}</span>
                 <span className="ml-auto text-sm text-muted-foreground">{index + 1}</span>
@@ -122,9 +122,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium flex items-center justify-between w-full"
+              key={item.url}
             >
-              <SidebarMenuButton key={item.url} size="lg">
-
+              <SidebarMenuButton size="lg">
                 <span className="text-lg">{item.icon}</span>
                 <span>{item.title}</span>
                 <ArrowUpRight className="ml-auto size-4" />
@@ -139,7 +139,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <span className="flex items-center">
             <Button variant="ghost" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
               {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
-           </Button>
+            </Button>
             <span className="text-sm pl-2 italic">or press &apos;t&apos;</span>
           </span>
         </div>
