@@ -7,7 +7,7 @@ export default function EventsPage(): React.ReactNode {
         <CardHeader>
           <CardTitle className="text-primary font-normal">Events</CardTitle>
         </CardHeader>
-        <CardContent className="flex-grow overflow-hidden">Hello World</CardContent>
+        <CardContent className="flex-grow overflow-hidden">This page is under construction...</CardContent>
       </Card>
     </div>
   )
