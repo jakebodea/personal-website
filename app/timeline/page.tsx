@@ -30,8 +30,8 @@ const timelineItems = [
     image: "/images/stanford.png",
     title: "NDO Student",
     location: "Stanford University",
-    description: "Pursuing Graduate Certificate in AI",
-    supportingMedia: "/images/stanford.png",
+    description: "Pursuing Graduate Certificate in AI. GPA 4.0, with courses CS229: Machine Learning and CS221: Principles and Techniques in Artificial Intelligence.",
+    // supportingMedia: "/images/stanford.png",
   },
   {
     startDate: "January 2023",
@@ -39,7 +39,7 @@ const timelineItems = [
     image: "/images/beckman.png",
     title: "Data Scientist",
     location: "Beckman Coulter",
-    description: "Data Scientist",
+    description: "Led the AI Operations team as Scrum Master, delivering internal AI solutions including automated vision inspection models, an LLM chatbot with RAG capabilities, and an ML-powered ticket agent that reduced manual ticket creation by 20%.",
   },
   {
     startDate: "June 2022",
@@ -47,7 +47,7 @@ const timelineItems = [
     image: "/images/beckman.png",
     title: "AI Intern",
     location: "Beckman Coulter",
-    description: "AI Intern",
+    description: "Developed a predictive ML model to enhance employee retention, automated cloud cost forecasts, streamlined hardware documentation with PowerBI, and collaborated with IT to reduce technical debt, cutting supported applications by 10%.",
     connectedToPrevious: true,
   },
   {
@@ -65,11 +65,13 @@ export default function TimelinePage(): React.ReactNode {
     <div className="p-6 h-full">
       <Card className="w-full h-full flex flex-col">
         <CardHeader>
-          <CardTitle className="text-primary font-normal">Timeline of Experiences</CardTitle>
+          <CardTitle className="text-primary font-light">Timeline of Experiences</CardTitle>
         </CardHeader>
         <CardContent className="flex-grow overflow-hidden">
           <div className="h-full overflow-y-auto pr-4">
-            <span className="text-secondary font-light mb-4 block">An attempt to document my experiences over the years in an approximate linear timeline, with some overlaps.</span>
+            <span className="text-primary font-extralight mb-4 block">
+              An attempt to document my experiences over the years in an approximate linear timeline.
+            </span>
             <Timeline items={timelineItems} />
           </div>
         </CardContent>

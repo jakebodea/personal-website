@@ -28,7 +28,7 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
               ? 
               <>
                 <p className="text-sm text-muted-foreground">{item.startDate} - </p> 
-                <p className="text-sm text-black font-semibold bg-yellow-200 px-1 rounded-sm"> Present</p>
+                <p className="text-sm text-black font-normal bg-yellow-200 px-1 rounded-sm"> Present</p>
               </>
               : <p className="text-sm text-muted-foreground">{item.startDate} - {item.endDate}</p>}
             </div>
@@ -49,9 +49,10 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
             </div>
           )}
           <div className="flex-1 ml-8">
-            <div className="flex gap-2 items-center">
-              <h3 className="text-lg text-primary font-semibold">{item.title}</h3>
-              <h4 className="text-primary font-normal"> @ {item.location}</h4>
+            <div className="flex gap-2 items-center text-lg">
+              <h3 className="text-primary font-normal">{item.title}</h3>
+              <h4 className="text-primary font-light text-xs mb-0.5">@</h4>
+              <h4 className="text-primary font-light">{item.location}</h4>
             </div>
             <p className="text-muted-foreground font-normal">{item.description}</p>
             {item.supportingMedia && <Image src={item.supportingMedia} alt={item.title} width={120} height={120} className="rounded-md object-cover" />}
