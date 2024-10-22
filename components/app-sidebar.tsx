@@ -97,17 +97,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }
 
   return (
-    <Sidebar variant="inset" {...props}>
-      <SidebarHeader className="flex flex-col items-start">
-        <span className="text-3xl text-primary">Jake Bodea</span>
-        <span className="text-lg italic">Subtitle 👍</span>
+    <Sidebar variant="inset" {...props} className="font-light">
+      <SidebarHeader className="flex flex-col items-start mt-4">
+        <span className="text-3xl text-primary font-normal">Jake Bodea</span>
+        <span className="text-lg font-light italic">Subtitle 👍</span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           {data.pages.map((item, index) => (
-            <Link href={item.url} className="font-medium" key={item.url}>
+            <Link href={item.url} key={item.url}>
               <SidebarMenuButton size="lg">
-                <span className="text-lg">{item.icon}</span>
+                <span className="text-lg mr-2">{item.icon}</span>
                 <span className="text-primary">{item.title}</span>
                 <span className="ml-auto text-sm text-muted-foreground">{index + 1}</span>
               </SidebarMenuButton>
@@ -115,17 +115,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           ))}
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarHeader>Contact Me</SidebarHeader>
+          <SidebarHeader className="font-light italic">Contact Me</SidebarHeader>
           {data.contact.map((item) => (
             <Link
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium flex items-center justify-between w-full"
+              className="flex items-center justify-between w-full"
               key={item.url}
             >
               <SidebarMenuButton size="lg">
-                <span className="text-lg">{item.icon}</span>
+                <span className="text-lg mr-2">{item.icon}</span>
                 <span>{item.title}</span>
                 <ArrowUpRight className="ml-auto size-4" />
               </SidebarMenuButton>
