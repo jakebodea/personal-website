@@ -6,39 +6,26 @@ export default function Home(): React.ReactNode {
   return (
     <div className="p-6 h-full">
       <Card className="w-full h-full flex flex-col">
-        <CardContent className="flex-grow overflow-auto p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-8">
-              <Image
-                src="/images/jake.jpeg"
-                alt="Jake Bodea"
-                width={150}
-                height={150}
-                className="rounded-full shadow-lg"
-              />
-              <div>
-                <h1 className="text-4xl font-bold mb-2">Jake Bodea</h1>
-                <p className="text-xl text-foreground">Director of AI | Data Scientist | Mathematics Graduate</p>
-                <p className="text-foreground">Currently: Irvine, CA</p>
-              </div>
-            </div>
-            <div className="space-y-6 text-lg">
-              <p>
-                Hi, I&apos;m Jake. an AI Director who loves to code, a data scientist passionate about machine learning, 
-                and a mathematics graduate who enjoys solving complex problems.
-              </p>
-              <p>
-                I specialize in developing AI solutions that streamline processes and drive innovation in the medical field. 
-                My expertise spans machine learning, NLP, and computer vision.
-              </p>
-              <p>
-                I enjoy creating intelligent software and implementing AI models for startups and established companies alike.
-              </p>
-              <p>
-                Contact me for AI consulting, data science projects, or machine learning implementations on a contract basis.
-              </p>
-            </div>
+        <CardContent className="flex-grow overflow-auto p-12">
+          <div className="flex flex-col justify-start mt-12 mb-12">
+            {/* <Image
+              src="/images/jake.jpeg"
+              alt="Jake Bodea"
+              width={250}
+              height={250}
+              className="rounded-full shadow-lg"
+            /> */}
+            <p className="text-primary font-light text-6xl leading-tight">
+              I&apos;m Jake, a mathematician who found himself in the world of AI and Computer Science. 
+              I play music too. 🤓
+            </p>
           </div>
+          <p className="text-3xl font-extralight leading-tight">
+            I like to dream about the future, and how both <span className="italic font-light">I</span> and <span className="italic font-light">AI</span> can shape it. 
+            My interests are wide, and I&apos;m always looking for my next challenge. Thus far, I&apos;ve been focusing my work on AI&apos;s role in healthcare.
+            My most recent position is as the <span className="font-light">Director of AI</span> at Ventris Medical, a small medical device company working 
+            focusing on innovation in the realm of spinal surgeries. I&apos;m excited to see what the future holds!
+          </p>
         </CardContent>
       </Card>
     </div>
