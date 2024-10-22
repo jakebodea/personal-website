@@ -90,7 +90,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return () => {
       window.removeEventListener("keydown", handleKeyPress)
     }
-  }, [theme])
+  }, [theme, setTheme]); // Add setTheme to the dependency array
 
   if (!mounted) {
     return null // Return null on server-side and first render on client-side
@@ -140,7 +140,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <Button variant="ghost" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
               {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
            </Button>
-            <span className="text-sm pl-2 italic">or press `t`</span>
+            <span className="text-sm pl-2 italic">or press &apos;t&apos;</span>
           </span>
         </div>
       </SidebarFooter>

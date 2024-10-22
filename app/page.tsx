@@ -24,7 +24,7 @@ export default function Home(): React.ReactNode {
             </div>
             <div className="space-y-6 text-lg">
               <p>
-                Hi, I'm Jake. an AI Director who loves to code, a data scientist passionate about machine learning, 
+                Hi, I&apos;m Jake. an AI Director who loves to code, a data scientist passionate about machine learning, 
                 and a mathematics graduate who enjoys solving complex problems.
               </p>
               <p>
