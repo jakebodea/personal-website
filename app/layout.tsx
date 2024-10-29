@@ -2,7 +2,9 @@ import dynamic from 'next/dynamic'
 import { SidebarProvider } from "@/components/ui/sidebar"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toaster"
 import { Roboto } from 'next/font/google'
+import { SiteToast } from "@/components/site-toast"
 
 const roboto = Roboto({
   weight: ['100', '300', '400', '500', '700', '900'],
@@ -36,6 +38,8 @@ export default function RootLayout({
               <main className="flex-1">{children}</main>
             </div>
           </SidebarProvider>
+          <Toaster />
+          <SiteToast />
         </ThemeProvider>
       </body>
     </html>
