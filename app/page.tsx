@@ -4,6 +4,10 @@ import React from "react";
 // import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 
+export const metadata = {
+  title: 'Home',
+  description: 'Jake Bodea\'s home page'
+}
 
 export default function Home(): React.ReactNode {
   return (
