@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { Roboto } from 'next/font/google'
 import { SiteToast } from "@/components/site-toast"
+import Script from 'next/script'
+
 
 const roboto = Roboto({
   weight: ['100', '300', '400', '500', '700', '900'],
@@ -53,6 +55,7 @@ export default function RootLayout({
           <SiteToast />
         </ThemeProvider>
       </body>
+      <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
     </html>
   )
 }
