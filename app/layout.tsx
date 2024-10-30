@@ -22,7 +22,20 @@ export const metadata = {
     default: 'Jake Bodea',
     template: '%s | Jake Bodea'
   },
-  description: 'Jake Bodea\'s personal website'
+  description: 'Jake Bodea\'s personal website',
+  openGraph: {
+    title: 'Jake Bodea',
+    description: 'Personal Website',
+    url: 'https://jakebodea.com',
+    siteName: 'Jake Bodea Personal Website',
+    locale: 'en_US',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  metadataBase: new URL('https://jakebodea.com'),
 }
 
 export default function RootLayout({
