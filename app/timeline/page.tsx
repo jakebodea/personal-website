@@ -7,6 +7,11 @@ import {
 } from "@/components/ui/card"
 import Timeline from "@/components/Timeline";
 
+export const metadata = {
+  title: 'Timeline',
+  description: 'Jake Bodea\'s timeline of experiences'
+}
+
 const timelineItems = [
   {
     startDate: "October 2024",

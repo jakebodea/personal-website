@@ -15,6 +15,14 @@ const roboto = Roboto({
 
 const AppSidebar = dynamic(() => import('@/components/app-sidebar').then(mod => mod.AppSidebar), { ssr: false })
 
+export const metadata = {
+  title: {
+    default: 'Jake Bodea',
+    template: '%s | Jake Bodea'
+  },
+  description: 'Jake Bodea\'s personal website'
+}
+
 export default function RootLayout({
   children,
 }: {

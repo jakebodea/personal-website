@@ -1,5 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
+export const metadata = {
+  title: 'Events',
+  description: 'Jake Bodea\'s events'
+}
+
 export default function EventsPage(): React.ReactNode {
   return (
     <div className="p-6 h-full">
