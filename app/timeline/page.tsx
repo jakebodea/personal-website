@@ -18,8 +18,8 @@ const timelineItems = [
     endDate: "Present",
     image: "/images/stanford_scpd.jpeg",
     title: "Course Facilitator",
-    location: "SCPD",
-    description: "Started as a course facilitator for the XCS229: Machine Learning course at Stanford Center for Professional Development."
+    location: "Stanford University",
+    description: "Started as a course facilitator for the XCS229: Machine Learning course at Stanford Engineering Center for Global & Online Education (CGOE)."
   },
   {
     startDate: "August 2024",
