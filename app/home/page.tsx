@@ -31,7 +31,7 @@ export default function Home(): React.ReactNode {
             <p>
               I like to dream about the future, and how both <span className="italic font-light">I</span> and <span className="italic font-light">AI</span> can shape it.
               My interests are wide, and I&apos;m always looking for my next challenge. Thus far, I&apos;ve been focusing my work on AI&apos;s role in healthcare.
-              My most recent position is as the <span className="font-light">Director of AI</span> at Ventris Medical, a small medical device company working
+              My most recent position is as the <span className="font-light">Director of AI</span> at Ventris Medical, a small medical device company
               focusing on innovation in the realm of spinal surgeries. I&apos;m excited to see what the future holds!
             </p>
             <p>
