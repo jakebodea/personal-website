@@ -23,8 +23,8 @@ export default function Home(): React.ReactNode {
               className="rounded-full shadow-lg"
             /> */}
             <p className="text-primary font-light text-6xl leading-tight">
-              I&apos;m Jake, a mathematician who found himself in the world of AI and Computer Science.
-              I play music too. 🤓
+              I&apos;m Jake, a mathematician turned AI and Computer Science professional.
+              I&apos;m also a musician.
             </p>
           </div>
           <div className="flex flex-col justify-start mt-12 mb-12 text-3xl font-extralight leading-tight gap-6">
@@ -35,7 +35,7 @@ export default function Home(): React.ReactNode {
               focusing on innovation in the realm of spinal surgeries. I&apos;m excited to see what the future holds!
             </p>
             <p>
-              I&apos;ve been spending my free time learning about web development (hence this website!) and app development.
+              I&apos;ve been spending my free time learning about web development (hence this website!) app development, and the intersection of music and ML.
               I&apos;m always looking for my next challenge, so if you&apos;re interested in collaborating, please reach out!
             </p>
           </div>
