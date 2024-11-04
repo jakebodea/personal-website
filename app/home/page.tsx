@@ -35,7 +35,7 @@ export default function Home(): React.ReactNode {
               focusing on innovation in the realm of spinal surgeries. I&apos;m excited to see what the future holds!
             </p>
             <p>
-              I&apos;ve been spending my free time learning about web development (hence this website!) app development, and the intersection of music and ML.
+              I&apos;ve been spending my free time learning about web development (hence this website!), app development, and the intersection of music and ML.
               I&apos;m always looking for my next challenge, so if you&apos;re interested in collaborating, please reach out!
             </p>
           </div>
