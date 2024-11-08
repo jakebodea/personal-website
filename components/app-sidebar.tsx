@@ -100,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar variant="inset" {...props} className="font-light">
       <SidebarHeader className="flex flex-col items-start mt-4">
         <span className="text-3xl text-primary font-normal">Jake Bodea</span>
-        <span className="text-lg font-light italic">Subtitle 👍</span>
+        <span className="text-lg font-light italic">AI/ML Professional</span>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
