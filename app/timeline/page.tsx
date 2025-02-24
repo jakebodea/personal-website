@@ -25,9 +25,9 @@ const timelineItems = [
     startDate: "August 2024",
     endDate: "Present",
     image: "/images/ventris.png",
-    title: "Director of AI",
+    title: "Lead AI Engineer",
     location: "Ventris Medical",
-    description: "Ventris Medical is a small medical device company that makes bone grafts for spinal fusion surgeries. As the Director of AI, I'm responsible for developing AI solutions for the company.",
+    description: "Ventris Medical is a small medical device company that makes bone grafts for spinal fusion surgeries. As the Lead AI Engineer, I'm responsible for developing AI solutions for the company.",
   },
   {
     startDate: "March 2024",
