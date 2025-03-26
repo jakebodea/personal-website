@@ -14,6 +14,14 @@ export const metadata = {
 
 const timelineItems = [
   {
+    startDate: "November 2024",
+    endDate: "Present",
+    image: "/images/taxrise.jpeg",
+    title: "Machine Learning Engineer",
+    location: "TaxRise",
+    description: "As a Machine Learning Engineer in the engineering team at TaxRise, I'm responsible for pushing full stack AI/ML solutions to automate and improve company processes."
+  },
+  {
     startDate: "October 2024",
     endDate: "Present",
     image: "/images/stanford_scpd.jpeg",
@@ -23,7 +31,7 @@ const timelineItems = [
   },
   {
     startDate: "August 2024",
-    endDate: "Present",
+    endDate: "November 2024",
     image: "/images/ventris.png",
     title: "Lead AI Engineer",
     location: "Ventris Medical",
@@ -36,7 +44,6 @@ const timelineItems = [
     title: "NDO Student",
     location: "Stanford University",
     description: "Pursuing Graduate Certificate in AI. GPA 4.0, with courses CS229: Machine Learning and CS221: Principles and Techniques in Artificial Intelligence.",
-    // supportingMedia: "/images/stanford.png",
   },
   {
     startDate: "January 2023",
