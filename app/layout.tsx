@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic'
 import { SidebarProvider } from "@/components/ui/sidebar"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"

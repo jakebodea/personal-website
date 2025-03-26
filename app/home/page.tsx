@@ -28,8 +28,8 @@ export default function Home(): React.ReactNode {
           </div>
           <div className="flex flex-col justify-start mt-12 mb-12 text-3xl font-extralight leading-tight gap-6">
             <p>
-              I enjoy exploring new ideas and experimenting with quick projects to assess their potential. My interests extend to music, where I'm intrigued by the intersection of music and AI, and I'm passionate about side projects in this area. 
-              Outside of work, I serve at Agape Christian Church of Orange County and am a fan of soccer, supporting FC Barcelona. I'm always on the lookout for opportunities to collaborate on creative ventures, so feel free to reach out if you share similar interests!
+              I enjoy exploring new ideas and experimenting with quick projects to assess their potential. My interests extend to music, where I&apos;m intrigued by the intersection of music and AI, and I&apos;m passionate about side projects in this area. 
+              Outside of work, I serve at Agape Christian Church of Orange County and am a fan of soccer, supporting FC Barcelona. I&apos;m always on the lookout for opportunities to collaborate on creative ventures, so feel free to reach out if you share similar interests!
             </p>
           </div>
         </CardContent>
