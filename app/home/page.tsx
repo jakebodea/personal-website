@@ -23,20 +23,13 @@ export default function Home(): React.ReactNode {
               className="rounded-full shadow-lg"
             /> */}
             <p className="text-primary font-light text-6xl leading-tight">
-              I&apos;m Jake, a mathematician turned AI and Computer Science professional.
-              I&apos;m also a musician.
+              I&apos;m Jake, a mathematician and musician turned AI and Computer Science professional.
             </p>
           </div>
           <div className="flex flex-col justify-start mt-12 mb-12 text-3xl font-extralight leading-tight gap-6">
             <p>
-              I like to dream about the future, and how both <span className="italic font-light">I</span> and <span className="italic font-light">AI</span> can shape it.
-              My interests are wide, and I&apos;m always looking for my next challenge. Thus far, I&apos;ve been focusing my work on AI&apos;s role in healthcare.
-              My most recent position is as the <span className="font-light">Lead AI Engineer</span> at Ventris Medical, a small medical device company
-              focusing on innovation in the realm of spinal surgeries. I&apos;m excited to see what the future holds!
-            </p>
-            <p>
-              I&apos;ve been spending my free time learning about web development (hence this website!), app development, and the intersection of music and ML.
-              I&apos;m always looking for my next challenge, so if you&apos;re interested in collaborating, please reach out!
+              I enjoy exploring new ideas and experimenting with quick projects to assess their potential. My interests extend to music, where I'm intrigued by the intersection of music and AI, and I'm passionate about side projects in this area. 
+              Outside of work, I serve at Agape Christian Church of Orange County and am a fan of soccer, supporting FC Barcelona. I'm always on the lookout for opportunities to collaborate on creative ventures, so feel free to reach out if you share similar interests!
             </p>
           </div>
         </CardContent>
