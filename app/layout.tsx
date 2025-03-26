@@ -15,7 +15,7 @@ const roboto = Roboto({
   variable: '--font-roboto',
 })
 
-const AppSidebar = dynamic(() => import('@/components/app-sidebar').then(mod => mod.AppSidebar), { ssr: false })
+import { SidebarWrapper } from '@/components/sidebar-wrapper'
 
 export const metadata = {
   title: {
@@ -60,7 +60,7 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <div className="flex h-screen w-screen">
-              <AppSidebar />
+              <SidebarWrapper />
               <main className="flex-1">{children}</main>
             </div>
           </SidebarProvider>
