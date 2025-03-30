@@ -32,11 +32,6 @@ const data = {
       title: "Projects",
       url: "/projects",
       icon: "💻"
-    },
-    {
-      title: "Events",
-      url: "/events",
-      icon: "🗓️"
     }
   ],
   contact: [

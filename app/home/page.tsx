@@ -22,14 +22,19 @@ export default function Home(): React.ReactNode {
               height={250}
               className="rounded-full shadow-lg"
             /> */}
-            <p className="text-primary font-light text-6xl leading-tight">
-              I&apos;m Jake, a mathematician and musician turned AI and Computer Science professional.
+            <p className="text-primary font-light text-5xl leading-tight mb-8">
+              I&apos;m Jake, a mathematician and musician turned AI Engineer & Full-Stack Developer.
             </p>
           </div>
-          <div className="flex flex-col justify-start mt-12 mb-12 text-3xl font-extralight leading-tight gap-6">
+          <div className="flex flex-col justify-start mt-12 mb-12 text-2xl font-extralight leading-relaxed gap-6">
             <p>
-              I enjoy exploring new ideas and experimenting with quick projects to assess their potential. My interests extend to music, where I&apos;m intrigued by the intersection of music and AI, and I&apos;m passionate about side projects in this area. 
-              Outside of work, I serve at Agape Christian Church of Orange County and am a fan of soccer, supporting FC Barcelona. I&apos;m always on the lookout for opportunities to collaborate on creative ventures, so feel free to reach out if you share similar interests!
+              I specialize in building intelligent applications, leveraging a strong foundation in <strong className="font-normal">Python, SQL, and JavaScript</strong>. My experience spans the full stack, from crafting user-friendly web interfaces to developing robust backend systems and even native iOS applications. I thrive on bringing ideas to life through code, with a particular passion for the rapidly evolving field of <strong className="font-normal">Artificial Intelligence</strong>.
+            </p>
+            <p>
+              I enjoy exploring new technologies and rapidly prototyping projects. You can see some of my work and consistent activity on my <a href="https://github.com/jakebodea" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">GitHub profile</a>, linked in the sidebar. My interests also include the intersection of music and AI, leading to various side projects in that space.
+            </p>
+            <p>
+              Outside of technology, I serve at Agape Christian Church of Orange County and am an avid soccer fan (Força Barça!). I&apos;m always open to collaborating on creative and challenging projects, so feel free to reach out!
             </p>
           </div>
         </CardContent>
