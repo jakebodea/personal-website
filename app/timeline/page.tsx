@@ -27,7 +27,7 @@ const timelineItems = [
     image: "/images/stanford_scpd.jpeg",
     title: "Course Facilitator",
     location: "Stanford University",
-    description: "Started as a course facilitator for the XCS229: Machine Learning course at Stanford Engineering Center for Global & Online Education (CGOE)."
+    description: "Course Facilitator for XCS221: Principles and Techniques in Artificial Intelligence and XCS229: Machine Learning at Stanford University Center for Global & Online Education (CGOE).",
   },
   {
     startDate: "August 2024",
@@ -35,7 +35,7 @@ const timelineItems = [
     image: "/images/ventris.png",
     title: "Lead AI Engineer",
     location: "Ventris Medical",
-    description: "Ventris Medical is a small medical device company that makes bone grafts for spinal fusion surgeries. As the Lead AI Engineer, I'm responsible for developing AI solutions for the company.",
+    description: "Ventris Medical is a small medical device company that makes bone grafts for spinal fusion surgeries. As the Lead AI Engineer, I'm responsible for developing AI solutions for the company, from web apps to iOS apps to vendor negotiations.",
   },
   {
     startDate: "March 2024",

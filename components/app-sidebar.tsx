@@ -115,7 +115,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           ))}
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarHeader className="font-light italic">Contact Me</SidebarHeader>
+          <SidebarHeader className="font-light italic">Profiles</SidebarHeader>
           {data.contact.map((item) => (
             <Link
               href={item.url}
