@@ -77,7 +77,7 @@ export default function TimelinePage(): React.ReactNode {
     <div className="p-6 h-full">
       <Card className="w-full h-full flex flex-col">
         <CardHeader>
-          <CardTitle className="text-primary font-light">Timeline of Experiences</CardTitle>
+          <CardTitle className="text-primary font-normal text-3xl">Timeline of Experiences</CardTitle>
         </CardHeader>
         <CardContent className="flex-grow overflow-hidden">
           <div className="h-full overflow-y-auto pr-4">
