@@ -82,7 +82,7 @@ export default function TimelinePage(): React.ReactNode {
         <CardContent className="flex-grow overflow-hidden">
           <div className="h-full overflow-y-auto pr-4">
             <span className="text-primary font-extralight mb-4 block">
-              An attempt to document my experiences over the years in an approximate linear timeline.
+              Documenting my career experiences in reverse chronological order.
             </span>
             <Timeline items={timelineItems} />
           </div>

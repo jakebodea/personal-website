@@ -21,7 +21,7 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
     <div className="relative">
       <div className="absolute left-1/4 top-12 bottom-12 w-0.5 bg-gray-200"></div>
       {items.map((item, index) => (
-        <div key={index} className={`relative flex pb-6 pt-6 last:mb-0 items-center ${index !== 0 ? !item.connectedToPrevious ? 'border-t' : '' : ''}`}>
+        <div key={index} className={`relative flex pb-6 pt-6 last:mb-0 items-center ${index !== 0 ? !item.connectedToPrevious ? 'border-t border-gray-200' : '' : ''}`}>
           <div className="w-1/4 flex justify-end pr-16">
             <div className="text-right flex justify-center gap-1">
               {item.endDate === "Present" 

@@ -23,7 +23,7 @@ export default function Home(): React.ReactNode {
               className="rounded-full shadow-lg"
             /> */}
             <p className="text-primary font-light text-5xl leading-tight mb-8">
-              I&apos;m Jake, a mathematician and musician turned <span className="underline">ML Engineer</span> & <span className="underline">Full-Stack Developer</span>.
+              I&apos;m Jake, a mathematician and musician turned <span className="italic font-normal">ML Engineer</span> & <span className="italic font-normal">Full-Stack Developer</span>.
             </p>
           </div>
           <div className="flex flex-col justify-start mt-12 mb-12 text-2xl font-extralight leading-relaxed gap-6">

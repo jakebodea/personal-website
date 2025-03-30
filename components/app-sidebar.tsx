@@ -98,19 +98,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <span className="text-lg italic">AI/ML Professional</span>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
+        <SidebarGroup className="mt-4">
           {data.pages.map((item, index) => (
             <Link href={item.url} key={item.url}>
               <SidebarMenuButton size="lg">
                 <span className="text-lg mr-2">{item.icon}</span>
-                <span className="text-primary font-normal">{item.title}</span>
+                <span className="text-primary text-lg font-normal">{item.title}</span>
                 <span className="ml-auto text-sm text-muted-foreground">{index + 1}</span>
               </SidebarMenuButton>
             </Link>
           ))}
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarHeader className="italic">Profiles</SidebarHeader>
+          <SidebarHeader className="italic text-xl">Profiles</SidebarHeader>
           {data.contact.map((item) => (
             <Link
               href={item.url}
@@ -121,7 +121,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <SidebarMenuButton size="lg">
                 <span className="text-lg mr-2">{item.icon}</span>
-                <span className="text-primary font-normal">{item.title}</span>
+                <span className="text-primary text-lg font-normal">{item.title}</span>
                 <ArrowUpRight className="ml-auto size-4" />
               </SidebarMenuButton>
             </Link>
