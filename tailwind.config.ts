@@ -10,6 +10,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['system-ui', ...fontFamily.sans],
+      },
       fontSize: {
         base: '2rem',
       },
