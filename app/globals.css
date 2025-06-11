@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  /* Default button styles */
+  .button {
+    @apply inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors;
+  }
+
+  .button-outline {
+    @apply inline-flex items-center px-6 py-3 border border-border rounded-lg font-medium hover:bg-accent/50 transition-colors;
+  }
+
+  /* Default button hover behavior */
+  button:not([class*="button"]):hover {
+    @apply transition-colors duration-200;
+  }
+
+  /* Primary button hover default */
+  button[class*="bg-primary"]:hover {
+    @apply bg-primary/90;
+  }
+
+  /* Secondary/outline button hover default */
+  button[class*="border"]:hover {
+    @apply bg-accent/50;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

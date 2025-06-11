@@ -44,12 +44,11 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
               )}
             </div>
 
-            {/* Connecting Line */}
-            <div className={`absolute left-1/2 top-8 w-8 h-0.5 bg-primary/40 ${isLeft ? '-translate-x-full' : 'translate-x-0'}`}></div>
+
 
             {/* Content Card */}
             <div className={`w-full max-w-lg ${isLeft ? 'mr-4 pr-4' : 'ml-4 pl-4'}`}>
-              <div className="bg-white dark:bg-secondary border-2 border-primary/20 dark:border-primary/30 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary/40 dark:group-hover:border-primary/50">
+              <div className="bg-contrast-light/50 backdrop-blur-sm border-2 border-primary/20 dark:border-primary/30 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary/40 dark:group-hover:border-primary/50">
                 {/* Date */}
                 <div className={`flex items-center gap-2 mb-4 ${isLeft ? 'justify-start' : 'justify-end'}`}>
                   <span className="text-sm text-muted-foreground font-medium">

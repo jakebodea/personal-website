@@ -20,7 +20,7 @@ export default function ProjectsPage(): React.ReactNode {
         </div>
 
         {/* Coming Soon Content */}
-        <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
+        <Card className="border-0 shadow-sm bg-contrast-light/50 backdrop-blur-sm">
           <CardContent className="p-12 text-center">
             <div className="max-w-md mx-auto space-y-6">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">

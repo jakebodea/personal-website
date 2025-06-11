@@ -67,7 +67,7 @@ export default function RootLayout({
             <div className="flex h-screen w-screen scrollbar-thin bg-background">
               <SidebarWrapper />
               <div className="flex-1 p-4 overflow-hidden">
-                <main className="h-full overflow-auto scrollbar-thin rounded-2xl border border-border/20 shadow-lg bg-gradient-to-br from-background light:to-[var(--vintage-white)] dark:to-contrast-lighter">{children}</main>
+                <main className="h-full overflow-auto scrollbar-thin rounded-2xl border border-border/20 shadow-lg bg-gradient-to-br from-[#FBFAF4] to-[#EAEEEF] dark:bg-gradient-to-br dark:from-background dark:to-contrast-lighter">{children}</main>
               </div>
             </div>
           </SidebarProvider>
