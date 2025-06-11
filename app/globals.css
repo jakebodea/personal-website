@@ -61,10 +61,10 @@
     --muted: 188 25% 92%; /* Sky (#BAEDDD) lightened */
     --muted-foreground: 193 25% 30%;
 
-    /* Light contrast colors from palette */
+    /* Light contrast colors from palette - more contrast */
     --contrast-light: 180 19% 86%; /* Sky (#BADEDD) */
-    --contrast-lighter: 200 14% 91%; /* Peacock 20 (#D5DDDF) */
-    --contrast-lightest: 60 17% 95%; /* Vintage White (#F3F3EE) */
+    --contrast-lighter: 194 14% 84%; /* Peacock 20 (#D5DDDF) */
+    --contrast-lightest: 200 17% 93%; /* Paper White (#FBFAF4) */
 
     /* Destructive (Terra Cotta) */
     --destructive: 13 60% 43%; /* Terra Cotta (#A84B2F) */
@@ -122,10 +122,10 @@
     --accent: 188 80% 50%;
     --accent-foreground: var(--foreground);
 
-    /* Dark mode contrast colors - variations of inky blue against offblack */
-    --contrast-light: 195 48% 15%; /* Dark Teal (#13343B) - your original dark bg */
+    /* Dark mode contrast colors - more contrast against offblack */
+    --contrast-light: 194 41% 22%; /* Peacock (#2E666E) */
     --contrast-lighter: 193 41% 17%; /* Inky Blue (#19343B) base */
-    --contrast-lightest: 193 38% 19%; /* Slightly lighter inky blue */
+    --contrast-lightest: 195 48% 15%; /* Dark Teal (#13343B) */
 
     --destructive: 13 60% 55%;
     --destructive-foreground: var(--foreground);

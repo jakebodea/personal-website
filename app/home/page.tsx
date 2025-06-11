@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function Home(): React.ReactNode {
   return (
-    <div className="min-h-full bg-gradient-to-br from-background via-contrast-lightest to-contrast-lighter">
+    <div className="min-h-full">
       <div className="container max-w-4xl mx-auto px-6 py-8">
         {/* Hero Section */}
         <div className="mb-16">
