@@ -28,7 +28,7 @@ export default function Home(): React.ReactNode {
           </div>
           <div className="flex flex-col justify-start mt-12 mb-12 text-2xl font-extralight leading-relaxed gap-6">
             <p>
-              I specialize in building intelligent applications, leveraging a strong foundation in <strong className="font-normal">Python, SQL, and JavaScript</strong>. My experience spans the full stack, from crafting user-friendly web interfaces to developing robust backend systems and even native iOS applications. I thrive on bringing ideas to life through code, with a particular passion for the rapidly evolving field of <strong className="font-normal">Artificial Intelligence</strong>.
+              I specialize in building intelligent applications, leveraging a strong foundation in <strong className="font-normal">Python, SQL, and JavaScript/TypeScript</strong>. My experience spans the full stack, from crafting user-friendly web interfaces to developing robust backend systems and even native iOS applications. I thrive on bringing ideas to life through code, with a particular passion for the rapidly evolving field of <strong className="font-normal">Artificial Intelligence</strong>.
             </p>
             <p>
               I enjoy exploring new technologies and rapidly prototyping projects. You can see some of my work and consistent activity on my GitHub profile, linked in the sidebar. My interests also include the intersection of music and AI, leading to various side projects in that space.
