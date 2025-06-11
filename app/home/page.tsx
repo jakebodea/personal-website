@@ -18,15 +18,15 @@ export default function Home(): React.ReactNode {
           <div className="mb-8">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <span className="w-2 h-2 bg-primary rounded-full mr-2 animate-pulse"></span>
-              Available for new opportunities
+              Always open to new opportunities :)
             </div>
             <h1 className="text-4xl md:text-6xl font-serif font-light leading-tight text-foreground mb-6">
                I&apos;m Jake, a mathematician and musician turned{" "}
                <span className="text-primary font-medium italic relative">
                  ML Engineer
                </span>
-               {" "}& <span className="text-primary font-medium italic relative">
-                 Full-Stack Developer
+               {" "}and {" "}<span className="text-primary font-medium italic relative">
+                 Full Stack Developer
                </span>.
              </h1>
             <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl">

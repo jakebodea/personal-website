@@ -87,7 +87,7 @@ export default function TimelinePage(): React.ReactNode {
         </div>
 
         {/* Timeline Content */}
-        <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
+        <Card className="border-0 shadow-sm bg-contrast-lightest/90 backdrop-blur-sm">
           <CardContent className="p-8">
             <div className="scrollbar-thin">
               <Timeline items={timelineItems} />
