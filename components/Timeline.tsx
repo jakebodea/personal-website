@@ -18,114 +18,113 @@ interface TimelineProps {
 
 const Timeline: React.FC<TimelineProps> = ({ items }) => {
   return (
-    <div className="relative">
-      {/* Main Timeline Line - starts from first item */}
-      <div className="absolute left-6 top-8 bottom-0 w-0.5 bg-primary/60"></div>
+    <div className="relative max-w-6xl mx-auto">
+      {/* Main Timeline Line - centered */}
+      <div className="absolute left-1/2 -translate-x-0.5 top-8 bottom-0 w-0.5 bg-primary/60"></div>
       
-      {items.map((item, index) => (
-        <div key={index} className="relative pl-16 pb-12 group">
-          {/* Timeline Dot */}
-          <div className="absolute left-6 top-8 -translate-x-1/2 z-10">
-            {item.endDate === "Present" ? (
-              <div className="relative">
-                <div className="absolute inset-0 w-5 h-5 rounded-full bg-accent/30 animate-ping"></div>
-                <div className="w-5 h-5 rounded-full bg-white border-3 border-primary shadow-lg relative">
-                  <div className="w-full h-full rounded-full bg-primary"></div>
-                </div>
-              </div>
-            ) : (
-              <div className="w-5 h-5 rounded-full shadow-lg relative">
-                <div className="absolute inset-0 rounded-full bg-primary"></div>
-                <div className="absolute inset-1 rounded-full bg-card"></div>
-              </div>
-            )}
-          </div>
-
-          {/* Content Card */}
-          <div className="bg-white dark:bg-secondary border-2 border-primary/20 dark:border-primary/30 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary/40 dark:group-hover:border-primary/50">
-            {/* Date */}
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-sm text-muted-foreground font-medium">
-                {item.startDate} - 
-              </span>
+      {items.map((item, index) => {
+        const isLeft = index % 2 === 0;
+        
+        return (
+          <div key={index} className={`relative pb-12 group flex items-center ${isLeft ? 'justify-start' : 'justify-end'}`}>
+            {/* Timeline Dot */}
+            <div className="absolute left-1/2 top-8 -translate-x-1/2 z-20">
               {item.endDate === "Present" ? (
-                <span className="bg-primary text-white text-xs font-semibold px-2 py-1 rounded-full shadow-sm">
-                  Present
-                </span>
+                <div className="relative">
+                  <div className="absolute inset-0 w-5 h-5 rounded-full bg-accent/30 animate-ping"></div>
+                  <div className="w-5 h-5 rounded-full bg-white border-3 border-primary shadow-lg relative">
+                    <div className="w-full h-full rounded-full bg-primary"></div>
+                  </div>
+                </div>
               ) : (
-                <span className="text-sm text-muted-foreground font-medium">
-                  {item.endDate}
-                </span>
+                <div className="w-5 h-5 rounded-full shadow-lg relative">
+                  <div className="absolute inset-0 rounded-full bg-primary"></div>
+                  <div className="absolute inset-1 rounded-full bg-card"></div>
+                </div>
               )}
             </div>
 
-            {/* Header with Logo and Title */}
-            <div className="flex items-start gap-4 mb-4">
-              <div className="flex-shrink-0">
-                <div className="w-16 h-16 rounded-xl bg-white border-2 border-border shadow-md">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    width={64}
-                    height={64}
-                    className="w-full h-full object-contain rounded-lg p-2"
-                  />
-                </div>
-              </div>
-              
-              <div className="flex-1 min-w-0">
-                <h3 className="text-xl font-semibold text-primary mb-1">
-                  {item.title}
-                </h3>
-                <div className="flex items-center gap-1 text-primary/70">
-                  <span className="text-sm">@</span>
-                  <span className="font-medium">{item.location}</span>
-                </div>
-              </div>
-            </div>
+            {/* Connecting Line */}
+            <div className={`absolute left-1/2 top-8 w-8 h-0.5 bg-primary/40 ${isLeft ? '-translate-x-full' : 'translate-x-0'}`}></div>
 
-            {/* Hover to expand indicator */}
-            <div className="flex items-center justify-end mb-2">
-              <div className="w-4 h-4 text-muted-foreground/50">
-                <svg className="w-full h-full transform group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Description - Hidden by default, shown on hover */}
-            <div className="overflow-hidden">
-              <div className="max-h-0 group-hover:max-h-40 transition-all duration-500 ease-in-out">
-                <div className="pt-2 border-t border-border/30">
-                  <p className="text-muted-foreground leading-relaxed">
-                    {item.description}
-                  </p>
+            {/* Content Card */}
+            <div className={`w-full max-w-lg ${isLeft ? 'mr-4 pr-4' : 'ml-4 pl-4'}`}>
+              <div className="bg-white dark:bg-secondary border-2 border-primary/20 dark:border-primary/30 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary/40 dark:group-hover:border-primary/50">
+                {/* Date */}
+                <div className={`flex items-center gap-2 mb-4 ${isLeft ? 'justify-start' : 'justify-end'}`}>
+                  <span className="text-sm text-muted-foreground font-medium">
+                    {item.startDate} - 
+                  </span>
+                  {item.endDate === "Present" ? (
+                    <span className="bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                      Present
+                    </span>
+                  ) : (
+                    <span className="text-sm text-muted-foreground font-medium">
+                      {item.endDate}
+                    </span>
+                  )}
                 </div>
-              </div>
-            </div>
 
-            {/* Supporting Media */}
-            {item.supportingMedia && (
-              <div className="mt-4 overflow-hidden">
-                <div className="max-h-0 group-hover:max-h-96 transition-all duration-700 ease-in-out">
-                  <div className="pt-4">
-                    <Image 
-                      src={item.supportingMedia} 
-                      alt={item.title} 
-                      width={300} 
-                      height={200} 
-                      className="rounded-lg border-2 border-border shadow-md" 
-                    />
+                {/* Header with Logo and Title */}
+                <div className={`flex items-start gap-4 mb-4 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
+                  <div className="flex-shrink-0">
+                    <div className="w-16 h-16 rounded-xl bg-white border-2 border-border shadow-md">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-contain rounded-lg p-2"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className={`flex-1 min-w-0 ${isLeft ? 'text-left' : 'text-right'}`}>
+                    <h3 className="text-3xl font-serif italic text-primary leading-none">
+                      {item.title}
+                    </h3>
+                    <div className={`flex items-center text-primary/70 ${isLeft ? 'justify-start' : 'justify-end'}`}>
+                      <span className="font-serif text-base leading-none">{item.location}</span>
+                    </div>
                   </div>
                 </div>
+
+                {/* Description - Hidden by default, shown on hover */}
+                <div className="overflow-hidden">
+                  <div className="max-h-0 group-hover:max-h-48 transition-all duration-500 ease-in-out">
+                    <div className="pt-3 border-t border-border/30">
+                      <p className={`text-muted-foreground leading-relaxed text-sm ${isLeft ? 'text-left' : 'text-right'}`}>
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Supporting Media */}
+                {item.supportingMedia && (
+                  <div className="mt-3 overflow-hidden">
+                    <div className="max-h-0 group-hover:max-h-96 transition-all duration-700 ease-in-out">
+                      <div className={`pt-3 ${isLeft ? 'text-left' : 'text-right'}`}>
+                        <Image 
+                          src={item.supportingMedia} 
+                          alt={item.title} 
+                          width={350} 
+                          height={220} 
+                          className="rounded-lg border-2 border-border shadow-md" 
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
       
       {/* End Marker */}
-      <div className="absolute left-6 -bottom-2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary shadow-sm"></div>
+      <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-2 h-2 rounded-full bg-primary shadow-sm"></div>
     </div>
   );
 };
