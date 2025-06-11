@@ -7,8 +7,8 @@ export const metadata = {
 
 export default function ProjectsPage(): React.ReactNode {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
-      <div className="container max-w-4xl mx-auto px-6 py-12">
+    <div className="min-h-full bg-gradient-to-br from-background via-contrast-lightest to-contrast-lighter">
+      <div className="container max-w-4xl mx-auto px-6 py-8">
         {/* Header Section */}
         <div className="mb-12">
           <h1 className="text-4xl md:text-5xl font-serif font-light text-foreground mb-4">

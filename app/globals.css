@@ -35,7 +35,7 @@
   :root {
     /* Perplexity core palette */
     /* Base neutrals */
-    --background: 48 28% 97%; /* Paper White (#FBFAF4) */
+    --background: 52 19% 88%; /* Light Green (#E4E3D4) */
     --foreground: 180 45% 6%; /* Offblack (#091717) */
 
     /* Core brand turquoise */
@@ -61,6 +61,11 @@
     --muted: 188 25% 92%; /* Sky (#BAEDDD) lightened */
     --muted-foreground: 193 25% 30%;
 
+    /* Light contrast colors from palette */
+    --contrast-light: 180 19% 86%; /* Sky (#BADEDD) */
+    --contrast-lighter: 200 14% 91%; /* Peacock 20 (#D5DDDF) */
+    --contrast-lightest: 60 17% 95%; /* Vintage White (#F3F3EE) */
+
     /* Destructive (Terra Cotta) */
     --destructive: 13 60% 43%; /* Terra Cotta (#A84B2F) */
     --destructive-foreground: 0 0% 98%;
@@ -80,7 +85,7 @@
     --chart-5: 13 60% 43%; /* Terra Cotta */
 
     /* Sidebar */
-    --sidebar-background: 48 28% 97%; /* same as background */
+    --sidebar-background: var(--background); /* same as global background */
     --sidebar-foreground: var(--foreground);
     --sidebar-primary: var(--primary);
     --sidebar-primary-foreground: var(--background);
@@ -96,19 +101,19 @@
 
   .dark {
     /* Dark mode */
-    --background: 200 6% 12%; /* #1C2123 */
-    --foreground: 210 20% 90%; /* near-white but not pure */
+    --background: 180 45% 6%; /* Offblack (#091717) */
+    --foreground: 210 20% 90%; /* near-white for text */
 
-    --card: 200 8% 15%;
+    --card: 193 41% 17%; /* Inky Blue (#19343B) - pops against offblack */
     --card-foreground: var(--foreground);
 
-    --popover: 200 8% 15%;
+    --popover: 193 41% 17%; /* Inky Blue */
     --popover-foreground: var(--foreground);
 
     --primary: 188 63% 48%; /* vivid turquoise stands out on dark */
-    --primary-foreground: var(--foreground);
+    --primary-foreground: 180 45% 6%; /* Offblack for contrast */
 
-    --secondary: 193 30% 24%; /* inky blue for sidebar & subtle surfaces */
+    --secondary: 193 41% 17%; /* Inky Blue (#19343B) */
     --secondary-foreground: var(--foreground);
 
     --muted: 200 6% 22%;
@@ -116,6 +121,11 @@
 
     --accent: 188 80% 50%;
     --accent-foreground: var(--foreground);
+
+    /* Dark mode contrast colors - variations of inky blue against offblack */
+    --contrast-light: 195 48% 15%; /* Dark Teal (#13343B) - your original dark bg */
+    --contrast-lighter: 193 41% 17%; /* Inky Blue (#19343B) base */
+    --contrast-lightest: 193 38% 19%; /* Slightly lighter inky blue */
 
     --destructive: 13 60% 55%;
     --destructive-foreground: var(--foreground);
@@ -130,12 +140,12 @@
     --chart-4: 48 28% 97%;
     --chart-5: 13 60% 55%;
 
-    --sidebar-background: 200 6% 14%; /* slightly lighter than main bg */
+    --sidebar-background: var(--background); /* same as global background */
     --sidebar-foreground: var(--foreground);
     --sidebar-primary: var(--primary);
-    --sidebar-primary-foreground: var(--foreground);
+    --sidebar-primary-foreground: 180 45% 6%; /* Offblack */
     --sidebar-accent: var(--accent);
-    --sidebar-accent-foreground: var(--foreground);
+    --sidebar-accent-foreground: 180 45% 6%; /* Offblack */
     --sidebar-border: var(--border);
     --sidebar-ring: var(--primary);
 

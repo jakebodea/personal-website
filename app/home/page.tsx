@@ -11,8 +11,8 @@ export const metadata = {
 
 export default function Home(): React.ReactNode {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
-      <div className="container max-w-4xl mx-auto px-6 py-12">
+    <div className="min-h-full bg-gradient-to-br from-background via-contrast-lightest to-contrast-lighter">
+      <div className="container max-w-4xl mx-auto px-6 py-8">
         {/* Hero Section */}
         <div className="mb-16">
           <div className="mb-8">
@@ -38,7 +38,7 @@ export default function Home(): React.ReactNode {
         {/* Main Content Grid */}
         <div className="grid gap-8 md:gap-12">
           {/* About Section */}
-          <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
+          <Card className="border-0 shadow-sm bg-contrast-lightest/80 backdrop-blur-sm">
             <CardContent className="p-8">
               <h2 className="text-2xl font-semibold text-foreground mb-6 flex items-center">
                 <span className="w-1.5 h-6 bg-primary rounded-full mr-3"></span>
@@ -62,7 +62,7 @@ export default function Home(): React.ReactNode {
 
           {/* Skills & Interests Grid */}
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
+            <Card className="border-0 shadow-sm bg-contrast-lighter/70 backdrop-blur-sm">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center">
                   <span className="w-1 h-4 bg-accent rounded-full mr-2"></span>
@@ -85,7 +85,7 @@ export default function Home(): React.ReactNode {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
+            <Card className="border-0 shadow-sm bg-contrast-lighter/70 backdrop-blur-sm">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center">
                   <span className="w-1 h-4 bg-accent rounded-full mr-2"></span>
@@ -110,7 +110,7 @@ export default function Home(): React.ReactNode {
           </div>
 
           {/* CTA Section */}
-          <Card className="border-0 shadow-sm bg-gradient-to-r from-primary/5 to-accent/5 backdrop-blur-sm">
+          <Card className="border-0 shadow-sm bg-contrast-light/50 backdrop-blur-sm">
             <CardContent className="p-8 text-center">
               <h3 className="text-xl font-semibold text-foreground mb-4">
                 Let&apos;s Build Something Amazing

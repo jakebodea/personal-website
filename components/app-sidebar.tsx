@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { Moon, Sun, ArrowUpRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Link from 'next/link'
 import {
@@ -13,7 +13,7 @@ import {
   SidebarHeader,
   SidebarMenuButton,
 } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button"
+
 import { useTheme } from "next-themes"
 
 const data = {
@@ -92,7 +92,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }
 
   return (
-    <Sidebar variant="inset" {...props} className="border-r border-border/50">
+    <Sidebar variant="inset" {...props} className="border-r-0">
       <SidebarHeader className="flex flex-col items-start px-6 py-8 border-b border-border/30">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Jake Bodea</h1>
@@ -140,16 +140,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <div className="text-xs text-muted-foreground">
             <p>Use <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded font-mono">1-3</kbd> to navigate</p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="px-2 py-1.5 h-auto hover:bg-accent/50 transition-colors"
-            >
-              {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
-            </Button>
-            <span className="text-xs text-muted-foreground">Press <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded font-mono">T</kbd> to toggle</span>
+          <div className="text-xs text-muted-foreground">
+            <p>Press <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded font-mono">T</kbd> to toggle theme</p>
           </div>
         </div>
       </SidebarFooter>

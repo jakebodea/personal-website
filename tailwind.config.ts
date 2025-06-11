@@ -68,6 +68,11 @@ const config: Config = {
           'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
+        },
+        contrast: {
+          light: 'hsl(var(--contrast-light))',
+          lighter: 'hsl(var(--contrast-lighter))',
+          lightest: 'hsl(var(--contrast-lightest))'
         }
       },
       borderRadius: {

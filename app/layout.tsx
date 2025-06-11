@@ -64,9 +64,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider>
-            <div className="flex h-screen w-screen scrollbar-thin">
+            <div className="flex h-screen w-screen scrollbar-thin bg-background">
               <SidebarWrapper />
-              <main className="flex-1 overflow-auto scrollbar-thin">{children}</main>
+              <div className="flex-1 p-4 overflow-hidden">
+                <main className="h-full overflow-auto scrollbar-thin rounded-2xl border border-border/20 shadow-lg">{children}</main>
+              </div>
             </div>
           </SidebarProvider>
           <Toaster />
