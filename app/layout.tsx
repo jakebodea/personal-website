@@ -4,8 +4,23 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { SiteToast } from "@/components/site-toast"
 import Script from 'next/script'
+import { Montserrat, Instrument_Serif } from 'next/font/google'
 
 import { SidebarWrapper } from '@/components/sidebar-wrapper'
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  display: 'swap',
+})
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  variable: '--font-instrument-serif',
+  weight: ['400'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
 
 export const metadata = {
   title: {
@@ -34,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`font-sans`}>
+    <html lang="en" suppressHydrationWarning className={`${montserrat.variable} ${instrumentSerif.variable} font-sans`}>
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -49,9 +64,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider>
-            <div className="flex h-screen w-screen">
+            <div className="flex h-screen w-screen scrollbar-thin">
               <SidebarWrapper />
-              <main className="flex-1">{children}</main>
+              <main className="flex-1 overflow-auto scrollbar-thin">{children}</main>
             </div>
           </SidebarProvider>
           <Toaster />

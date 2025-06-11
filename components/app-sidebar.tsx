@@ -92,51 +92,65 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }
 
   return (
-    <Sidebar variant="inset" {...props} className="font-light">
-      <SidebarHeader className="flex flex-col items-start mt-4">
-        <span className="text-3xl text-primary">Jake Bodea</span>
-        <span className="text-lg italic">AI/ML Professional</span>
+    <Sidebar variant="inset" {...props} className="border-r border-border/50">
+      <SidebarHeader className="flex flex-col items-start px-6 py-8 border-b border-border/30">
+        <div className="space-y-1">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Jake Bodea</h1>
+          <p className="text-sm text-muted-foreground font-medium">AI/ML Professional</p>
+        </div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup className="mt-4">
+        <SidebarGroup className="px-3 py-4">
+          <div className="mb-2 px-3">
+            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Navigation</h2>
+          </div>
           {data.pages.map((item, index) => (
             <Link href={item.url} key={item.url}>
-              <SidebarMenuButton size="lg">
-                <span className="text-lg mr-2">{item.icon}</span>
-                <span className="text-primary text-lg font-normal">{item.title}</span>
-                <span className="ml-auto text-sm text-muted-foreground">{index + 1}</span>
+              <SidebarMenuButton size="lg" className="w-full justify-start gap-3 px-3 py-2.5 hover:bg-accent/50 transition-colors group">
+                <span className="text-base">{item.icon}</span>
+                <span className="text-foreground font-medium group-hover:text-primary transition-colors">{item.title}</span>
+                <span className="ml-auto text-xs text-muted-foreground/60 font-mono">{index + 1}</span>
               </SidebarMenuButton>
             </Link>
           ))}
         </SidebarGroup>
-        <SidebarGroup>
-          <SidebarHeader className="italic text-xl">Profiles</SidebarHeader>
+        <SidebarGroup className="px-3 py-4">
+          <div className="mb-2 px-3">
+            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Connect</h2>
+          </div>
           {data.contact.map((item) => (
             <Link
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between w-full"
+              className="block w-full"
               key={item.url}
             >
-              <SidebarMenuButton size="lg">
-                <span className="text-lg mr-2">{item.icon}</span>
-                <span className="text-primary text-lg font-normal">{item.title}</span>
-                <ArrowUpRight className="ml-auto size-4" />
+              <SidebarMenuButton size="lg" className="w-full justify-start gap-3 px-3 py-2.5 hover:bg-accent/50 transition-colors group">
+                <span className="text-base">{item.icon}</span>
+                <span className="text-foreground font-medium group-hover:text-primary transition-colors">{item.title}</span>
+                <ArrowUpRight className="ml-auto size-4 text-muted-foreground/60 group-hover:text-primary transition-colors" />
               </SidebarMenuButton>
             </Link>
           ))}
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <div className="flex flex-col justify-start">
-          <span className="text-sm pb-2 italic">Navigate tabs with keyboard!</span>
-          <span className="flex items-center">
-            <Button variant="ghost" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+        <div className="px-6 py-4 border-t border-border/30 space-y-3">
+          <div className="text-xs text-muted-foreground">
+            <p>Use <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded font-mono">1-3</kbd> to navigate</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="px-2 py-1.5 h-auto hover:bg-accent/50 transition-colors"
+            >
               {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
             </Button>
-            <span className="text-sm pl-2 italic">or press &apos;t&apos;</span>
-          </span>
+            <span className="text-xs text-muted-foreground">Press <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded font-mono">T</kbd> to toggle</span>
+          </div>
         </div>
       </SidebarFooter>
     </Sidebar>

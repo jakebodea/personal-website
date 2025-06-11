@@ -11,7 +11,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['system-ui', ...fontFamily.sans],
+        // Next.js optimized fonts
+        sans: ['var(--font-montserrat)', ...fontFamily.sans],
+        serif: ['var(--font-instrument-serif)', ...fontFamily.serif],
       },
       fontSize: {
         base: '2rem',

@@ -74,20 +74,27 @@ const timelineItems = [
 
 export default function TimelinePage(): React.ReactNode {
   return (
-    <div className="p-6 h-full">
-      <Card className="w-full h-full flex flex-col">
-        <CardHeader>
-          <CardTitle className="text-primary font-normal text-3xl">Timeline of Experiences</CardTitle>
-        </CardHeader>
-        <CardContent className="flex-grow overflow-hidden">
-          <div className="h-full overflow-y-auto pr-4">
-            <span className="text-primary font-extralight mb-4 block">
-              Documenting my career experiences in reverse chronological order.
-            </span>
-            <Timeline items={timelineItems} />
-          </div>
-        </CardContent>
-      </Card>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
+      <div className="container max-w-4xl mx-auto px-6 py-12">
+        {/* Header Section */}
+        <div className="mb-12">
+          <h1 className="text-4xl md:text-5xl font-serif font-light text-foreground mb-4">
+            Professional Timeline
+          </h1>
+          <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl">
+            A chronological journey through my career experiences, from student to AI engineer.
+          </p>
+        </div>
+
+        {/* Timeline Content */}
+        <Card className="border-0 shadow-sm bg-card/50 backdrop-blur-sm">
+          <CardContent className="p-8">
+            <div className="scrollbar-thin">
+              <Timeline items={timelineItems} />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
