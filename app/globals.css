@@ -97,6 +97,9 @@
     /* Custom sidebar variables */
     --sidebar-border: hsl(var(--border));
     --sidebar: hsl(var(--card));
+    
+    /* Vintage white for light mode only */
+    --vintage-white: #F3F3EE;
   }
 
   .dark {

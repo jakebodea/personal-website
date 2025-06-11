@@ -19,46 +19,113 @@ interface TimelineProps {
 const Timeline: React.FC<TimelineProps> = ({ items }) => {
   return (
     <div className="relative">
-      <div className="absolute left-1/4 top-12 bottom-12 w-0.5 bg-gray-200"></div>
+      {/* Main Timeline Line - starts from first item */}
+      <div className="absolute left-6 top-8 bottom-0 w-0.5 bg-primary/60"></div>
+      
       {items.map((item, index) => (
-        <div key={index} className={`relative flex pb-6 pt-6 last:mb-0 items-center ${index !== 0 ? !item.connectedToPrevious ? 'border-t border-gray-200' : '' : ''}`}>
-          <div className="w-1/4 flex justify-end pr-16">
-            <div className="text-right flex justify-center gap-1">
-              {item.endDate === "Present" 
-              ? 
-              <>
-                <p className="text-sm text-muted-foreground">{item.startDate} - </p> 
-                <p className="text-sm text-black font-normal bg-yellow-200 px-1 rounded-sm"> Present</p>
-              </>
-              : <p className="text-sm text-muted-foreground">{item.startDate} - {item.endDate}</p>}
-            </div>
+        <div key={index} className="relative pl-16 pb-12 group">
+          {/* Timeline Dot */}
+          <div className="absolute left-6 top-8 -translate-x-1/2 z-10">
+            {item.endDate === "Present" ? (
+              <div className="relative">
+                <div className="absolute inset-0 w-5 h-5 rounded-full bg-accent/30 animate-ping"></div>
+                <div className="w-5 h-5 rounded-full bg-white border-3 border-primary shadow-lg relative">
+                  <div className="w-full h-full rounded-full bg-primary"></div>
+                </div>
+              </div>
+            ) : (
+              <div className="w-5 h-5 rounded-full shadow-lg relative">
+                <div className="absolute inset-0 rounded-full bg-primary"></div>
+                <div className="absolute inset-1 rounded-full bg-card"></div>
+              </div>
+            )}
           </div>
-          {item.connectedToPrevious ? (
-            <div className="w-24 h-24 flex items-center justify-center -ml-12">
-              <span className="text-4xl text-gray-200 ml-0.5">-</span>
+
+          {/* Content Card */}
+          <div className="bg-white dark:bg-secondary border-2 border-primary/20 dark:border-primary/30 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary/40 dark:group-hover:border-primary/50">
+            {/* Date */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-sm text-muted-foreground font-medium">
+                {item.startDate} - 
+              </span>
+              {item.endDate === "Present" ? (
+                <span className="bg-primary text-white text-xs font-semibold px-2 py-1 rounded-full shadow-sm">
+                  Present
+                </span>
+              ) : (
+                <span className="text-sm text-muted-foreground font-medium">
+                  {item.endDate}
+                </span>
+              )}
             </div>
-          ) : (
-            <div className="w-24 h-24 rounded-full bg-white z-10 flex items-center justify-center border-2 border-gray-200 flex-shrink-0 -ml-12">
-              <Image
-                src={item.image}
-                alt={item.title}
-                width={120}
-                height={120}
-                className="rounded-full object-cover"
-              />
+
+            {/* Header with Logo and Title */}
+            <div className="flex items-start gap-4 mb-4">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-xl bg-white border-2 border-border shadow-md">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={64}
+                    height={64}
+                    className="w-full h-full object-contain rounded-lg p-2"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex-1 min-w-0">
+                <h3 className="text-xl font-semibold text-primary mb-1">
+                  {item.title}
+                </h3>
+                <div className="flex items-center gap-1 text-primary/70">
+                  <span className="text-sm">@</span>
+                  <span className="font-medium">{item.location}</span>
+                </div>
+              </div>
             </div>
-          )}
-          <div className="flex-1 ml-8">
-            <div className="flex gap-2 items-center text-lg">
-              <h3 className="text-primary font-normal">{item.title}</h3>
-              <h4 className="text-primary font-light text-xs mb-0.5">@</h4>
-              <h4 className="text-primary font-light">{item.location}</h4>
+
+            {/* Hover to expand indicator */}
+            <div className="flex items-center justify-end mb-2">
+              <div className="w-4 h-4 text-muted-foreground/50">
+                <svg className="w-full h-full transform group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </div>
-            <p className="text-muted-foreground font-normal">{item.description}</p>
-            {item.supportingMedia && <Image src={item.supportingMedia} alt={item.title} width={120} height={120} className="rounded-md object-cover" />}
+
+            {/* Description - Hidden by default, shown on hover */}
+            <div className="overflow-hidden">
+              <div className="max-h-0 group-hover:max-h-40 transition-all duration-500 ease-in-out">
+                <div className="pt-2 border-t border-border/30">
+                  <p className="text-muted-foreground leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Supporting Media */}
+            {item.supportingMedia && (
+              <div className="mt-4 overflow-hidden">
+                <div className="max-h-0 group-hover:max-h-96 transition-all duration-700 ease-in-out">
+                  <div className="pt-4">
+                    <Image 
+                      src={item.supportingMedia} 
+                      alt={item.title} 
+                      width={300} 
+                      height={200} 
+                      className="rounded-lg border-2 border-border shadow-md" 
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ))}
+      
+      {/* End Marker */}
+      <div className="absolute left-6 -bottom-2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary shadow-sm"></div>
     </div>
   );
 };
