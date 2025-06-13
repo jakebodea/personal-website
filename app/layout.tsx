@@ -1,7 +1,7 @@
 import { SidebarProvider } from "@/components/ui/sidebar"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/sonner"
 import { SiteToast } from "@/components/site-toast"
 import Script from 'next/script'
 import { Montserrat, Instrument_Serif } from 'next/font/google'

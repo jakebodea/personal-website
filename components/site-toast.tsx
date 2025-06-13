@@ -1,25 +1,22 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 export function SiteToast() {
-  const { toast } = useToast();
   const isFirstRender = useRef(true);
 
   useEffect(() => {
     if (isFirstRender.current) {
       setTimeout(() => {
-        toast({
-          title: "🚧 Website is Still Under Construction",
-          description: "You'll probably see some rough edges and empty pages, sorry!",
-          variant: "destructive",
-          duration: 10000,
+        toast.success("You have my word  🤝", {
+          description: "You will not be reading GPT-slop on this website. Every word is mine!",
+          duration: 8000,
         });
-      }, 100);
+      }, 1000);
       isFirstRender.current = false;
     }
-  }, [toast]);
+  }, []);
 
   return null;
 } 

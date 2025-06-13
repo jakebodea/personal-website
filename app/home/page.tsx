@@ -22,9 +22,11 @@ export default function Home(): React.ReactNode {
             </div>
             <h1 className="text-4xl md:text-6xl font-serif font-light leading-tight text-foreground mb-6">
                I&apos;m Jake, a mathematician turned{" "}
-               <span className="text-primary font-medium italic relative">ML Engineer</span>
-               {" "}and {" "}
-               <span className="text-primary font-medium italic relative">Full Stack Developer</span>
+               <span className="text-primary font-medium italic relative">ML Engineer </span>
+               and
+               <span className="text-primary font-medium italic relative"> Full Stack Developer </span>
+               with a keen eye for
+               <span className="text-primary font-medium italic relative"> design</span>
                .
              </h1>
             <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-3xl">
