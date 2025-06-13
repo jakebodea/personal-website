@@ -25,7 +25,9 @@
     "react-dom": "^18",
     "sonner": "^2.0.5",
     "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "react-markdown": "^9.0.0",
+    "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",

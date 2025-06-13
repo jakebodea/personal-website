@@ -32,6 +32,11 @@ const data = {
       title: "Projects",
       url: "/projects",
       icon: "💻"
+    },
+    {
+      title: "Blogs",
+      url: "/blogs",
+      icon: "📝"
     }
   ],
   contact: [
@@ -138,7 +143,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <div className="px-6 py-4 border-t border-border/30 space-y-3">
           <div className="text-xs text-muted-foreground">
-            <p>Use <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded font-mono">1-3</kbd> to navigate</p>
+            <p>Use <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded font-mono">1-4</kbd> to navigate</p>
           </div>
           <div className="text-xs text-muted-foreground">
             <p>Press <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded font-mono">T</kbd> to toggle theme</p>
