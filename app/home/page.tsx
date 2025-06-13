@@ -21,16 +21,14 @@ export default function Home(): React.ReactNode {
               Always open to new opportunities :)
             </div>
             <h1 className="text-4xl md:text-6xl font-serif font-light leading-tight text-foreground mb-6">
-               I&apos;m Jake, a mathematician and musician turned{" "}
-               <span className="text-primary font-medium italic relative">
-                 ML Engineer
-               </span>
-               {" "}and {" "}<span className="text-primary font-medium italic relative">
-                 Full Stack Developer
-               </span>.
+               I&apos;m Jake, a mathematician turned{" "}
+               <span className="text-primary font-medium italic relative">ML Engineer</span>
+               {" "}and {" "}
+               <span className="text-primary font-medium italic relative">Full Stack Developer</span>
+               .
              </h1>
-            <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl">
-              Building intelligent applications that bridge the gap between complex data and meaningful user experiences.
+            <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-3xl">
+              Building cool stuff that solves real problems, from algorithms to web & iOS apps... and some totally unnecessary but fun side projects too!
             </p>
           </div>
         </div>
