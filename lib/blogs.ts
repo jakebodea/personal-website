@@ -39,9 +39,26 @@ export function getBlogData(slug: string): BlogData {
   return { slug, title, date, content }
 }
 
-export function getAllBlogs(): BlogMeta[] {
+export function getAllBlogs(): BlogData[] {
   return getBlogSlugs()
     .map((slug) => getBlogData(slug))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+}
+
+export function searchBlogs(query: string): BlogData[] {
+  if (!query.trim()) {
+    return getAllBlogs().map(meta => getBlogData(meta.slug))
+  }
+
+  const searchTerm = query.toLowerCase()
+  
+  return getBlogSlugs()
+    .map((slug) => getBlogData(slug))
+    .filter((blog) => {
+      const titleMatch = blog.title.toLowerCase().includes(searchTerm)
+      const contentMatch = blog.content.toLowerCase().includes(searchTerm)
+      return titleMatch || contentMatch
+    })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 

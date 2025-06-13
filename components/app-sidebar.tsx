@@ -82,7 +82,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === 't') {
+      // Don't trigger theme toggle if user is typing in an input field
+      const activeElement = document.activeElement
+      const isInputFocused = activeElement && (
+        activeElement.tagName === 'INPUT' || 
+        activeElement.tagName === 'TEXTAREA' ||
+        (activeElement as HTMLElement).contentEditable === 'true'
+      )
+      
+      if (event.key === 't' && !isInputFocused) {
         setTheme(theme === "light" ? "dark" : "light")
       }
     }

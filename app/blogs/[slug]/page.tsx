@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getBlogSlugs, getBlogData } from '@/lib/blogs'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
@@ -10,34 +12,44 @@ interface PageProps {
   }
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return getBlogSlugs().map((slug) => ({ slug }))
 }
 
-export function generateMetadata({ params }: PageProps) {
-  const { title } = getBlogData(params.slug)
+export async function generateMetadata({ params }: PageProps) {
+  const resolvedParams = await params
+  const { title } = getBlogData(resolvedParams.slug)
   return {
     title,
     description: `${title} - Blog post by Jake Bodea`,
   }
 }
 
-export default function BlogPostPage({ params }: PageProps) {
-  const { title, date, content } = getBlogData(params.slug)
+export default async function BlogPostPage({ params }: PageProps) {
+  const resolvedParams = await params
+  const { title, date, content } = getBlogData(resolvedParams.slug)
 
   return (
     <div className="min-h-full">
       <div className="container mx-auto max-w-3xl px-6 py-8">
+        <Link 
+          href="/blogs" 
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 group"
+        >
+          <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+          <span className="font-sans text-sm">Back to Blogs</span>
+        </Link>
+        
         <article className="prose prose-neutral dark:prose-invert max-w-none">
           <h1 className="font-serif font-light text-4xl md:text-5xl text-foreground mb-2">
             {title}
           </h1>
           <p className="text-sm text-muted-foreground mb-8 font-sans">
-            {new Date(date).toLocaleDateString(undefined, {
+            {new Date(date + 'T00:00:00').toLocaleDateString(undefined, {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
-            })} | By Jake Bodea
+            })} | Authored by Jake Bodea
           </p>
           <ReactMarkdown
             remarkPlugins={[remarkGfm as any]}
@@ -115,6 +127,24 @@ export default function BlogPostPage({ params }: PageProps) {
                 <del
                   {...props}
                   className={cn("font-sans", className)}
+                />
+              ),
+              a: ({ className, ...props }: any) => (
+                <a
+                  {...props}
+                  className={cn("text-primary hover:text-primary/80 hover:underline transition-colors", className)}
+                />
+              ),
+              ul: ({ className, ...props }: any) => (
+                <ul
+                  {...props}
+                  className={cn("font-sans list-disc list-inside space-y-1 my-4", className)}
+                />
+              ),
+              ol: ({ className, ...props }: any) => (
+                <ol
+                  {...props}
+                  className={cn("font-sans list-decimal list-inside space-y-1 my-4", className)}
                 />
               ),
             }}

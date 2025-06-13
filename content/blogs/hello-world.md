@@ -1,11 +1,11 @@
 # Hello World
-2025-06-13
+2025-06-12
 
 This is a **hello world** post demonstrating _markdown_ rendering.
 
 ## Features
 
-- Headers
+- Headers (see above, duh)
 - *Italics*
 - **Bold**
 - ~~Strikethrough~~
