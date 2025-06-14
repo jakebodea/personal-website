@@ -9,6 +9,7 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeMathjax from 'rehype-mathjax'
 import { CodeBlock } from '@/components/ui/code-block'
+import { CopyMarkdownButton } from '@/components/ui/copy-markdown-button'
 
 interface PageProps {
   params: {
@@ -39,13 +40,16 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <div className="min-h-full">
       <div className="container mx-auto max-w-3xl px-6 py-8">
-        <Link 
-          href="/blogs" 
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 group"
-        >
-          <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="font-sans text-sm">Back to Blogs</span>
-        </Link>
+        <div className="flex justify-between items-center mb-6">
+          <Link 
+            href="/blogs" 
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+          >
+            <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+            <span className="font-sans text-sm">Back to Blogs</span>
+          </Link>
+          <CopyMarkdownButton content={content} />
+        </div>
         
         <article className="prose prose-neutral dark:prose-invert max-w-none">
           <h1 className="font-serif font-light text-4xl md:text-5xl text-foreground mb-2">

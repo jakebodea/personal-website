@@ -1,7 +1,7 @@
 # Complete Markdown Formatting Showcase
 2025-06-04
 
-This markdown file includes **every major formatting option** available in standard Markdown syntax.
+Ok so I lied in the "no GPT-slop" toast... this blog post is actually written by ChatGPT but curated/edited by me. I was using this  markdown file in development to make sure I include **every major formatting option** available in standard Markdown syntax for future blogs. 
 
 ---
 
@@ -114,7 +114,7 @@ print("heyyyy world")
 
 ---
 
-## 11. Escaping Characters
+## 10. Escaping Characters
 
 Use a backslash to escape Markdown characters:
 \*not italic\*
@@ -123,12 +123,9 @@ Use a backslash to escape Markdown characters:
 
 ---
 
-## 13. LaTeX
+## 11. LaTeX
 
 Here's some example LaTeX content: 
 
 $$ 3x - 4y = 10z $$ 
 
---- 
-
-**End of Markdown Formatting Showcase**

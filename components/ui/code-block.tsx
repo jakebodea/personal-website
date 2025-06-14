@@ -36,7 +36,12 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" onClick={handleCopy}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleCopy}
+                className="text-muted-foreground hover:text-foreground hover:bg-[#D5DDDF] active:bg-[#96AAAE] dark:hover:bg-accent/50 dark:active:bg-accent/70"
+              >
                 {isCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               </Button>
             </TooltipTrigger>
