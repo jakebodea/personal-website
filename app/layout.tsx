@@ -1,12 +1,13 @@
 import { SidebarProvider } from "@/components/ui/sidebar"
 import "./globals.css"
-import { ThemeProvider } from "@/components/providers/theme-provider"
+import { ThemeProvider } from "@/components/providers/ThemeProvider"
 import { Toaster } from "@/components/ui/sonner"
 import { SiteToast } from "@/components/site-toast"
 import Script from 'next/script'
 import { Montserrat, Instrument_Serif } from 'next/font/google'
+import dynamic from "next/dynamic"
 
-import { Sidebar } from '@/components/layout/Sidebar'
+const Sidebar = dynamic(() => import('@/components/layout/Sidebar').then(mod => mod.Sidebar), { ssr: false })
 
 const montserrat = Montserrat({
   subsets: ['latin'],

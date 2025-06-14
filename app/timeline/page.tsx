@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Timeline from "@/components/Timeline";
-import { timelineItems } from "@/content/timeline";
+import { timelineItems } from "@/content/timeline-data";
 import TimelineHeader from "./components/TimelineHeader";
 
 export const metadata = {

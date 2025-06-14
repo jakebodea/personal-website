@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SidebarGroup, SidebarMenuButton } from "@/components/ui/sidebar";
-import { sidebarData } from "@/content/sidebar";
+import { sidebarData } from "@/content/sidebar-data";
 
 export function SidebarNavigation() {
     return (
