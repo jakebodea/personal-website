@@ -2,7 +2,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import "./globals.css"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
 import { Toaster } from "@/components/ui/sonner"
-import { SiteToast } from "@/components/site-toast"
+import { GPTSlopToast } from "@/components/GPTSlopToast"
 import Script from 'next/script'
 import { Montserrat, Instrument_Serif } from 'next/font/google'
 // We can't dynamically import a client component with ssr: false in a server component,
@@ -73,7 +73,7 @@ export default function RootLayout({
             </div>
           </SidebarProvider>
           <Toaster />
-          <SiteToast />
+          <GPTSlopToast />
         </ThemeProvider>
       </body>
       <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />

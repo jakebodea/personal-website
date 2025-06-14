@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { toast } from "sonner";
 
-export function SiteToast() {
+export function GPTSlopToast() {
   const isFirstRender = useRef(true);
 
   useEffect(() => {

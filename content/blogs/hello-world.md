@@ -1,6 +1,7 @@
 ---
 title: "Hello World"
 date: "2025-06-13"
+description: "Was a test case but decided to leave it in"
 ---
 
 Ok so I lied in the "no GPT-slop" toast... this blog post is actually written by ChatGPT but curated/edited by me. I was using this  markdown file in development to make sure I include **every major formatting option** available in standard Markdown syntax for future blogs. 

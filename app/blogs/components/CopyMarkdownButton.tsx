@@ -36,8 +36,7 @@ export function CopyMarkdownButton({ content, className }: CopyMarkdownButtonPro
             size="icon"
             className={cn(
               'text-muted-foreground hover:text-foreground',
-              'hover:bg-[#D5DDDF] active:bg-[#96AAAE]',
-              'dark:hover:bg-accent/50 dark:active:bg-accent/70',
+              'hover:bg-muted/20 active:bg-muted/50',
               className
             )}
           >

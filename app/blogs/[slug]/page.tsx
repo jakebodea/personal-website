@@ -9,7 +9,7 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeMathjax from 'rehype-mathjax'
 import { CodeBlock } from '@/components/ui/code-block'
-import { CopyMarkdownButton } from '@/components/ui/copy-markdown-button'
+import { CopyMarkdownButton } from '@/app/blogs/components/CopyMarkdownButton'
 
 interface PageProps {
   params: {
@@ -35,7 +35,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const { title, date, content } = getBlogData(resolvedParams.slug)
 
   // Check if content has footnotes
-  const hasFootnotes = content.includes('[^') && content.includes(']:')
+  // const hasFootnotes = content.includes('[^') && content.includes(']:')
 
   return (
     <div className="min-h-full">
@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   <h1
                     {...props}
                     className={cn(
-                      "font-serif text-3xl md:text-4xl lg:text-5xl font-light mt-12 mb-6 first:mt-0 border-b border-border pb-2",
+                      "font-serif text-3xl md:text-4xl lg:text-5xl font-light mt-12 mb-6 first:mt-0",
                       className
                     )}
                   />
@@ -82,7 +82,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   <h2
                     {...props}
                     className={cn(
-                      "font-serif text-2xl md:text-3xl lg:text-4xl font-light mt-10 mb-4 border-b border-border pb-2",
+                      "font-serif text-2xl md:text-3xl lg:text-4xl font-light mt-10 mb-4",
                       className
                     )}
                   />

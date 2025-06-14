@@ -6,6 +6,7 @@ export interface BlogMeta {
   slug: string
   title: string
   date: string
+  description: string
 }
 
 export interface BlogData extends BlogMeta {
@@ -28,13 +29,15 @@ function parseBlogFile(filePath: string): Omit<BlogData, 'slug'> {
 
     const title = data.title || 'Untitled Post'
     const date = data.date || new Date().toISOString().split('T')[0]
+    const description = data.description || 'No description provided'
 
-    return { title, date, content: content.trim() }
+    return { title, date, description, content: content.trim() }
   } catch (error) {
     console.error(`Error parsing blog file ${filePath}:`, error)
     return { 
       title: 'Error Loading Post', 
       date: new Date().toISOString().split('T')[0], 
+      description: 'Error loading post',
       content: 'There was an error loading this blog post.' 
     }
   }
@@ -42,8 +45,8 @@ function parseBlogFile(filePath: string): Omit<BlogData, 'slug'> {
 
 export function getBlogData(slug: string): BlogData {
   const fullPath = path.join(BLOGS_DIR, `${slug}.md`)
-  const { title, date, content } = parseBlogFile(fullPath)
-  return { slug, title, date, content }
+  const { title, date, description, content } = parseBlogFile(fullPath)
+  return { slug, title, date, description, content }
 }
 
 export function getAllBlogs(): BlogData[] {

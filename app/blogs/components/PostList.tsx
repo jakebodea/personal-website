@@ -14,16 +14,21 @@ export default function PostList({ posts, searchQuery }: PostListProps) {
             {posts.length > 0 ? (
                 posts.map((post) => (
                     <li key={post.slug}>
-                        <Link href={`/blogs/${post.slug}`} className="group block">
-                            <h2 className="text-2xl font-serif text-primary group-hover:text-primary/80 group-hover:underline mb-1 transition-colors">
-                                {post.title}
-                            </h2>
+                        <Link href={`/blogs/${post.slug}`} className="group block hover:bg-muted/20 rounded-lg p-4 transition-colors">
+                            <div className="flex items-baseline justify-between mb-2">
+                                <h2 className="text-2xl font-serif text-primary group-hover:text-primary/80 transition-colors">
+                                    {post.title}
+                                </h2>
+                                <p className="text-sm text-muted-foreground font-sans">
+                                    {new Date(post.date + 'T00:00:00').toLocaleDateString(undefined, {
+                                        year: 'numeric',
+                                        month: 'long', 
+                                        day: 'numeric',
+                                    })}
+                                </p>
+                            </div>
                             <p className="text-sm text-muted-foreground font-sans">
-                                {new Date(post.date + 'T00:00:00').toLocaleDateString(undefined, {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                })}
+                                {post.description}
                             </p>
                         </Link>
                     </li>

@@ -17,7 +17,7 @@ export function SidebarConnect() {
                     className="block w-full"
                     key={item.url}
                 >
-                    <SidebarMenuButton size="lg" className="w-full justify-start gap-3 px-3 py-2.5 hover:bg-[#D5DDDF] active:bg-[#96AAAE] dark:hover:bg-accent/50 dark:active:bg-accent/70 transition-colors group">
+                    <SidebarMenuButton size="lg" className="w-full justify-start gap-3 px-3 py-2.5 hover:bg-muted/20 active:bg-muted/50 transition-colors group">
                         <span className="text-base">{item.icon}</span>
                         <span className="text-foreground font-medium group-hover:text-foreground transition-colors">{item.title}</span>
                         <ArrowUpRight className="ml-auto size-4 text-muted-foreground/60 group-hover:text-foreground transition-colors" />
