@@ -21,16 +21,25 @@ function getBlogSlugs(): string[] {
 }
 
 function parseBlogFile(filePath: string): Omit<BlogData, 'slug'> {
-  const raw = fs.readFileSync(filePath, 'utf8')
-  const lines = raw.split(/\r?\n/)
+  try {
+    const raw = fs.readFileSync(filePath, 'utf8')
+    const lines = raw.split(/\r?\n/)
 
-  const titleLine = lines[0] || ''
-  const dateLine = lines[1] || ''
-  const title = titleLine.replace(/^#\s*/, '').trim()
-  const date = dateLine.trim()
-  const content = lines.slice(2).join('\n').trim()
+    const titleLine = lines[0] || ''
+    const dateLine = lines[1] || ''
+    const title = titleLine.replace(/^#\s*/, '').trim()
+    const date = dateLine.trim()
+    const content = lines.slice(2).join('\n').trim()
 
-  return { title, date, content }
+    return { title, date, content }
+  } catch (error) {
+    console.error(`Error parsing blog file ${filePath}:`, error)
+    return { 
+      title: 'Error Loading Post', 
+      date: new Date().toISOString().split('T')[0], 
+      content: 'There was an error loading this blog post.' 
+    }
+  }
 }
 
 export function getBlogData(slug: string): BlogData {

@@ -110,6 +110,90 @@
   .dark [data-sonner-toast] button[data-close-button] {
     color: inherit !important;
   }
+
+  /* Enhanced markdown content styling */
+  .markdown-content ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+  }
+
+  .markdown-content ul ul {
+    list-style-type: circle;
+    margin-top: 0.5rem;
+  }
+
+  .markdown-content ul ul ul {
+    list-style-type: square;
+  }
+
+  .markdown-content ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+  }
+
+  .markdown-content ol ol {
+    list-style-type: lower-alpha;
+    margin-top: 0.5rem;
+  }
+
+  .markdown-content ol ol ol {
+    list-style-type: lower-roman;
+  }
+
+  /* Enhanced table styling */
+  .markdown-content table {
+    border-spacing: 0;
+    width: 100%;
+  }
+
+  .markdown-content th {
+    font-weight: 600;
+    background-color: hsl(var(--muted) / 0.5);
+  }
+
+  .markdown-content tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Enhanced blockquote styling */
+  .markdown-content blockquote {
+    position: relative;
+  }
+
+  .markdown-content blockquote::before {
+    position: absolute;
+    left: -0.5rem;
+    top: -0.25rem;
+    font-size: 3rem;
+    color: hsl(var(--primary) / 0.3);
+    font-family: serif;
+    line-height: 1;
+  }
+
+  /* Code block improvements */
+  .markdown-content pre {
+    position: relative;
+  }
+
+  .markdown-content pre:hover {
+    box-shadow: 0 4px 12px hsl(var(--primary) / 0.1);
+  }
+
+  /* Smooth transitions for interactive elements */
+  .markdown-content a,
+  .markdown-content code,
+  .markdown-content pre {
+    transition: all 0.2s ease-in-out;
+  }
+
+  .rc-tooltip-content {
+    @apply z-50;
+  }
+}
+
+.custom-blockquote p:before,
+.custom-blockquote p:after {
+  content: none;
 }
 
 @layer base {
