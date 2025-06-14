@@ -70,9 +70,9 @@
   }
 
   [data-sonner-toast][data-type="success"] {
-    background: #944454 !important;
-    color: #FDF7F9 !important;
-    border: 2px solid #944454 !important;
+    background: #E4E3D4 !important;
+    color: #2C2C2C !important;
+    border: 2px solid #E4E3D4 !important;
   }
 
   [data-sonner-toast][data-type="error"] {
@@ -89,11 +89,11 @@
 
   /* Dark mode specific enhancements */
   .dark [data-sonner-toast][data-type="success"] {
-    background: rgba(148, 68, 84, 0.18) !important;
-    color: #F3DAE0 !important;
-    border: 2px solid rgba(148, 68, 84, 0.4) !important;
+    background: rgba(228, 227, 212, 0.18) !important;
+    color: #E4E3D4 !important;
+    border: 2px solid rgba(228, 227, 212, 0.4) !important;
     backdrop-filter: blur(12px) !important;
-    box-shadow: 0 0 20px rgba(148, 68, 84, 0.3) !important;
+    box-shadow: 0 0 20px rgba(228, 227, 212, 0.3) !important;
   }
 
   .dark [data-sonner-toast][data-type="error"] {
