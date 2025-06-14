@@ -5,9 +5,9 @@ import { Toaster } from "@/components/ui/sonner"
 import { SiteToast } from "@/components/site-toast"
 import Script from 'next/script'
 import { Montserrat, Instrument_Serif } from 'next/font/google'
-import dynamic from "next/dynamic"
-
-const Sidebar = dynamic(() => import('@/components/layout/Sidebar').then(mod => mod.Sidebar), { ssr: false })
+// We can't dynamically import a client component with ssr: false in a server component,
+// so we've created a wrapper component to handle the client-side-only import of the Sidebar.
+import SidebarWrapper from "@/components/layout/SidebarWrapper"
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -66,7 +66,7 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <div className="flex h-screen w-screen scrollbar-thin bg-background">
-              <Sidebar />
+              <SidebarWrapper />
               <div className="flex-1 p-4 overflow-hidden min-h-0">
                 <main className="h-full overflow-auto scrollbar-thin rounded-2xl border border-border/20 shadow-lg bg-gradient-to-br from-[#FBFAF4] to-[#EAEEEF] dark:bg-gradient-to-br dark:from-background dark:to-contrast-lighter">{children}</main>
               </div>
