@@ -12,27 +12,25 @@ import { CodeBlock } from '@/components/ui/code-block'
 import { CopyMarkdownButton } from '@/app/blogs/components/CopyMarkdownButton'
 
 interface PageProps {
-  params: {
-    slug: string
-  }
+  slug: string
 }
 
 export async function generateStaticParams() {
   return getBlogSlugs().map((slug) => ({ slug }))
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const resolvedParams = await params
-  const { title } = getBlogData(resolvedParams.slug)
+export async function generateMetadata({ params }: { params: Promise<PageProps> }) {
+  const { slug } = await params
+  const { title } = getBlogData(slug)
   return {
     title,
     description: `${title} - Blog post by Jake Bodea`,
   }
 }
 
-export default async function BlogPostPage({ params }: PageProps) {
-  const resolvedParams = await params
-  const { title, date, content } = getBlogData(resolvedParams.slug)
+export default async function BlogPostPage({ params }: { params: Promise<PageProps> }) {
+  const { slug } = await params
+  const { title, date, content } = getBlogData(slug)
 
   // Check if content has footnotes
   // const hasFootnotes = content.includes('[^') && content.includes(']:')

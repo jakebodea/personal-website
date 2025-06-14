@@ -1,10 +1,4 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import Timeline from "@/app/timeline/components/Timeline";
 import { timelineItems } from "@/content/timeline-data";
 import TimelineHeader from "./components/TimelineHeader";

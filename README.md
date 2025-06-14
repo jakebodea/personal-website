@@ -21,7 +21,7 @@ The project follows a structure that separates concerns while taking advantage o
 
 -   `app/`: Contains all the routes and pages for the application. Each folder represents a URL segment.
     -   `app/layout.tsx`: The root layout of the application.
-    -   `app/page.tsx`: The entry point for the homepage.
+    -   `app/(home)/page.tsx`: The entry point for the homepage.
     -   `app/(routes)`: Subdirectories for each page (e.g., `blogs`, `projects`), containing their specific components and logic.
 -   `components/`: Contains reusable components shared across the application.
     -   `components/ui`: UI primitives from Shadcn UI.

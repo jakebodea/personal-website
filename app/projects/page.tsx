@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import ComingSoon from "./components/ComingSoon";
 import ProjectHeader from "./components/ProjectHeader";
 

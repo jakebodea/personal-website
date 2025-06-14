@@ -20,7 +20,7 @@ export default function AboutSection(): React.ReactNode {
                     </h2>
                     <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                         <p>
-                            I specialize in building intelligent applications, leveraging a strong foundation in{" "}
+                            In my undergrad, I majored in Math with minors in Computer Science, 
                             <EmphasisText>Python</EmphasisText>,{" "}
                             <EmphasisText>SQL</EmphasisText>, and{" "}
                             <EmphasisText>JavaScript / TypeScript</EmphasisText>.
