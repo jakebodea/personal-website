@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import Timeline from "@/components/Timeline";
+import Timeline from "@/app/timeline/components/Timeline";
 import { timelineItems } from "@/content/timeline-data";
 import TimelineHeader from "./components/TimelineHeader";
 

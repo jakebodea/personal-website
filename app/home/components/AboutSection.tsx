@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import EmphasisText from "@/components/text/EmphasisText";
 
 export default function AboutSection(): React.ReactNode {
     return (
@@ -20,14 +21,14 @@ export default function AboutSection(): React.ReactNode {
                     <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                         <p>
                             I specialize in building intelligent applications, leveraging a strong foundation in{" "}
-                            <span className="text-foreground font-medium bg-accent/20 px-2 py-0.5 rounded">Python</span>,{" "}
-                            <span className="text-foreground font-medium bg-accent/20 px-2 py-0.5 rounded">SQL</span>, and{" "}
-                            <span className="text-foreground font-medium bg-accent/20 px-2 py-0.5 rounded">JavaScript/TypeScript</span>.
+                            <EmphasisText>Python</EmphasisText>,{" "}
+                            <EmphasisText>SQL</EmphasisText>, and{" "}
+                            <EmphasisText>JavaScript / TypeScript</EmphasisText>.
                             My experience spans the full stack, from crafting user-friendly web interfaces to developing robust backend systems and native iOS applications.
                         </p>
                         <p>
                             I thrive on bringing ideas to life through code, with a particular passion for the rapidly evolving field of{" "}
-                            <span className="text-primary font-medium">Artificial Intelligence</span>. My unique background in mathematics and music gives me a distinctive perspective on pattern recognition and algorithmic thinking.
+                            <EmphasisText>Artificial Intelligence</EmphasisText>. My unique background in mathematics and music gives me a distinctive perspective on pattern recognition and algorithmic thinking.
                         </p>
                     </div>
                 </CardContent>
