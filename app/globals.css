@@ -229,7 +229,7 @@
     --accent-foreground: 0 0% 100%;
 
     /* Muted state (light Peacock tint) */
-    --muted: 30 12% 45%; /* Warm gray (#7B756F) */
+    --muted: 30 12% 75%; /* Warm gray (#7B756F) */
     --muted-foreground: 193 25% 30%;
 
     /* Light contrast colors from palette - more contrast */
