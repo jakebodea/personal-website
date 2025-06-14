@@ -196,6 +196,12 @@
   content: none;
 }
 
+.katex-container .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.5rem;
+}
+
 @layer base {
   :root {
     /* Perplexity core palette */

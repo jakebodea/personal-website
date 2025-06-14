@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { ArrowLeft, CheckSquare, Square } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import rehypeMathjax from 'rehype-mathjax'
 import { CodeBlock } from '@/components/ui/code-block'
 
 interface PageProps {
@@ -58,7 +60,8 @@ export default async function BlogPostPage({ params }: PageProps) {
           </p>
           <div className="markdown-content">
             <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[remarkGfm, remarkMath]}
+              rehypePlugins={[rehypeMathjax as any]}
               components={{
                 // Headings
                 h1: ({ className, node, ...props }: any) => (
@@ -239,7 +242,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 img: ({ className, node, ...props }: any) => (
                   <img
                     {...props}
-                    className={cn("my-8 rounded-lg max-w-full h-auto shadow-md border", className)}
+                    className={cn("my-8 rounded-lg h-auto shadow-md border", className)}
                   />
                 ),
                 

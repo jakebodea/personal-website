@@ -129,6 +129,6 @@ Here's some example LaTeX content:
 
 $$ 3x - 4y = 10z $$ 
 
--- 
+--- 
 
 **End of Markdown Formatting Showcase**

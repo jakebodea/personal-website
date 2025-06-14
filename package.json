@@ -27,7 +27,9 @@
     "react-markdown": "^8.0.7",
     "react-syntax-highlighter": "^15.6.1",
     "rehype-highlight": "^5.0.2",
+    "rehype-mathjax": "^7.1.0",
     "remark-gfm": "^3.0.1",
+    "remark-math": "^6.0.0",
     "sonner": "^2.0.5",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
