@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import matter from 'gray-matter'
 
 export interface BlogMeta {
   slug: string
@@ -23,15 +24,12 @@ function getBlogSlugs(): string[] {
 function parseBlogFile(filePath: string): Omit<BlogData, 'slug'> {
   try {
     const raw = fs.readFileSync(filePath, 'utf8')
-    const lines = raw.split(/\r?\n/)
+    const { data, content } = matter(raw)
 
-    const titleLine = lines[0] || ''
-    const dateLine = lines[1] || ''
-    const title = titleLine.replace(/^#\s*/, '').trim()
-    const date = dateLine.trim()
-    const content = lines.slice(2).join('\n').trim()
+    const title = data.title || 'Untitled Post'
+    const date = data.date || new Date().toISOString().split('T')[0]
 
-    return { title, date, content }
+    return { title, date, content: content.trim() }
   } catch (error) {
     console.error(`Error parsing blog file ${filePath}:`, error)
     return { 

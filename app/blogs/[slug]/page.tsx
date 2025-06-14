@@ -57,7 +57,8 @@ export default async function BlogPostPage({ params }: PageProps) {
           </h1>
           <p className="text-sm text-muted-foreground mb-8 font-sans">
             {new Date(date + 'T00:00:00').toLocaleDateString(undefined, {
-              year: 'numeric',
+              weekday: 'long',
+              year: 'numeric', 
               month: 'long',
               day: 'numeric',
             })} | Authored by Jake Bodea
