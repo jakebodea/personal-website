@@ -7,7 +7,7 @@ import Script from 'next/script'
 import { Montserrat, Instrument_Serif } from 'next/font/google'
 // We can't dynamically import a client component with ssr: false in a server component,
 // so we've created a wrapper component to handle the client-side-only import of the Sidebar.
-import SidebarWrapper from "@/components/layout/SidebarWrapper"
+import { Sidebar } from "@/components/layout/Sidebar"
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -66,7 +66,7 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <div className="flex h-screen w-screen scrollbar-thin bg-background">
-              <SidebarWrapper />
+              <Sidebar />
               <div className="flex-1 p-4 overflow-hidden min-h-0">
                 <main className="h-full overflow-auto scrollbar-thin rounded-2xl border border-border/20 shadow-lg bg-gradient-to-br from-[#FBFAF4] to-[#EAEEEF] dark:bg-gradient-to-br dark:from-background dark:to-contrast-lighter">{children}</main>
               </div>

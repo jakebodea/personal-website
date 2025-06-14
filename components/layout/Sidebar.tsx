@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation"
 import {
   Sidebar as SidebarPrimitive,
   SidebarContent,
+  SidebarGroup,
+  SidebarMenuSkeleton,
 } from "@/components/ui/sidebar"
 
 import { useTheme } from "next-themes"
@@ -58,7 +60,30 @@ export function Sidebar({ ...props }: React.ComponentProps<typeof SidebarPrimiti
   }, [theme, setTheme]); // Add setTheme to the dependency array
 
   if (!mounted) {
-    return null // Return null on server-side and first render on client-side
+    return (
+      <SidebarPrimitive variant="inset" {...props} className="border-r-0">
+        <SidebarHeader />
+        <SidebarContent>
+          <SidebarGroup className="px-3 py-4">
+              <div className="mb-2 px-3">
+                  <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Navigation</h2>
+              </div>
+              {sidebarData.pages.map((item) => (
+                  <SidebarMenuSkeleton key={item.url} />
+              ))}
+          </SidebarGroup>
+          <SidebarGroup className="px-3 py-4">
+              <div className="mb-2 px-3">
+                  <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Connect</h2>
+              </div>
+              {sidebarData.contact.map((item) => (
+                  <SidebarMenuSkeleton key={item.url} />
+              ))}
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter />
+      </SidebarPrimitive>
+    )
   }
 
   return (
