@@ -1,12 +1,12 @@
 import { SidebarProvider } from "@/components/ui/sidebar"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/providers/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { SiteToast } from "@/components/site-toast"
 import Script from 'next/script'
 import { Montserrat, Instrument_Serif } from 'next/font/google'
 
-import { SidebarWrapper } from '@/components/sidebar-wrapper'
+import { Sidebar } from '@/components/layout/Sidebar'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -65,7 +65,7 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <div className="flex h-screen w-screen scrollbar-thin bg-background">
-              <SidebarWrapper />
+              <Sidebar />
               <div className="flex-1 p-4 overflow-hidden min-h-0">
                 <main className="h-full overflow-auto scrollbar-thin rounded-2xl border border-border/20 shadow-lg bg-gradient-to-br from-[#FBFAF4] to-[#EAEEEF] dark:bg-gradient-to-br dark:from-background dark:to-contrast-lighter">{children}</main>
               </div>
