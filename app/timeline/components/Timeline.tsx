@@ -66,7 +66,7 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
                 </div>
 
                 {/* Header with Logo and Title */}
-                <div className={`flex items-start gap-4 mb-4 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
+                <div className={`flex items-center gap-4 mb-4 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
                   <div className="flex-shrink-0">
                     <div className="w-16 h-16 rounded-xl bg-white border-2 border-border shadow-md">
                       <Image
@@ -84,7 +84,7 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
                       {item.title}
                     </h3>
                     <div className={`flex items-center text-primary/70 ${isLeft ? 'justify-start' : 'justify-end'}`}>
-                      <span className="font-serif text-base leading-none">{item.location}</span>
+                      <span className="font-serif text-xl leading-none">{item.location}</span>
                     </div>
                   </div>
                 </div>
