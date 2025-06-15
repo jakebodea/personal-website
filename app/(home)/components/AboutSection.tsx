@@ -20,15 +20,58 @@ export default function AboutSection(): React.ReactNode {
                     </h2>
                     <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                         <p>
-                            In my undergrad, I majored in Math with minors in Computer Science, 
-                            <EmphasisText>Python</EmphasisText>,{" "}
-                            <EmphasisText>SQL</EmphasisText>, and{" "}
-                            <EmphasisText>JavaScript / TypeScript</EmphasisText>.
-                            My experience spans the full stack, from crafting user-friendly web interfaces to developing robust backend systems and native iOS applications.
+                            I build AI systems that solve real problems –– be it saving people hours of work, 
+                            catching issues before they become expensive mistakes, or bringing in new revenue. 
+                            While my primary focus is on <EmphasisText>AI/ML engineering</EmphasisText> (whichever is 
+                            necessary for the project at hand), I also emphasize <EmphasisText>full-stack development</EmphasisText> 
+                            because I believe that the best AI is the kind that actually gets used –– whether or not people know it's AI.
                         </p>
                         <p>
-                            I thrive on bringing ideas to life through code, with a particular passion for the rapidly evolving field of{" "}
-                            <EmphasisText>Artificial Intelligence</EmphasisText>. My unique background in mathematics and music gives me a distinctive perspective on pattern recognition and algorithmic thinking.
+                            Some keyword spam (sorry):
+                            <ul className="list-disc pl-5">
+                                <li>
+                                    My tech stack is always evolving, but my current language stack is <EmphasisText>Python, SQL, JavaScript, and TypeScript.</EmphasisText>
+                                </li>
+                                <li>
+                                    I&apos;ve been working on mastering some more low-level languages like <EmphasisText>C++ and Rust.</EmphasisText>
+                                </li>
+                                <li>
+                                    My current go-to systems and frameworks for frontend are <EmphasisText>React, Next.js</EmphasisText>, Tailwind CSS, and Shadcn UI.
+                                </li>
+                                <li>
+                                    For my backend, I use FastAPI.
+                                </li>
+                                <li>
+                                    I&apos;ve worked with databases like PostgreSQL, Databricks, and MS SQL.
+                                </li>
+                                <li>
+                                    I use Docker for containerization.
+                                </li>
+                                <li>
+                                    I have experience with cloud platforms such as AWS, GCP, and Azure.
+                                </li>
+                                <li>
+                                    I&apos;ve worked with both GitHub and Bitbucket for version control and building CI/CD pipelines.
+                                </li>
+                                <li>
+                                    As far as AI/ML APIs, I&apos;ve worked with OpenAI, Anthropic, Google, and Hugging Face.
+                                </li>
+                                <li>
+                                    Model development is obviously in <EmphasisText>PyTorch</EmphasisText> :)
+                                </li>
+                            </ul>
+                        </p>
+                        <p>
+                            More on traditional <EmphasisText>Machine Learning:</EmphasisText> My foundations are rooted in my academic background.
+                            I&apos;ve been working towards an AI graduate certificate at <EmphasisText>Stanford,</EmphasisText> maintaining a {" "}
+                            <EmphasisText>4.0 GPA</EmphasisText> through some of the most challenging courses in the field. I&apos;ve also 
+                            completed an undergraduate degree in math, CS, and business data analytics (and music lol), where I graduated as the 
+                            <EmphasisText>outstanding Mathematics graduate.</EmphasisText> This background enables me to approach ML challenges with 
+                            deep fundamentals understanding, leading to strong models that actually make an impact on the business.
+                        </p>
+                        <p>
+                            Outside my day job, my non-extracurricular time is spent either <EmphasisText>consulting</EmphasisText> local businesses for AI solutions, 
+                            or as a <EmphasisText>course facilitator</EmphasisText> for Stanford&apos;s Machine Learning and AI Principles courses. 
                         </p>
                     </div>
                 </CardContent>

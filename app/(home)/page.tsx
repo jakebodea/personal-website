@@ -15,7 +15,7 @@ export default function HomePage(): React.ReactNode {
         {/* Main Content Grid */}
         <div className="grid gap-8 md:gap-12">
           <AboutSection />
-          <InfoGrid />
+          {/* <InfoGrid /> */}
           <CtaSection />
         </div>
       </div>

@@ -40,7 +40,8 @@ export default function HeroSection(): React.ReactNode {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          Building cool stuff that solves real problems, from algorithms to web & iOS apps... and some totally unnecessary but fun side projects too!
+          {/* Building cool stuff that both look good and solve real problems, from algorithms to web & iOS apps... and some totally unnecessary but fun side projects too! */}
+          Great work that doesn&apos;t look great isn&apos;t truly great yet. This mantra guides my projects, whether it&apos;s designing user interfaces, developing models, or tidying up codebases.
         </motion.p>
       </div>
     </motion.div>

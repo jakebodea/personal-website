@@ -10,7 +10,7 @@ export function GPTSlopToast() {
     if (isFirstRender.current) {
       setTimeout(() => {
         toast.success("You have my word  🤝", {
-          description: "No GPT-slop on this website. Every word is mine!",
+          description: "No GPT-slop on this website. Every word is mine –– including emdashes!",
           duration: 8000,
         });
       }, 1000);
