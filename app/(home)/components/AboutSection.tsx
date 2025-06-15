@@ -26,41 +26,39 @@ export default function AboutSection(): React.ReactNode {
                             necessary for the project at hand), I also emphasize <EmphasisText>full-stack development</EmphasisText> 
                             because I believe that the best AI is the kind that actually gets used –– whether or not people know it's AI.
                         </p>
-                        <p>
-                            Some keyword spam (sorry):
-                            <ul className="list-disc pl-5">
-                                <li>
-                                    My tech stack is always evolving, but my current language stack is <EmphasisText>Python, SQL, JavaScript, and TypeScript.</EmphasisText>
-                                </li>
-                                <li>
-                                    I&apos;ve been working on mastering some more low-level languages like <EmphasisText>C++ and Rust.</EmphasisText>
-                                </li>
-                                <li>
-                                    My current go-to systems and frameworks for frontend are <EmphasisText>React, Next.js</EmphasisText>, Tailwind CSS, and Shadcn UI.
-                                </li>
-                                <li>
-                                    For my backend, I use FastAPI.
-                                </li>
-                                <li>
-                                    I&apos;ve worked with databases like PostgreSQL, Databricks, and MS SQL.
-                                </li>
-                                <li>
-                                    I use Docker for containerization.
-                                </li>
-                                <li>
-                                    I have experience with cloud platforms such as AWS, GCP, and Azure.
-                                </li>
-                                <li>
-                                    I&apos;ve worked with both GitHub and Bitbucket for version control and building CI/CD pipelines.
-                                </li>
-                                <li>
-                                    As far as AI/ML APIs, I&apos;ve worked with OpenAI, Anthropic, Google, and Hugging Face.
-                                </li>
-                                <li>
-                                    Model development is obviously in <EmphasisText>PyTorch</EmphasisText> :)
-                                </li>
-                            </ul>
-                        </p>
+                        <p>Some keyword spam (sorry):</p>
+                        <ul className="list-disc pl-5">
+                            <li>
+                                My tech stack is always evolving, but my current language stack is <EmphasisText>Python, SQL, JavaScript, and TypeScript.</EmphasisText>
+                            </li>
+                            <li>
+                                I&apos;ve been working on mastering some more low-level languages like <EmphasisText>C++ and Rust.</EmphasisText>
+                            </li>
+                            <li>
+                                My current go-to systems and frameworks for frontend are <EmphasisText>React, Next.js</EmphasisText>, Tailwind CSS, and Shadcn UI.
+                            </li>
+                            <li>
+                                For my backend, I use FastAPI.
+                            </li>
+                            <li>
+                                I&apos;ve worked with databases like PostgreSQL, Databricks, and MS SQL.
+                            </li>
+                            <li>
+                                I use Docker for containerization.
+                            </li>
+                            <li>
+                                I have experience with cloud platforms such as AWS, GCP, and Azure.
+                            </li>
+                            <li>
+                                I&apos;ve worked with both GitHub and Bitbucket for version control and building CI/CD pipelines.
+                            </li>
+                            <li>
+                                As far as AI/ML APIs, I&apos;ve worked with OpenAI, Anthropic, Google, and Hugging Face.
+                            </li>
+                            <li>
+                                Model development is obviously in <EmphasisText>PyTorch</EmphasisText> :)
+                            </li>
+                        </ul>
                         <p>
                             More on traditional <EmphasisText>Machine Learning:</EmphasisText> My foundations are rooted in my academic background.
                             I&apos;ve been working towards an AI graduate certificate at <EmphasisText>Stanford,</EmphasisText> maintaining a {" "}

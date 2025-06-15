@@ -1,4 +1,4 @@
-[
+export const quotesData = [
   {
     "quote": "Everything is computer",
     "author": "Donald Trump"

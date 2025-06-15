@@ -1,22 +1,13 @@
-import fs from 'fs'
-import path from 'path'
+import { quotesData } from '@/content/quotes-data'
 
 export interface QuoteData {
   quote: string
   author: string
 }
 
-const QUOTES_FILE = path.join(process.cwd(), 'content', 'quotes.json')
 
 export function getAllQuotes(): QuoteData[] {
-  try {
-    const raw = fs.readFileSync(QUOTES_FILE, 'utf8')
-    const quotes = JSON.parse(raw) as QuoteData[]
-    return quotes
-  } catch (error) {
-    console.error('Error reading quotes file:', error)
-    return []
-  }
+  return quotesData
 }
 
 export function searchQuotes(query: string): QuoteData[] {
