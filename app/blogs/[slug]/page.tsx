@@ -3,6 +3,7 @@
 import { getBlogSlugs, getBlogData } from '@/lib/blogs'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowLeft, CheckSquare, Square } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -243,9 +244,14 @@ export default async function BlogPostPage({ params }: { params: Promise<PagePro
                 
                 // Images
                 img: ({ className, node, ...props }: any) => (
-                  <img
+                  <Image
                     {...props}
-                    className={cn("my-8 rounded-lg h-auto shadow-md border", className)}
+                    alt={props.alt || "Blog image"}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    style={{ width: '100%', height: 'auto' }}
+                    className={cn("my-8 rounded-lg shadow-md border", className)}
                   />
                 ),
                 

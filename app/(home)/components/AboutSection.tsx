@@ -24,7 +24,7 @@ export default function AboutSection(): React.ReactNode {
                             catching issues before they become expensive mistakes, or bringing in new revenue. 
                             While my primary focus is on <EmphasisText>AI/ML engineering</EmphasisText> (whichever is 
                             necessary for the project at hand), I also emphasize <EmphasisText>full-stack development</EmphasisText> 
-                            because I believe that the best AI is the kind that actually gets used –– whether or not people know it's AI.
+                            because I believe that the best AI is the kind that actually gets used –– whether or not people know it&apos;s AI.
                         </p>
                         <p>Some keyword spam (sorry):</p>
                         <ul className="list-disc pl-5">

@@ -40,7 +40,7 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
           {filteredQuotes.map((quote, index) => (
             <div key={index} className="border-l-4 border-primary/30 pl-6 py-2">
               <blockquote className="text-3xl font-serif font-normal text-muted-foreground mb-2">
-                "{quote.quote}"
+                &ldquo;{quote.quote}&rdquo;
               </blockquote>
               <cite className="text-md font-sans text-muted-foreground font-light">
                 — {quote.author}
@@ -51,7 +51,7 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
           {filteredQuotes.length === 0 && searchQuery && (
             <div className="text-center py-8">
               <p className="text-muted-foreground">
-                No quotes found matching "{searchQuery}"
+                No quotes found matching &ldquo;{searchQuery}&rdquo;
               </p>
             </div>
           )}

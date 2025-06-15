@@ -16,7 +16,7 @@ export default function InfoGrid(): React.ReactNode {
                     <CardContent className="p-6">
                         <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center">
                             <span className="w-1 h-4 bg-accent rounded-full mr-2"></span>
-                            What I'm Building
+                            What I&apos;m Building
                         </h3>
                         <ul className="space-y-3 text-muted-foreground">
                             <li className="flex items-center">
