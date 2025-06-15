@@ -6,7 +6,7 @@ const ProjectHeader = () => (
             Featured Projects
         </h1>
         <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl">
-            A showcase of my technical work, from AI applications to full-stack solutions.
+            A showcase of my technical work.
         </p>
     </div>
 );
