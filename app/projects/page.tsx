@@ -1,19 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import ComingSoon from "./components/ComingSoon";
+import ProjectHeader from "./components/ProjectHeader";
 
 export const metadata = {
   title: 'Projects',
   description: 'Jake Bodea\'s projects'
 }
 
-export default function EventsPage(): React.ReactNode {
+export default function ProjectsPage(): React.ReactNode {
   return (
-    <div className="p-6 h-full">
-      <Card className="w-full h-full flex flex-col">
-        <CardHeader>
-          <CardTitle className="text-primary font-normal">Projects</CardTitle>
-        </CardHeader>
-        <CardContent className="flex-grow overflow-hidden">This page is under construction...</CardContent>
-      </Card>
+    <div className="min-h-full">
+      <div className="container max-w-4xl mx-auto px-6 py-8">
+        {/* Header Section */}
+        <ProjectHeader />
+
+        {/* Coming Soon Content */}
+        <ComingSoon />
+      </div>
     </div>
   )
 }

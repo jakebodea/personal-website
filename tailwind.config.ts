@@ -10,6 +10,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        // Next.js optimized fonts
+        sans: ['var(--font-montserrat)', ...fontFamily.sans],
+        serif: ['var(--font-instrument-serif)', ...fontFamily.serif],
+      },
       fontSize: {
         base: '2rem',
       },
@@ -63,15 +68,17 @@ const config: Config = {
           'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
+        },
+        contrast: {
+          light: 'hsl(var(--contrast-light))',
+          lighter: 'hsl(var(--contrast-lighter))',
+          lightest: 'hsl(var(--contrast-lightest))'
         }
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
-      },
-      fontFamily: {
-        sans: ['var(--font-roboto)', ...fontFamily.sans],
       },
     }
   },

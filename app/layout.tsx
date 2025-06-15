@@ -1,20 +1,27 @@
 import { SidebarProvider } from "@/components/ui/sidebar"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
-import { Roboto } from 'next/font/google'
-import { SiteToast } from "@/components/site-toast"
+import { ThemeProvider } from "@/components/providers/ThemeProvider"
+import { Toaster } from "@/components/ui/sonner"
+import { GPTSlopToast } from "@/components/GPTSlopToast"
 import Script from 'next/script'
+import { Montserrat, Instrument_Serif } from 'next/font/google'
+// We can't dynamically import a client component with ssr: false in a server component,
+// so we've created a wrapper component to handle the client-side-only import of the Sidebar.
+import { Sidebar } from "@/components/layout/Sidebar"
 
-
-const roboto = Roboto({
-  weight: ['100', '300', '400', '500', '700', '900'],
-  style: ['normal', 'italic'],
+const montserrat = Montserrat({
   subsets: ['latin'],
-  variable: '--font-roboto',
+  variable: '--font-montserrat',
+  display: 'swap',
 })
 
-import { SidebarWrapper } from '@/components/sidebar-wrapper'
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  variable: '--font-instrument-serif',
+  weight: ['400'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
 
 export const metadata = {
   title: {
@@ -43,14 +50,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${roboto.variable} font-sans`}>
+    <html lang="en" suppressHydrationWarning className={`${montserrat.variable} ${instrumentSerif.variable} font-sans`}>
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={roboto.className}>
+      <body className={`font-sans`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -58,13 +65,15 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider>
-            <div className="flex h-screen w-screen">
-              <SidebarWrapper />
-              <main className="flex-1">{children}</main>
+            <div className="flex h-screen w-screen scrollbar-thin bg-background">
+              <Sidebar />
+              <div className="flex-1 p-4 overflow-hidden min-h-0">
+                <main className="h-full overflow-auto scrollbar-thin rounded-2xl border border-border/20 shadow-lg bg-gradient-to-br from-[#FBFAF4] to-[#EAEEEF] dark:bg-gradient-to-br dark:from-background dark:to-contrast-lighter">{children}</main>
+              </div>
             </div>
           </SidebarProvider>
           <Toaster />
-          <SiteToast />
+          <GPTSlopToast />
         </ThemeProvider>
       </body>
       <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
