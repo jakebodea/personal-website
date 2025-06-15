@@ -31,7 +31,7 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
       <div className="container mx-auto max-w-3xl px-6 py-8">
         <h1 className="text-4xl md:text-5xl font-serif font-light text-foreground mb-4">Quotes</h1>
         <p className="text-lg text-muted-foreground mb-10 font-light">
-          A collection of quotes and sources that have inspired me thus far
+          A collection of quotes and sources that have inspired me.
         </p>
         
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />

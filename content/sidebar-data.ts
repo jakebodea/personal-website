@@ -23,7 +23,7 @@ export const sidebarData = {
     {
       title: "Quotes",
       url: "/quotes",
-      icon: "💭"
+      icon: "💬"
     }
   ],
   contact: [
