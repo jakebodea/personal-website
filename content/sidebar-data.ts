@@ -19,6 +19,11 @@ export const sidebarData = {
       title: "Blogs",
       url: "/blogs",
       icon: "📝"
+    },
+    {
+      title: "Quotes",
+      url: "/quotes",
+      icon: "💭"
     }
   ],
   contact: [
