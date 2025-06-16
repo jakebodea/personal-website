@@ -6,8 +6,8 @@ export const timelineItems = [
     title: "Machine Learning Engineer",
     location: "TaxRise",
     bullets: [
-      "Built a full-stack internal application that delivers LLM-generated coaching for sales calls, supporting both text-to-text and voice-to-voice modalities—automating what was previously manual manager call reviews",
-      "Developed a backend system that processes over 5,000 daily calls, generating transcripts, summaries, and insights—fully integrated with Salesforce",
+      "Built a full-stack internal application that delivers LLM-generated coaching for sales calls, supporting both text-to-text and voice-to-voice modalities, automating what was previously manual manager call reviews",
+      "Developed a backend system that processes over 5,000 daily calls, generating transcripts, summaries, and insights, with full integration with Salesforce",
       "Created a client-facing, full-stack application for document upload and classification using a custom ML model, also supporting views for internal document requests and matching",
       "Led ML efforts to support Legal by building a compliance and sentiment analysis model for all company calls, with real-time dashboards for analysis and auditability, allowing departments to catch potential issues before external escalation",
       "Designed workflows to automate both inbound and outbound calls via autonomous agents, with support for tool invocation and database integrations"
