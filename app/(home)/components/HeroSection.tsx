@@ -41,7 +41,7 @@ export default function HeroSection(): React.ReactNode {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           {/* Building cool stuff that both look good and solve real problems, from algorithms to web & iOS apps... and some totally unnecessary but fun side projects too! */}
-          {"Build fast, ship fast, and fix fast, but it has to look good throughout. Optimizing every element from the user's perspective, be it interfaces, backends, or models, is key to an end product that's actually useful."}
+          {"Build fast, ship fast, and fix fast, but it has to look good throughout. Optimizing every element from the user's perspective, be it frontend interfaces, backends, or machine learning models, is key to an end product that's actually useful."}
         </motion.p>
       </div>
     </motion.div>
