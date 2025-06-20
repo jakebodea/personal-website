@@ -22,18 +22,28 @@ export default function CtaSection(): React.ReactNode {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
-                            href="https://www.linkedin.com/in/jakebodea/"
+                            href="https://x.com/jakebodea"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
                         >
+                            Connect on X
+                        </a>
+
+                        <a
+                            href="https://www.linkedin.com/in/jakebodea/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-6 py-3 rounded-lg font-medium hover:bg-accent/50 transition-colors"
+                        >
                             Connect on LinkedIn
                         </a>
+                        
                         <a
                             href="https://github.com/jakebodea"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center px-6 py-3 border border-border rounded-lg font-medium hover:bg-accent/50 transition-colors"
+                            className="inline-flex items-center px-6 py-3 rounded-lg font-medium hover:bg-accent/50 transition-colors"
                         >
                             View GitHub
                         </a>
@@ -42,4 +52,4 @@ export default function CtaSection(): React.ReactNode {
             </Card>
         </motion.div>
     )
-} 
+}
