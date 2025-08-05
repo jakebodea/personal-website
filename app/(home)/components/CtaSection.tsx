@@ -27,7 +27,7 @@ export default function CtaSection(): React.ReactNode {
                             rel="noopener noreferrer"
                             className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
                         >
-                            Connect on X
+                            Connect on 𝕏
                         </a>
 
                         <a
