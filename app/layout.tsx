@@ -5,10 +5,9 @@ import { Toaster } from "@/components/ui/sonner"
 import { GPTSlopToast } from "@/components/GPTSlopToast"
 import Script from 'next/script'
 import { Montserrat, Instrument_Serif } from 'next/font/google'
-// We can't dynamically import a client component with ssr: false in a server component,
-// so we've created a wrapper component to handle the client-side-only import of the Sidebar.
 import { Sidebar } from "@/components/layout/Sidebar"
 import { CanvasTrigger } from "../components/layout/CanvasTrigger"
+import { MobileFadeOverlay } from "../components/layout/MobileFadeOverlay"
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -69,9 +68,10 @@ export default function RootLayout({
             <div className="flex h-screen w-screen scrollbar-thin bg-background">
               <Sidebar />
               <div className="flex-1 overflow-hidden min-h-0 flex flex-col">
-                <div className="p-4 h-full min-h-0 flex-1 relative">
+                <div className="md:p-4 h-full min-h-0 flex-1 relative">
                   <CanvasTrigger />
-                  <main className="h-full overflow-auto scrollbar-thin rounded-2xl border border-border/20 shadow-lg bg-gradient-to-br from-[#FBFAF4] to-[#EAEEEF] dark:bg-gradient-to-br dark:from-background dark:to-contrast-lighter">{children}</main>
+                  <MobileFadeOverlay />
+                  <main className="h-full overflow-auto scrollbar-thin pt-12 md:pt-2 md:rounded-2xl md:border md:border-border/20 md:shadow-lg bg-gradient-to-br from-[#FBFAF4] to-[#EAEEEF] dark:bg-gradient-to-br dark:from-background dark:to-contrast-lighter">{children}</main>
                 </div>
               </div>
             </div>
