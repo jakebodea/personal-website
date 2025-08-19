@@ -8,7 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
@@ -95,13 +95,28 @@ const SidebarProvider = React.forwardRef<
         : setOpen((open) => !open)
     }, [isMobile, setOpen, setOpenMobile])
 
-    // Adds a keyboard shortcut to toggle the sidebar.
+    // Adds keyboard shortcuts to toggle the sidebar.
     React.useEffect(() => {
       const handleKeyDown = (event: KeyboardEvent) => {
+        const activeElement = document.activeElement as HTMLElement | null
+        const isInputFocused = !!activeElement && (
+          activeElement.tagName === 'INPUT' ||
+          activeElement.tagName === 'TEXTAREA' ||
+          activeElement.isContentEditable
+        )
+
+        // Cmd/Ctrl + b
         if (
           event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
           (event.metaKey || event.ctrlKey)
         ) {
+          event.preventDefault()
+          toggleSidebar()
+          return
+        }
+
+        // Plain 's'
+        if (event.key === 's' && !isInputFocused) {
           event.preventDefault()
           toggleSidebar()
         }
@@ -205,11 +220,55 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
+            <SheetTitle className="sr-only">Site Menu</SheetTitle>
+            <SheetDescription className="sr-only">Main navigation and links</SheetDescription>
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>
         </Sheet>
       )
     }
+
+    const [sidebarWidthPx, setSidebarWidthPx] = React.useState<number | null>(null)
+    const isDraggingRef = React.useRef(false)
+
+    React.useEffect(() => {
+      const stored = window.localStorage.getItem("sidebar:width")
+      if (stored) {
+        const parsed = parseInt(stored, 10)
+        if (!Number.isNaN(parsed)) {
+          setSidebarWidthPx(parsed)
+        }
+      }
+    }, [])
+
+    React.useEffect(() => {
+      const handleMove = (event: MouseEvent) => {
+        if (!isDraggingRef.current) return
+        const x = event.clientX
+        const min = 200
+        const max = 480
+        const newWidth = Math.min(max, Math.max(min, side === "left" ? x : window.innerWidth - x))
+        setSidebarWidthPx(newWidth)
+      }
+      const handleUp = () => {
+        if (!isDraggingRef.current) return
+        isDraggingRef.current = false
+        if (sidebarWidthPx) {
+          window.localStorage.setItem("sidebar:width", String(sidebarWidthPx))
+        }
+        document.body.style.cursor = ""
+      }
+      window.addEventListener("mousemove", handleMove)
+      window.addEventListener("mouseup", handleUp)
+      return () => {
+        window.removeEventListener("mousemove", handleMove)
+        window.removeEventListener("mouseup", handleUp)
+      }
+    }, [sidebarWidthPx, side])
+
+    const widthStyle = sidebarWidthPx
+      ? { "--sidebar-width": `${sidebarWidthPx}px` } as React.CSSProperties
+      : undefined
 
     return (
       <div
@@ -219,11 +278,12 @@ const Sidebar = React.forwardRef<
         data-collapsible={state === "collapsed" ? collapsible : ""}
         data-variant={variant}
         data-side={side}
+        style={widthStyle}
       >
         {/* This is what handles the sidebar gap on desktop */}
         <div
           className={cn(
-            "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
+            "duration-300 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-in-out",
             "group-data-[collapsible=offcanvas]:w-0",
             "group-data-[side=right]:rotate-180",
             variant === "floating" || variant === "inset"
@@ -233,7 +293,7 @@ const Sidebar = React.forwardRef<
         />
         <div
           className={cn(
-            "duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex",
+            "duration-300 fixed inset-y-0 z-30 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-in-out md:flex",
             side === "left"
               ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
               : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
@@ -251,7 +311,21 @@ const Sidebar = React.forwardRef<
           >
             {children}
           </div>
+          {/* Resize handle */}
+          <button
+            aria-label="Resize sidebar"
+            className={cn(
+              "absolute inset-y-0 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100",
+              side === "left" ? "right-0" : "left-0"
+            )}
+            onMouseDown={(e) => {
+              e.preventDefault()
+              isDraggingRef.current = true
+              document.body.style.cursor = "col-resize"
+            }}
+          />
         </div>
+        {/* Floating trigger moved to CanvasTrigger within content */}
       </div>
     )
   }

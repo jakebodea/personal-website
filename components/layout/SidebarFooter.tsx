@@ -10,6 +10,9 @@ export function SidebarFooter() {
                 <div className="text-xs text-muted-foreground">
                     <p>Press <kbd className="px-1.5 py-0.5 text-xs bg-muted/30 rounded font-mono">T</kbd> to toggle theme</p>
                 </div>
+                <div className="text-xs text-muted-foreground">
+                    <p>Press <kbd className="px-1.5 py-0.5 text-xs bg-muted/30 rounded font-mono">S</kbd> to toggle sidebar</p>
+                </div>
             </div>
         </SidebarFooterPrimitive>
     );
