@@ -20,12 +20,12 @@ export default function CtaSection(): React.ReactNode {
                         I&apos;m always open to collaborating on creative and challenging projects.
                         Whether you&apos;re looking to build an AI-powered application or explore innovative solutions, let&apos;s connect.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                         <a
                             href="https://x.com/jakebodea"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                            className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors w-full sm:w-auto"
                         >
                             Connect on 𝕏
                         </a>
@@ -34,7 +34,7 @@ export default function CtaSection(): React.ReactNode {
                             href="https://www.linkedin.com/in/jakebodea/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center px-6 py-3 rounded-lg font-medium hover:bg-accent/50 transition-colors"
+                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium hover:bg-accent/50 transition-colors w-full sm:w-auto"
                         >
                             Connect on LinkedIn
                         </a>
@@ -43,7 +43,7 @@ export default function CtaSection(): React.ReactNode {
                             href="https://github.com/jakebodea"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center px-6 py-3 rounded-lg font-medium hover:bg-accent/50 transition-colors"
+                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium hover:bg-accent/50 transition-colors w-full sm:w-auto"
                         >
                             View GitHub
                         </a>

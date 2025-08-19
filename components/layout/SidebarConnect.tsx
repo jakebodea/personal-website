@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { SidebarGroup, SidebarMenuButton } from "@/components/ui/sidebar";
+import { SidebarGroup, SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
 import { sidebarData } from "@/content/sidebar-data";
 
 export function SidebarConnect() {
+    const { isMobile, setOpenMobile } = useSidebar();
     return (
         <SidebarGroup className="px-3 py-4">
-            <div className="mb-2 px-3">
-                <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Connect</h2>
+            <div className="mb-2">
+                <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-left">Connect</h2>
             </div>
             {sidebarData.contact.map((item) => (
                 <Link
@@ -16,6 +17,7 @@ export function SidebarConnect() {
                     rel="noopener noreferrer"
                     className="block w-full"
                     key={item.url}
+                    onClick={() => { if (isMobile) setOpenMobile(false) }}
                 >
                     <SidebarMenuButton size="lg" className="w-full justify-start gap-3 px-3 py-2.5 hover:bg-muted/20 active:bg-muted/50 transition-colors group">
                         <span className="text-base">{item.icon}</span>
