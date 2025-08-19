@@ -7,8 +7,8 @@ export function SidebarConnect() {
     const { isMobile, setOpenMobile } = useSidebar();
     return (
         <SidebarGroup className="px-3 py-4">
-            <div className="mb-2 px-3">
-                <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Connect</h2>
+            <div className="mb-2">
+                <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-left">Connect</h2>
             </div>
             {sidebarData.contact.map((item) => (
                 <Link
