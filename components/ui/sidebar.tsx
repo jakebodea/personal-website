@@ -228,47 +228,7 @@ const Sidebar = React.forwardRef<
       )
     }
 
-    const [sidebarWidthPx, setSidebarWidthPx] = React.useState<number | null>(null)
-    const isDraggingRef = React.useRef(false)
 
-    React.useEffect(() => {
-      const stored = window.localStorage.getItem("sidebar:width")
-      if (stored) {
-        const parsed = parseInt(stored, 10)
-        if (!Number.isNaN(parsed)) {
-          setSidebarWidthPx(parsed)
-        }
-      }
-    }, [])
-
-    React.useEffect(() => {
-      const handleMove = (event: MouseEvent) => {
-        if (!isDraggingRef.current) return
-        const x = event.clientX
-        const min = 200
-        const max = 480
-        const newWidth = Math.min(max, Math.max(min, side === "left" ? x : window.innerWidth - x))
-        setSidebarWidthPx(newWidth)
-      }
-      const handleUp = () => {
-        if (!isDraggingRef.current) return
-        isDraggingRef.current = false
-        if (sidebarWidthPx) {
-          window.localStorage.setItem("sidebar:width", String(sidebarWidthPx))
-        }
-        document.body.style.cursor = ""
-      }
-      window.addEventListener("mousemove", handleMove)
-      window.addEventListener("mouseup", handleUp)
-      return () => {
-        window.removeEventListener("mousemove", handleMove)
-        window.removeEventListener("mouseup", handleUp)
-      }
-    }, [sidebarWidthPx, side])
-
-    const widthStyle = sidebarWidthPx
-      ? { "--sidebar-width": `${sidebarWidthPx}px` } as React.CSSProperties
-      : undefined
 
     return (
       <div
@@ -278,7 +238,6 @@ const Sidebar = React.forwardRef<
         data-collapsible={state === "collapsed" ? collapsible : ""}
         data-variant={variant}
         data-side={side}
-        style={widthStyle}
       >
         {/* This is what handles the sidebar gap on desktop */}
         <div
@@ -311,19 +270,6 @@ const Sidebar = React.forwardRef<
           >
             {children}
           </div>
-          {/* Resize handle */}
-          <button
-            aria-label="Resize sidebar"
-            className={cn(
-              "absolute inset-y-0 w-1 cursor-col-resize opacity-0 transition-opacity hover:opacity-100",
-              side === "left" ? "right-0" : "left-0"
-            )}
-            onMouseDown={(e) => {
-              e.preventDefault()
-              isDraggingRef.current = true
-              document.body.style.cursor = "col-resize"
-            }}
-          />
         </div>
         {/* Floating trigger moved to CanvasTrigger within content */}
       </div>
