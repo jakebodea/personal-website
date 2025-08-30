@@ -1,5 +1,9 @@
 export const quotesData = [
   {
+    "quote": "Embarassment is an under-explored emption. Go make a fool of yourself.",
+    "author": "Austin Butler"
+  },
+  {
     "quote": "Everything is computer",
     "author": "Donald Trump"
   },
