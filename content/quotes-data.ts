@@ -4,6 +4,10 @@ export const quotesData = [
     "author": "Austin Butler"
   },
   {
+    "quote": "When I am, as it were, completely myself, entirely alone, and of good cheer-say, travelling in a carriage, or walking after a good meal, or during the night when I cannot sleep; it is on such occasions that my ideas flow best and most abundantly. Whence and how they come, I know not; nor can I force them.",
+    "author": "Wolfgang Amadeus Mozart"
+  },
+  {
     "quote": "Everything is computer",
     "author": "Donald Trump"
   },
