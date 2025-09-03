@@ -1,9 +1,10 @@
 'use client'
 
 import { QuoteData } from '@/lib/quotes'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import SearchBar from './components/SearchBar'
 import type { ReactNode } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function renderBasicMarkdown(text: string): ReactNode[] {
   const linkRegex = /\[([^\[\]]+)\]\((https?:\/\/[^\s)]+)\)/g
@@ -22,8 +23,8 @@ function renderBasicMarkdown(text: string): ReactNode[] {
       <a
         key={`a-${linkMatch.index}`}
         href={href}
-        target={href.startsWith('http') ? '_blank' : undefined}
-        rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        target="_blank"
+        rel="noopener noreferrer"
         className="underline decoration-1 underline-offset-2 decoration-current hover:decoration-primary hover:text-primary transition-colors"
       >
         {parseEmphasisAndAutoLinks(linkText)}
@@ -127,23 +128,34 @@ interface QuotesPageProps {
   initialQuotes: QuoteData[]
 }
 
+function shuffle<T>(array: T[]): T[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]]
+  }
+  return array
+}
+
 export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
   const [searchQuery, setSearchQuery] = useState('')
-  const [filteredQuotes, setFilteredQuotes] = useState(initialQuotes)
+  const [baseQuotes, setBaseQuotes] = useState(initialQuotes)
+  const [isReady, setIsReady] = useState(false)
 
+  // Shuffle once on client after mount to avoid SSR hydration mismatch
   useEffect(() => {
-    if (searchQuery.trim()) {
-      const searchTerm = searchQuery.toLowerCase()
-      const filtered = initialQuotes.filter((quote) => {
-        const quoteMatch = quote.quote.toLowerCase().includes(searchTerm)
-        const authorMatch = quote.author.toLowerCase().includes(searchTerm)
-        return quoteMatch || authorMatch
-      })
-      setFilteredQuotes(filtered)
-    } else {
-      setFilteredQuotes(initialQuotes)
-    }
-  }, [searchQuery, initialQuotes])
+    setBaseQuotes(shuffle([...initialQuotes]))
+    setIsReady(true)
+  }, [initialQuotes])
+
+  const filteredQuotes = useMemo(() => {
+    const term = searchQuery.trim().toLowerCase()
+    if (!term) return baseQuotes
+    return baseQuotes.filter((quote) => {
+      const quoteMatch = quote.quote.toLowerCase().includes(term)
+      const authorMatch = quote.author.toLowerCase().includes(term)
+      return quoteMatch || authorMatch
+    })
+  }, [searchQuery, baseQuotes])
 
   return (
     <div className="min-h-full">
@@ -156,23 +168,33 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         
         <div className="space-y-8">
-          {filteredQuotes.map((quote, index) => (
-            <div key={index} className="border-l-4 border-primary/30 pl-6 py-2">
-              <blockquote className="text-3xl font-serif font-normal text-muted-foreground mb-2 whitespace-pre-wrap" style={{ tabSize: 4 }}>
-                {renderBasicMarkdown(quote.quote)}
-              </blockquote>
-              <cite className="text-md font-sans text-muted-foreground font-light">
-                — {renderBasicMarkdown(quote.author)}
-              </cite>
-            </div>
-          ))}
-          
-          {filteredQuotes.length === 0 && searchQuery && (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">
-                No quotes found matching &ldquo;{searchQuery}&rdquo;
-              </p>
-            </div>
+          {!isReady ? (
+            Array.from({ length: 6 }).map((_, i) => (
+              <div key={`s-${i}`} className="border-l-4 border-primary/30 pl-6 py-2">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/3" />
+              </div>
+            ))
+          ) : (
+            <>
+              {filteredQuotes.map((quote) => (
+                <div key={`${quote.author}|${quote.quote}`} className="border-l-4 border-primary/30 pl-6 py-2">
+                  <blockquote className="text-3xl font-serif font-normal text-muted-foreground mb-2 whitespace-pre-wrap" style={{ tabSize: 4 }}>
+                    {renderBasicMarkdown(quote.quote)}
+                  </blockquote>
+                  <cite className="text-md font-sans text-muted-foreground font-light">
+                    — {renderBasicMarkdown(quote.author)}
+                  </cite>
+                </div>
+              ))}
+              {filteredQuotes.length === 0 && searchQuery && (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">
+                    No quotes found matching &ldquo;{searchQuery}&rdquo;
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
