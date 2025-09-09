@@ -1,5 +1,9 @@
 export const quotesData = [
   {
+    "quote": "The wise man accepts his pain, endures it, but does not _add_ to it by complaining.",
+    "author": "Marcus Aurelius"
+  },
+  {
     "quote": "Embarassment is an under-explored emption. Go make a fool of yourself.",
     "author": "Austin Butler"
   },
