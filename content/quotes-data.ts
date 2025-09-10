@@ -1,5 +1,9 @@
 export const quotesData = [
   {
+    "quote": "The unexamined life is not worth living. But the overexamined life is not worth living either.",
+    "author": "Socrates"
+  },
+  {
     "quote": "The wise man accepts his pain, endures it, but does not _add_ to it by complaining.",
     "author": "Marcus Aurelius"
   },
