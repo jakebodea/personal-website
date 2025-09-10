@@ -1,5 +1,9 @@
 export const quotesData = [
   {
+    "quote": "Get married, have kids, and stop partying into oblivion.\n\nLeave a legacy, be courageous.",
+    "author": "Charlie Kirk (RIP)"
+  },
+  {
     "quote": "The unexamined life is not worth living. But the overexamined life is not worth living either.",
     "author": "Socrates"
   },
