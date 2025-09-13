@@ -5,6 +5,10 @@ on:
     - cron: '0 15-23,0-3 * * *'  # Every hour from 8am to 8pm PDT
   workflow_dispatch:
 
+permissions:
+  actions: write
+  contents: read
+
 jobs:
   check-quotes:
     runs-on: ubuntu-latest
@@ -49,11 +53,10 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            await github.rest.actions.createWorkflowDispatch({
+            await github.rest.repos.createDispatchEvent({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'nextjs.yml',
-              ref: 'main'
+              event_type: 'quotes-changed'
             })
             console.log('Build workflow triggered!')
             
