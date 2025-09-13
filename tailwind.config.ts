@@ -81,6 +81,10 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
       },
+      transitionDuration: {
+        '3500': '3500ms',
+        '4000': '4000ms',
+      },
     }
   },
   plugins: [tailwindcssAnimate],

@@ -42,12 +42,12 @@ export function CanvasTrigger() {
   return (
     <div className={`pointer-events-none absolute ${isMobile ? 'top-2 left-4' : 'top-4 left-6'} z-40 ${
       shouldAnimate 
-        ? "animate-in fade-in-0 slide-in-from-left-2 duration-[4000ms] ease-out" 
+        ? "animate-in fade-in-0 slide-in-from-left-2 duration-4000 ease-out" 
         : "opacity-0"
     }`}>
       <div className={`pointer-events-auto rounded-xl p-2 md:p-3 ${
         shouldAnimate 
-          ? "animate-in zoom-in-95 duration-[3500ms] ease-out" 
+          ? "animate-in zoom-in-95 duration-3500 ease-out" 
           : "scale-95"
       }`}>
         <SidebarTrigger className="h-7 w-7" />

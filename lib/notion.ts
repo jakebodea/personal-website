@@ -1,7 +1,24 @@
 import { QuoteData } from './quotes'
 
+// TypeScript interfaces for Notion API
+interface NotionRichText {
+  plain_text: string
+  type: string
+}
+
+interface NotionProperty {
+  type: string
+  title?: NotionRichText[]
+  rich_text?: NotionRichText[]
+  url?: string | null
+}
+
+interface NotionPage {
+  properties: Record<string, NotionProperty>
+}
+
 // Helper function to extract plain text from Notion rich text
-function extractPlainText(richTextArray: any[]): string {
+function extractPlainText(richTextArray: NotionRichText[]): string {
   if (!richTextArray || richTextArray.length === 0) {
     return ''
   }
@@ -15,12 +32,12 @@ function extractPlainText(richTextArray: any[]): string {
 }
 
 // Helper function to extract page title
-function extractPageTitle(page: any): string {
+function extractPageTitle(page: NotionPage): string {
   // Try to get the title from page properties
-  const titleProperty = Object.values(page.properties).find((prop: any) => prop.type === 'title')
+  const titleProperty = Object.values(page.properties).find((prop: NotionProperty) => prop.type === 'title')
   
-  if (titleProperty && (titleProperty as any).title && (titleProperty as any).title.length > 0) {
-    return extractPlainText((titleProperty as any).title)
+  if (titleProperty && titleProperty.title && titleProperty.title.length > 0) {
+    return extractPlainText(titleProperty.title)
   }
   
   return 'Unknown Author'
@@ -54,7 +71,7 @@ export async function getQuotesFromNotion(): Promise<QuoteData[]> {
 
     const data = await response.json()
 
-    const quotes: QuoteData[] = data.results.map((page: any) => {
+    const quotes: QuoteData[] = data.results.map((page: NotionPage) => {
       // Extract quote text from the "quote" property
       const quoteProperty = page.properties.quote
       let quoteText = ''

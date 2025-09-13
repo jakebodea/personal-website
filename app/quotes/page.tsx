@@ -5,9 +5,6 @@ import QuotesPageClient from './QuotesClient'
 export const revalidate = 3600
 
 export default async function QuotesPage() {
-  console.log('📖 Quotes page loading...')
   const quotes = await getAllQuotes()
-  console.log('📚 Quotes loaded in page component:', quotes.length, 'quotes')
-  
   return <QuotesPageClient initialQuotes={quotes} />
 } 
