@@ -143,10 +143,8 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
 
   // Shuffle once on client after mount to avoid SSR hydration mismatch
   useEffect(() => {
-    console.log('🎲 Shuffling quotes on client side...', initialQuotes.length, 'quotes')
     setBaseQuotes(shuffle([...initialQuotes]))
     setIsReady(true)
-    console.log('✅ Client side shuffling complete')
   }, [initialQuotes])
 
   const filteredQuotes = useMemo(() => {
