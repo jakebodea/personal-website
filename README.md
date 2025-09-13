@@ -45,13 +45,6 @@ The quotes page uses a custom Notion integration to dynamically fetch and displa
 
 Instead of using the official Notion SDK, the integration uses direct REST API calls to `https://api.notion.com/v1/databases/{database_id}/query`.
 
-### Database Structure
-
-The Notion database uses a simple schema:
-
-- **Page Title**: Author name (e.g., "James Clear")
-- **quote** (Rich Text): The quote content with support for line breaks and formatting
-- **author_link** (URL): Optional link to the author's profile/website
 
 ### Smart Text Processing
 
@@ -60,11 +53,52 @@ The system handles Notion's rich text formatting by:
 - Preserving formatting while extracting plain text
 - Creating markdown-style links when author links are provided
 
-### Performance Optimizations
+### Static Site + Dynamic Content Challenge
 
-- **Server-side caching**: Pages are cached for 1 hour using Next.js `revalidate`
-- **Client-side rendering**: Quotes are shuffled and filtered on the client for smooth interactions
-- **Search functionality**: Real-time search through quotes and authors without additional API calls
+Since this site is deployed to **GitHub Pages** (static hosting), traditional server-side features like Next.js's `revalidate` don't work - there's no running server to refresh cached content. This creates a challenge: how do you get fresh content from Notion without manual deployments?
+
+### Clever GitHub Actions Solution
+
+I built a smart automation system that works around static hosting limitations:
+
+#### **Smart Change Detection**
+- A scheduled GitHub Action runs hourly during active hours (8am to 8pm PDT)
+- Fetches fresh quotes from Notion API
+- Creates a SHA-256 hash of the content for comparison
+- Only triggers a rebuild if quotes have actually changed
+
+#### **Smart Caching**
+- Uses GitHub Actions cache to store content hashes between runs
+- Prevents unnecessary builds when quotes haven't changed
+- Saves ~95% of build time on unchanged content
+
+#### **Two-Workflow Architecture**
+1. **Quote Checker** (`check-quotes.yml`): Lightweight check (~30 seconds)
+2. **Main Build** (`nextjs.yml`): Full rebuild only when needed (~5 minutes)
+
+```yaml
+# Runs hourly during active hours, only builds when quotes change
+on:
+  schedule:
+    - cron: '0 15-23,0-3 * * *'  # 8am to 8pm PDT
+```
+
+#### **TypeScript Build Script**
+- Custom `scripts/check-quotes.ts` handles the smart comparison
+- Exit codes control workflow behavior:
+  - `0`: Changes detected → Trigger build
+  - `1`: No changes → Skip build  
+  - `2`: Error → Fail safe and build anyway
+
+### Performance Benefits
+
+- **Automatic updates**: Fresh quotes appear within an hour of Notion changes
+- **Resource efficient**: No unnecessary rebuilds when content is unchanged  
+- **Zero maintenance**: Runs completely automated once configured
+- **Client-side optimization**: Quotes are shuffled and filtered locally for smooth interactions
+- **Real-time search**: Filter through quotes and authors without additional API calls
+
+This approach gives you **dynamic content** on a **static site** - the best of both worlds! And, free! :)
 
 ### Markdown Support
 

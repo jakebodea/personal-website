@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint ."
+      "build": "next build",
+      "start": "next start",
+      "lint": "eslint .",
+      "check-quotes": "bun run scripts/check-quotes.ts"
   },
   "dependencies": {
     "@notionhq/client": "^5.1.0",
