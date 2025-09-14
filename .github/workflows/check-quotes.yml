@@ -7,7 +7,7 @@ on:
 
 permissions:
   actions: write
-  contents: read
+  contents: write
 
 jobs:
   check-quotes:
@@ -53,12 +53,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            await github.rest.repos.createDispatchEvent({
+            await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              event_type: 'quotes-changed'
+              workflow_id: 'nextjs.yml',
+              ref: 'main'
             })
-            console.log('Build workflow triggered!')
+            console.log('Build workflow (workflow_dispatch) triggered!')
             
       - name: Log result
         run: |
