@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from 'react'
 import SearchBar from './components/SearchBar'
 import type { ReactNode } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
+import { NotionSyncBrag } from '@/components/layout/NotionSyncBrag'
 
 function renderBasicMarkdown(text: string): ReactNode[] {
   const linkRegex = /\[([^\[\]]+)\]\((https?:\/\/[^\s)]+)\)/g
@@ -12,7 +13,7 @@ function renderBasicMarkdown(text: string): ReactNode[] {
   let lastIndex = 0
   let linkMatch: RegExpExecArray | null
 
-  while ((linkMatch = linkRegex.exec(text)) !== null) {
+  while ((linkMatch = linkRegex.exec  (text)) !== null) {
     if (linkMatch.index > lastIndex) {
       nodes.push(...parseEmphasisAndAutoLinks(text.slice(lastIndex, linkMatch.index)))
     }
@@ -161,10 +162,10 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
     <div className="min-h-full">
       <div className="container mx-auto max-w-3xl px-6 py-8">
         <h1 className="text-4xl md:text-5xl font-serif font-light text-foreground mb-4">Quotes</h1>
-        <p className="text-lg text-muted-foreground mb-10 font-light">
+        <p className="text-lg text-muted-foreground font-light mb-3">
           A collection of quotes and sources that have inspired me.
         </p>
-        
+        <NotionSyncBrag />
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         
         <div className="space-y-8">
