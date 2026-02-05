@@ -163,7 +163,7 @@ async function queryNotionDatabase(databaseId: string): Promise<NotionPage[]> {
       headers,
       body: JSON.stringify(body),
       next: { revalidate: 3600 },
-    })
+    } as RequestInit)
 
     if (!response.ok) {
       const errorData = await response.text()
@@ -207,7 +207,7 @@ async function fetchBlockChildren(blockId: string): Promise<NotionBlock[]> {
       method: 'GET',
       headers,
       next: { revalidate: 3600 },
-    })
+    } as RequestInit)
 
     if (!response.ok) {
       const errorData = await response.text()
