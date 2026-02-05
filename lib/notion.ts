@@ -1,4 +1,4 @@
-import { QuoteData } from './quotes'
+import type { QuoteData } from './quotes'
 
 // TypeScript interfaces for Notion API
 interface NotionRichText {

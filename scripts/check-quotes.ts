@@ -27,7 +27,7 @@ async function checkQuotesChanged() {
     try {
       previousHash = readFileSync('quotes-hash.txt', 'utf8').trim()
       console.log(`Previous hash: ${previousHash}`)
-    } catch (e) {
+    } catch {
       console.log('No previous hash found (first run)')
     }
     

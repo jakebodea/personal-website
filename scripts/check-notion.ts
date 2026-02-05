@@ -3,7 +3,8 @@
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 
-import { getBlogPostsFromNotion, getQuotesFromNotion, NotionBlogPost } from '../lib/notion'
+import type { NotionBlogPost } from '../lib/notion';
+import { getBlogPostsFromNotion, getQuotesFromNotion } from '../lib/notion'
 
 const QUOTES_HASH_FILE = 'quotes-hash.txt'
 const BLOGS_HASH_FILE = 'blogs-hash.txt'
@@ -15,7 +16,7 @@ function computeHash(payload: string): string {
 function readPreviousHash(filePath: string): string | null {
   try {
     return readFileSync(filePath, 'utf8').trim()
-  } catch (error) {
+  } catch {
     console.log(`No previous hash found for ${filePath} (first run)`)
     return null
   }

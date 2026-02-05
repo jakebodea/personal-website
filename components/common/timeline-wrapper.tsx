@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import Timeline from "./Timeline";
+import { Timeline } from "./timeline";
 import { timelineItems } from "@/content/timeline-data";
-import TimelineHeader from "./TimelineHeader";
+import { TimelineHeader } from "./timeline-header";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export default function TimelineWrapper(): React.ReactNode {
+export function TimelineWrapper(): React.ReactNode {
   const isMobile = useIsMobile();
 
   return (

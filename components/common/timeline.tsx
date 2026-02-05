@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
-import MobileTimeline from "./MobileTimeline";
+import { MobileTimeline } from "./mobile-timeline";
 
 interface TimelineItem {
   startDate: string;
@@ -31,7 +31,7 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
   return (
     <div className="relative max-w-6xl mx-auto">
       {/* Main Timeline Line - centered */}
-      <div className="absolute left-1/2 -translate-x-0.5 top-8 bottom-0 w-0.5 bg-primary/60"></div>
+      <div className="absolute left-1/2 -translate-x-0.5 top-8 bottom-0 w-0.5 bg-primary/60" />
       
       {items.map((item, index) => {
         const isLeft = index % 2 === 0;
@@ -42,15 +42,15 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
             <div className="absolute left-1/2 top-8 -translate-x-1/2 z-20">
               {item.endDate === "Present" ? (
                 <div className="relative">
-                  <div className="absolute inset-0 w-5 h-5 rounded-full bg-accent/30 animate-ping"></div>
+                  <div className="absolute inset-0 w-5 h-5 rounded-full bg-accent/30 animate-ping" />
                   <div className="w-5 h-5 rounded-full bg-white border-3 border-primary shadow-lg relative">
-                    <div className="w-full h-full rounded-full bg-primary"></div>
+                    <div className="w-full h-full rounded-full bg-primary" />
                   </div>
                 </div>
               ) : (
                 <div className="w-5 h-5 rounded-full shadow-lg relative">
-                  <div className="absolute inset-0 rounded-full bg-primary"></div>
-                  <div className="absolute inset-1 rounded-full bg-card"></div>
+                  <div className="absolute inset-0 rounded-full bg-primary" />
+                  <div className="absolute inset-1 rounded-full bg-card" />
                 </div>
               )}
             </div>
@@ -123,9 +123,9 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
       })}
       
       {/* End Marker */}
-      <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-2 h-2 rounded-full bg-primary shadow-sm"></div>
+      <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-2 h-2 rounded-full bg-primary shadow-sm" />
     </div>
   );
 };
 
-export default Timeline;
+export { Timeline };

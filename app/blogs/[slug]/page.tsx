@@ -10,7 +10,7 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeMathjax from 'rehype-mathjax'
 import { CodeBlock } from '@/components/ui/code-block'
-import { CopyMarkdownButton } from '@/app/blogs/components/CopyMarkdownButton'
+import { CopyMarkdownButton } from '@/components/common/copy-markdown-button'
 
 interface PageProps {
   slug: string

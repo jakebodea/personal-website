@@ -1,9 +1,9 @@
-import ComingSoon from "./components/ComingSoon";
-import ProjectHeader from "./components/ProjectHeader";
+import { ComingSoon } from "@/components/common/coming-soon";
+import { ProjectHeader } from "@/components/common/project-header";
 
 export const metadata = {
-  title: 'Projects',
-  description: 'Jake Bodea\'s projects'
+  title: 'projects',
+  description: 'jake bodea\'s projects'
 }
 
 export default function ProjectsPage(): React.ReactNode {

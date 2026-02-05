@@ -1,11 +1,11 @@
 'use client'
 
-import { QuoteData } from '@/lib/quotes'
+import type { QuoteData } from '@/lib/quotes'
 import { useState, useEffect, useMemo } from 'react'
-import SearchBar from './components/SearchBar'
+import { SearchInput } from '@/components/common/search-input'
 import type { ReactNode } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
-import { NotionSyncBrag } from '@/components/layout/NotionSyncBrag'
+import { NotionSyncBrag } from '@/components/layout/notion-sync-brag'
 
 function renderBasicMarkdown(text: string): ReactNode[] {
   const linkRegex = /\[([^\[\]]+)\]\((https?:\/\/[^\s)]+)\)/g
@@ -161,17 +161,17 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
   return (
     <div className="min-h-full">
       <div className="container mx-auto max-w-3xl px-6 py-8">
-        <h1 className="text-4xl md:text-5xl font-serif font-light text-foreground mb-4">Quotes</h1>
-        <p className="text-lg text-muted-foreground font-light mb-3">
-          A collection of quotes and sources that have inspired me.
+        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">quotes</h1>
+        <p className="text-lg text-muted-foreground mb-3">
+          a collection of quotes and sources that have inspired me.
         </p>
         <NotionSyncBrag />
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <SearchInput value={searchQuery} onChange={setSearchQuery} placeholder="search quotes..." />
         
         <div className="space-y-8">
           {!isReady ? (
             Array.from({ length: 6 }).map((_, i) => (
-              <div key={`s-${i}`} className="border-l-4 border-primary/30 pl-6 py-2">
+              <div key={`s-${i}`} className="border-l-4 border-accent/30 pl-6 py-2">
                 <Skeleton className="h-6 w-3/4 mb-2" />
                 <Skeleton className="h-4 w-1/3" />
               </div>
@@ -179,7 +179,7 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
           ) : (
             <>
               {filteredQuotes.map((quote) => (
-                <div key={`${quote.author}|${quote.quote}`} className="border-l-4 border-primary/30 pl-6 py-2">
+                <div key={`${quote.author}|${quote.quote}`} className="border-l-4 border-accent/30 pl-6 py-2">
                   <blockquote className="text-3xl font-serif font-normal text-muted-foreground mb-2 whitespace-pre-wrap" style={{ tabSize: 4 }}>
                     {renderBasicMarkdown(quote.quote)}
                   </blockquote>
