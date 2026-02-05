@@ -1,8 +1,10 @@
 import "./globals.css"
 import { ThemeProvider } from "@/components/providers/theme-provider"
+import { NavigationProvider } from "@/components/providers/navigation-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { Montserrat, Instrument_Serif } from "next/font/google"
 import { TopNav } from "@/components/layout/top-nav"
+import { PageTransition } from "@/components/layout/page-transition"
 import { GPTSlopToast } from "@/components/gpt-slop-toast"
 import { Analytics } from "@vercel/analytics/next"
 
@@ -79,15 +81,19 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {process.env.VERCEL_GIT_COMMIT_REF === "dev" && (
-            <div className="fixed top-2 right-2 z-[100] bg-accent text-white text-xs font-bold px-2 py-1 rounded">
-              dev
-            </div>
-          )}
-          <TopNav />
-          <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>
-          <Toaster />
-          <GPTSlopToast />
+          <NavigationProvider>
+            {process.env.VERCEL_GIT_COMMIT_REF === "dev" && (
+              <div className="fixed top-2 right-2 z-[100] bg-accent text-white text-xs font-bold px-2 py-1 rounded">
+                dev
+              </div>
+            )}
+            <TopNav />
+            <main className="min-h-[calc(100vh-3.5rem)]">
+              <PageTransition>{children}</PageTransition>
+            </main>
+            <Toaster />
+            <GPTSlopToast />
+          </NavigationProvider>
         </ThemeProvider>
         <Analytics />
       </body>
