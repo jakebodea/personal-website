@@ -4,6 +4,11 @@ import { Toaster } from "@/components/ui/sonner"
 import Script from "next/script"
 import { Montserrat, Instrument_Serif } from "next/font/google"
 import { TopNav } from "@/components/layout/top-nav"
+import { getAllQuotes } from "@/lib/quotes"
+
+// Warm the quotes cache in the background on every page load
+// This ensures quotes are cached before users navigate to /quotes
+void getAllQuotes().catch(() => {})
 
 const montserrat = Montserrat({
   subsets: ["latin"],

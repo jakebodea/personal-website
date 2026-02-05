@@ -162,6 +162,7 @@ async function queryNotionDatabase(databaseId: string): Promise<NotionPage[]> {
       method: 'POST',
       headers,
       body: JSON.stringify(body),
+      next: { revalidate: 3600 },
     })
 
     if (!response.ok) {
@@ -205,6 +206,7 @@ async function fetchBlockChildren(blockId: string): Promise<NotionBlock[]> {
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers,
+      next: { revalidate: 3600 },
     })
 
     if (!response.ok) {
