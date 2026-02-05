@@ -3,12 +3,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { Montserrat, Instrument_Serif } from "next/font/google"
 import { TopNav } from "@/components/layout/top-nav"
-import { getAllQuotes } from "@/lib/quotes"
 import { Analytics } from "@vercel/analytics/next"
-
-// Warm the quotes cache in the background on every page load
-// This ensures quotes are cached before users navigate to /quotes
-void getAllQuotes().catch(() => {})
 
 const montserrat = Montserrat({
   subsets: ["latin"],

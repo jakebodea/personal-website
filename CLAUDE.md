@@ -8,7 +8,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 bun run dev       # Start development server
 bun run build     # Production build
 bun run lint      # Run ESLint with --fix
-bun run check-notion  # Check Notion for content changes
 ```
 
 Always use Bun, not Node.js/npm/pnpm. Bun automatically loads `.env` files.
@@ -17,19 +16,18 @@ Always use Bun, not Node.js/npm/pnpm. Bun automatically loads `.env` files.
 
 **Stack**: Next.js 16 (App Router) + TypeScript + Tailwind CSS + Shadcn UI + Framer Motion
 
-**Static Site on GitHub Pages**: No server runtime. All data fetching happens at build time. Notion content syncs via scheduled GitHub Actions that detect changes and trigger rebuilds.
+**Deployed on Vercel** with ISR (Incremental Static Regeneration). Notion content auto-refreshes hourly via `revalidate: 3600` in fetch calls.
 
 ### Content Sources
-- **Quotes**: Fetched from Notion API at build time, client-side searchable
+- **Quotes**: Fetched from Notion API, cached 1 hour, client-side searchable
 - **Blogs**: Markdown files in `/content/blogs/`, parsed with gray-matter
 - **Timeline**: Static TypeScript data in `/content/timeline-data.ts`
 
 ### Key Files
-- `lib/notion.ts` - All Notion API integration (~17KB, exempted from max-lines rule)
+- `lib/notion.ts` - All Notion API integration (exempted from max-lines rule)
 - `lib/quotes.ts` - Quote fetching entry point
 - `lib/blogs.ts` - Markdown blog loading with search
-- `app/layout.tsx` - Root layout, preloads quotes cache
-- `scripts/check-notion.ts` - Smart content change detection for GitHub Actions
+- `app/layout.tsx` - Root layout with Vercel Analytics
 
 ### Server vs Client Components
 - Pages are server components by default
