@@ -19,13 +19,3 @@ export function useIsMobile() {
 
   return !!isMobile
 }
-
-export function useIsTouchDevice() {
-  const [isTouch, setIsTouch] = React.useState(false)
-
-  React.useEffect(() => {
-    setIsTouch("ontouchstart" in window || navigator.maxTouchPoints > 0)
-  }, [])
-
-  return isTouch
-}

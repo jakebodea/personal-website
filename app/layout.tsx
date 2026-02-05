@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { Montserrat, Instrument_Serif } from "next/font/google"
 import { TopNav } from "@/components/layout/top-nav"
+import { GPTSlopToast } from "@/components/gpt-slop-toast"
 import { Analytics } from "@vercel/analytics/next"
 
 const montserrat = Montserrat({
@@ -86,6 +87,7 @@ export default function RootLayout({
           <TopNav />
           <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>
           <Toaster />
+          <GPTSlopToast />
         </ThemeProvider>
         <Analytics />
       </body>

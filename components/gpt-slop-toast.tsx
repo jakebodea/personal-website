@@ -9,11 +9,11 @@ export function GPTSlopToast() {
   useEffect(() => {
     if (isFirstRender.current) {
       setTimeout(() => {
-        toast.success("You have my word  🤝", {
-          description: "No GPT-slop on this website. Every word is mine –– including emdashes!",
-          duration: 8000,
-        });
-      }, 1000);
+          toast("you have my word  🤝", {
+            description: "no GPT-slop on this website. every word is mine –– even emdashes",
+            duration: 8000,
+          });
+        }, 500);
       isFirstRender.current = false;
     }
   }, []);
