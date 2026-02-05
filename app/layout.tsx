@@ -1,7 +1,6 @@
 import "./globals.css"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
-import Script from "next/script"
 import { Montserrat, Instrument_Serif } from "next/font/google"
 import { TopNav } from "@/components/layout/top-nav"
 import { getAllQuotes } from "@/lib/quotes"
@@ -93,7 +92,6 @@ export default function RootLayout({
           <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>
           <Toaster />
         </ThemeProvider>
-        <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
         <Analytics />
       </body>
     </html>

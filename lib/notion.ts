@@ -390,7 +390,6 @@ export async function getQuotesFromNotion(): Promise<QuoteData[]> {
   }
 
   try {
-    console.log('Fetching quotes from Notion...')
     const pages = await queryNotionDatabase(process.env.QUOTES_DATABASE_ID)
 
     const quotes: QuoteData[] = pages.map((page: NotionPage) => {
@@ -428,7 +427,6 @@ export async function getQuotesFromNotion(): Promise<QuoteData[]> {
       }
     }).filter((quote: QuoteData) => quote.quote && quote.author)
 
-    console.log(`Successfully processed ${quotes.length} quotes from Notion`)
     return quotes
   } catch (error) {
     console.error('Error fetching quotes from Notion:', error)
@@ -480,7 +478,6 @@ export async function getBlogPostsFromNotion(): Promise<NotionBlogPost[]> {
   }
 
   try {
-    console.log('Fetching blog posts from Notion...')
     const pages = await queryNotionDatabase(process.env.BLOGS_DATABASE_ID)
 
     const publishedPages = pages.filter((page) => {
@@ -536,7 +533,6 @@ export async function getBlogPostsFromNotion(): Promise<NotionBlogPost[]> {
       })
     }
 
-    console.log(`Successfully processed ${blogPosts.length} blog posts from Notion`)
     return blogPosts
   } catch (error) {
     console.error('Error fetching blogs from Notion:', error)
