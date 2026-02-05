@@ -5,6 +5,7 @@ import Script from "next/script"
 import { Montserrat, Instrument_Serif } from "next/font/google"
 import { TopNav } from "@/components/layout/top-nav"
 import { getAllQuotes } from "@/lib/quotes"
+import { Analytics } from "@vercel/analytics/next"
 
 // Warm the quotes cache in the background on every page load
 // This ensures quotes are cached before users navigate to /quotes
@@ -93,6 +94,7 @@ export default function RootLayout({
           <Toaster />
         </ThemeProvider>
         <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+        <Analytics />
       </body>
     </html>
   )
