@@ -55,7 +55,7 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
 
               {/* Content Card */}
               <div className={`w-full max-w-lg ${isLeft ? 'mr-4 pr-4' : 'ml-4 pl-4'}`}>
-                <Card className="backdrop-blur-sm border-2 border-border shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-muted-foreground/30 bg-contrast-light/50">
+                <Card className="backdrop-blur-sm border-2 border-border shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-muted-foreground/30 bg-card/50">
                   <CardHeader className="pb-3">
                     {/* Date */}
                     <div className={`flex items-center gap-2 mb-4 ${isLeft ? 'justify-start' : 'justify-end'}`}>

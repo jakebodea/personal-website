@@ -1,25 +1,14 @@
 "use client"
 
-import * as React from "react"
 import { motion } from "framer-motion"
 import { usePathname } from "next/navigation"
 import { useNavigation } from "@/components/providers/navigation-provider"
+import { useIsMobile } from "@/hooks/use-mobile"
+
+import type { ReactNode } from "react"
 
 interface PageTransitionProps {
-  children: React.ReactNode
-}
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState(false)
-
-  React.useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener("resize", check)
-    return () => window.removeEventListener("resize", check)
-  }, [])
-
-  return isMobile
+  children: ReactNode
 }
 
 export function PageTransition({ children }: PageTransitionProps) {
