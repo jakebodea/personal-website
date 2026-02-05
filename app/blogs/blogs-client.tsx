@@ -4,7 +4,7 @@ import type { BlogData } from '@/lib/blogs'
 import { useState, useEffect } from 'react'
 import { PostList } from '@/components/common/post-list'
 import { SearchInput } from '@/components/common/search-input'
-import { PageTitle } from '@/components/layout/page-title'
+import { PageWrapper } from '@/components/layout/page-wrapper'
 
 interface BlogsPageProps {
   initialPosts: BlogData[]
@@ -29,14 +29,9 @@ export default function BlogsPageClient({ initialPosts }: BlogsPageProps) {
   }, [searchQuery, initialPosts])
 
   return (
-    <div className="min-h-full">
-      <div className="container mx-auto max-w-3xl px-6 py-8">
-        <PageTitle className="text-4xl md:text-5xl font-serif text-foreground mb-10">blogs</PageTitle>
-        
-        <SearchInput value={searchQuery} onChange={setSearchQuery} placeholder="search blog posts..." />
-
-        <PostList posts={filteredPosts} searchQuery={searchQuery} />
-      </div>
-    </div>
+    <PageWrapper title="blogs">
+      <SearchInput value={searchQuery} onChange={setSearchQuery} placeholder="search blog posts..." />
+      <PostList posts={filteredPosts} searchQuery={searchQuery} />
+    </PageWrapper>
   )
 } 

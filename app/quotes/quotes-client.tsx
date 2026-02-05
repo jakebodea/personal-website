@@ -3,7 +3,7 @@
 import type { QuoteData } from '@/lib/quotes'
 import { useState, useEffect, useMemo } from 'react'
 import { SearchInput } from '@/components/common/search-input'
-import { PageTitle } from '@/components/layout/page-title'
+import { PageWrapper } from '@/components/layout/page-wrapper'
 import type { ReactNode } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { NotionSyncBrag } from '@/components/layout/notion-sync-brag'
@@ -160,46 +160,40 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
   }, [searchQuery, baseQuotes])
 
   return (
-    <div className="min-h-full">
-      <div className="container mx-auto max-w-3xl px-6 py-8">
-        <PageTitle className="text-4xl md:text-5xl font-serif text-foreground mb-4">quotes</PageTitle>
-        <p className="text-lg text-muted-foreground mb-3">
-          a collection of quotes and sources that have inspired me.
-        </p>
-        <NotionSyncBrag />
-        <SearchInput value={searchQuery} onChange={setSearchQuery} placeholder="search quotes..." />
-        
-        <div className="space-y-8">
-          {!isReady ? (
-            Array.from({ length: 6 }).map((_, i) => (
-              <div key={`s-${i}`} className="border-l-4 border-accent/30 pl-6 py-2">
-                <Skeleton className="h-6 w-3/4 mb-2" />
-                <Skeleton className="h-4 w-1/3" />
-              </div>
-            ))
-          ) : (
-            <>
-              {filteredQuotes.map((quote) => (
-                <div key={`${quote.author}|${quote.quote}`} className="border-l-4 border-accent/30 pl-6 py-2">
-                  <blockquote className="text-3xl font-serif font-normal text-muted-foreground mb-2 whitespace-pre-wrap" style={{ tabSize: 4 }}>
-                    {renderBasicMarkdown(quote.quote)}
-                  </blockquote>
-                  <cite className="text-md font-sans text-muted-foreground font-light">
+    <PageWrapper title="quotes" subtitle="a collection of quotes and sources that have inspired me.">
+      <NotionSyncBrag />
+      <SearchInput value={searchQuery} onChange={setSearchQuery} placeholder="search quotes..." />
+
+      <div className="space-y-8">
+        {!isReady ? (
+          Array.from({ length: 6 }).map((_, i) => (
+            <div key={`s-${i}`} className="border-l-4 border-accent/30 pl-6 py-2">
+              <Skeleton className="h-6 w-3/4 mb-2" />
+              <Skeleton className="h-4 w-1/3" />
+            </div>
+          ))
+        ) : (
+          <>
+            {filteredQuotes.map((quote) => (
+              <div key={`${quote.author}|${quote.quote}`} className="border-l-4 border-accent/30 pl-6 py-2">
+                <blockquote className="text-3xl font-serif font-normal text-muted-foreground mb-2 whitespace-pre-wrap" style={{ tabSize: 4 }}>
+                  {renderBasicMarkdown(quote.quote)}
+                </blockquote>
+                <cite className="text-md font-sans text-muted-foreground font-light">
                     — {renderBasicMarkdown(quote.author)}
-                  </cite>
-                </div>
-              ))}
-              {filteredQuotes.length === 0 && searchQuery && (
-                <div className="text-center py-8">
-                  <p className="text-muted-foreground">
+                </cite>
+              </div>
+            ))}
+            {filteredQuotes.length === 0 && searchQuery && (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground">
                     No quotes found matching &ldquo;{searchQuery}&rdquo;
-                  </p>
-                </div>
-              )}
-            </>
-          )}
-        </div>
+                </p>
+              </div>
+            )}
+          </>
+        )}
       </div>
-    </div>
+    </PageWrapper>
   )
 } 

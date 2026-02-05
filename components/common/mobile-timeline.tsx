@@ -21,7 +21,7 @@ const MobileTimeline: React.FC<MobileTimelineProps> = ({ items }) => {
   return (
     <div className="relative w-full">
       {/* Left-aligned Timeline Line */}
-      <div className="absolute left-3 top-8 bottom-0 w-0.5 bg-accent/60" />
+      <div className="absolute left-3 top-8 bottom-0 w-0.5 bg-border" />
 
       {items.map((item, index) => {
         return (
@@ -79,7 +79,7 @@ const MobileTimeline: React.FC<MobileTimelineProps> = ({ items }) => {
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-xl font-serif italic text-accent leading-tight mb-1 break-words">
+                        <h3 className="text-xl font-serif italic text-foreground leading-tight mb-1 break-words">
                           {item.title}
                         </h3>
                         <div className="flex items-center text-muted-foreground">

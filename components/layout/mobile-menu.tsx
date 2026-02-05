@@ -63,32 +63,32 @@ export function MobileMenu({ navItems, isOpen, onClose }: MobileMenuProps) {
           transition={{ duration: 0.15 }}
           className="fixed inset-0 z-[70] bg-background md:hidden"
         >
-            {/* Spacer for nav header */}
-            <div className="h-14" />
+          {/* Spacer for nav header */}
+          <div className="h-14" />
 
-            {/* Nav Links */}
-            <nav className="flex flex-col px-6 mx-auto max-w-4xl w-full">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.15, delay: index * 0.03 }}
+          {/* Nav Links */}
+          <nav className="flex flex-col px-6 mx-auto max-w-4xl w-full">
+            {navItems.map((item, index) => (
+              <motion.div
+                key={item.href}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.15, delay: index * 0.03 }}
+              >
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "block py-4 text-2xl font-medium transition-colors",
+                    isActive(item.href)
+                      ? "text-accent"
+                      : "text-muted-foreground active:text-foreground"
+                  )}
                 >
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "block py-4 text-2xl font-medium transition-colors",
-                      isActive(item.href)
-                        ? "text-accent"
-                        : "text-muted-foreground active:text-foreground"
-                    )}
-                  >
-                    {item.title}
-                  </Link>
-                </motion.div>
-              ))}
-            </nav>
+                  {item.title}
+                </Link>
+              </motion.div>
+            ))}
+          </nav>
         </motion.div>
       )}
     </AnimatePresence>
