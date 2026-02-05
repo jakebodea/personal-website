@@ -1,47 +1,46 @@
-import { SidebarProvider } from "@/components/ui/sidebar"
 import "./globals.css"
-import { ThemeProvider } from "@/components/providers/ThemeProvider"
+import { ThemeProvider } from "@/components/providers/theme-provider"
+import { NavigationProvider } from "@/components/providers/navigation-provider"
 import { Toaster } from "@/components/ui/sonner"
-import { GPTSlopToast } from "@/components/GPTSlopToast"
-import Script from 'next/script'
-import { Montserrat, Instrument_Serif } from 'next/font/google'
-import { Sidebar } from "@/components/layout/Sidebar"
-import { CanvasTrigger } from "../components/layout/CanvasTrigger"
-import { MobileFadeOverlay } from "../components/layout/MobileFadeOverlay"
+import { Montserrat, Instrument_Serif } from "next/font/google"
+import { TopNav } from "@/components/layout/top-nav"
+import { PageTransition } from "@/components/layout/page-transition"
+import { GPTSlopToast } from "@/components/gpt-slop-toast"
+import { Analytics } from "@vercel/analytics/next"
 
 const montserrat = Montserrat({
-  subsets: ['latin'],
-  variable: '--font-montserrat',
-  display: 'swap',
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
 })
 
 const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  variable: '--font-instrument-serif',
-  weight: ['400'],
-  style: ['normal', 'italic'],
-  display: 'swap',
+  subsets: ["latin"],
+  variable: "--font-instrument-serif",
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
 })
 
 export const metadata = {
   title: {
-    default: 'Jake Bodea',
-    template: '%s | Jake Bodea'
+    default: "jake bodea",
+    template: "%s | jake bodea",
   },
-  description: 'Jake Bodea\'s personal website',
+  description: "jake bodea's personal website",
   openGraph: {
-    title: 'Jake Bodea',
-    description: 'Personal Website',
-    url: 'https://jakebodea.com',
-    siteName: 'Jake Bodea Personal Website',
-    locale: 'en_US',
-    type: 'website',
+    title: "jake bodea",
+    description: "personal website",
+    url: "https://jakebodea.com",
+    siteName: "jake bodea",
+    locale: "en_US",
+    type: "website",
   },
   robots: {
     index: true,
     follow: true,
   },
-  metadataBase: new URL('https://jakebodea.com'),
+  metadataBase: new URL("https://jakebodea.com"),
 }
 
 export default function RootLayout({
@@ -50,42 +49,54 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${montserrat.variable} ${instrumentSerif.variable} font-sans`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${montserrat.variable} ${instrumentSerif.variable} font-sans`}
+    >
       <head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className={`font-sans`}>
+      <body className="min-h-screen bg-background text-foreground font-sans">
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
-            {process.env.VERCEL_GIT_COMMIT_REF === 'dev' && (
-              <div className="fixed top-2 right-2 z-50 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">
-                DEV
+          <NavigationProvider>
+            {process.env.VERCEL_GIT_COMMIT_REF === "dev" && (
+              <div className="fixed top-2 right-2 z-[100] bg-accent text-white text-xs font-bold px-2 py-1 rounded">
+                dev
               </div>
             )}
-            <div className="flex h-screen w-screen scrollbar-thin bg-background">
-              <Sidebar />
-              <div className="flex-1 overflow-hidden min-h-0 flex flex-col">
-                <div className="md:p-4 h-full min-h-0 flex-1 relative">
-                  <CanvasTrigger />
-                  <MobileFadeOverlay />
-                  <main className="h-full overflow-auto scrollbar-thin pt-12 md:pt-2 md:rounded-2xl md:border md:border-border/20 md:shadow-lg bg-gradient-to-br from-[#FBFAF4] to-[#EAEEEF] dark:bg-gradient-to-br dark:from-background dark:to-contrast-lighter">{children}</main>
-                </div>
-              </div>
-            </div>
-          </SidebarProvider>
-          <Toaster />
-          <GPTSlopToast />
+            <TopNav />
+            <main className="min-h-[calc(100vh-3.5rem)]">
+              <PageTransition>{children}</PageTransition>
+            </main>
+            <Toaster />
+            <GPTSlopToast />
+          </NavigationProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
-      <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
     </html>
   )
 }

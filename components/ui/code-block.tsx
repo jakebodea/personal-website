@@ -106,7 +106,7 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
         codeTagProps={{
           style: {
             fontFamily: "var(--font-mono)",
-          }
+          },
         }}
       >
         {String(code).replace(/\n$/, "")}
