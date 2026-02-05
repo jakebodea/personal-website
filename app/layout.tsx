@@ -65,6 +65,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider>
+            {process.env.VERCEL_GIT_COMMIT_REF === 'dev' && (
+              <div className="fixed top-2 right-2 z-50 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">
+                DEV
+              </div>
+            )}
             <div className="flex h-screen w-screen scrollbar-thin bg-background">
               <Sidebar />
               <div className="flex-1 p-4 overflow-hidden min-h-0">
