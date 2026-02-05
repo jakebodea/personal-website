@@ -83,7 +83,7 @@ export default function RootLayout({
         >
           <NavigationProvider>
             {process.env.VERCEL_GIT_COMMIT_REF === "dev" && (
-              <div className="fixed top-2 right-2 z-[100] bg-accent text-white text-xs font-bold px-2 py-1 rounded">
+              <div className="fixed top-2 left-2 z-[100] bg-accent text-white text-xs font-bold px-2 py-1 rounded">
                 dev
               </div>
             )}
