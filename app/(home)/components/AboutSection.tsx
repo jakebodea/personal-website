@@ -20,56 +20,58 @@ export default function AboutSection(): React.ReactNode {
                     </h2>
                     <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                         <p>
-                            I build AI systems that solve real problems –– be it saving people hours of work, 
-                            catching issues before they become expensive mistakes, or bringing in new revenue. 
-                            While my primary focus is on <EmphasisText>AI/ML engineering</EmphasisText> (whichever is 
-                            necessary for the project at hand), I also emphasize <EmphasisText>full-stack development</EmphasisText> 
-                            because I believe that the best AI is the kind that actually gets used –– whether or not people know it&apos;s AI.
+                            {"I build AI systems that solve real problems –– be it saving people hours of work, "}
+                            {"catching issues before they become expensive mistakes, or bringing in new revenue. "}
+                            {"While my primary focus is on "}
+                            <EmphasisText>AI or ML engineering</EmphasisText>
+                            {" (depending on the project), I also emphasize "}
+                            <EmphasisText>full-stack development</EmphasisText>
+                            {" because I believe that the best AI is the kind that actually gets used –– whether or not people know it's AI."}
                         </p>
                         <p>Some keyword spam (sorry):</p>
                         <ul className="list-disc pl-5">
                             <li>
-                                My tech stack is always evolving, but my current language stack is <EmphasisText>Python, SQL, JavaScript, and TypeScript.</EmphasisText>
+                                {"My tech stack is always evolving, but my current language stack is "}
+                                <EmphasisText>Python, SQL, JavaScript, and TypeScript.</EmphasisText>
                             </li>
+                            {/* <li>
+                                {"I've been working on mastering some more low-level languages like "}
+                                <EmphasisText>C++ and Rust.</EmphasisText>
+                            </li> */}
                             <li>
-                                I&apos;ve been working on mastering some more low-level languages like <EmphasisText>C++ and Rust.</EmphasisText>
+                                {"My current go-to systems and frameworks for frontend are "}
+                                <EmphasisText>React, Next.js</EmphasisText>
+                                {", Tailwind CSS, and Shadcn UI."}
                             </li>
+                            <li>{"I like to use FastAPI for my backend."}</li>
+                            <li>{"I've worked with databases like PostgreSQL, Databricks, and MS SQL."}</li>
+                            <li>{"I use Docker for containerization."}</li>
+                            <li>{"I have experience with cloud platforms such as AWS, GCP, and Azure."}</li>
+                            <li>{"I've worked with both GitHub and Bitbucket for version control and building CI/CD pipelines."}</li>
+                            <li>{"As far as AI/ML APIs, I've worked with OpenAI, Anthropic, Google, and Hugging Face."}</li>
                             <li>
-                                My current go-to systems and frameworks for frontend are <EmphasisText>React, Next.js</EmphasisText>, Tailwind CSS, and Shadcn UI.
-                            </li>
-                            <li>
-                                For my backend, I use FastAPI.
-                            </li>
-                            <li>
-                                I&apos;ve worked with databases like PostgreSQL, Databricks, and MS SQL.
-                            </li>
-                            <li>
-                                I use Docker for containerization.
-                            </li>
-                            <li>
-                                I have experience with cloud platforms such as AWS, GCP, and Azure.
-                            </li>
-                            <li>
-                                I&apos;ve worked with both GitHub and Bitbucket for version control and building CI/CD pipelines.
-                            </li>
-                            <li>
-                                As far as AI/ML APIs, I&apos;ve worked with OpenAI, Anthropic, Google, and Hugging Face.
-                            </li>
-                            <li>
-                                Model development is obviously in <EmphasisText>PyTorch</EmphasisText> :)
+                                {"Model development is obviously in "}
+                                <EmphasisText>PyTorch</EmphasisText>
+                                {" :)"}
                             </li>
                         </ul>
                         <p>
-                            More on traditional <EmphasisText>Machine Learning:</EmphasisText> My foundations are rooted in my academic background.
-                            I&apos;ve been working towards an AI graduate certificate at <EmphasisText>Stanford,</EmphasisText> maintaining a {" "}
-                            <EmphasisText>4.0 GPA</EmphasisText> through some of the most challenging courses in the field. I&apos;ve also 
-                            completed an undergraduate degree in math, CS, and business data analytics (and music lol), where I graduated as the 
-                            <EmphasisText>outstanding Mathematics graduate.</EmphasisText> This background enables me to approach ML challenges with 
-                            deep fundamentals understanding, leading to strong models that actually make an impact on the business.
+                            {"More on traditional "}
+                            <EmphasisText>Machine Learning:</EmphasisText>
+                            {" My foundations are rooted in my academic background. I've been working towards an AI graduate certificate at "}
+                            <EmphasisText>Stanford</EmphasisText>
+                            {" maintaining a "}
+                            <EmphasisText>4.0 GPA</EmphasisText>
+                            {" through some of the most challenging courses in the field. I've also completed an undergraduate degree in math, CS, and business data analytics (and music lol), where I graduated as the "}
+                            <EmphasisText>outstanding Mathematics graduate.</EmphasisText>
+                            {" This background enables me to approach ML challenges with deep fundamentals understanding, leading to strong models that actually make an impact on the business."}
                         </p>
                         <p>
-                            Outside my day job, my non-extracurricular time is spent either <EmphasisText>consulting</EmphasisText> local businesses for AI solutions, 
-                            or as a <EmphasisText>course facilitator</EmphasisText> for Stanford&apos;s Machine Learning and AI Principles courses. 
+                            {"Outside my day job, my non-extracurricular time is spent either "}
+                            <EmphasisText>consulting</EmphasisText>
+                            {" local businesses for AI solutions, or as a "}
+                            <EmphasisText>course facilitator</EmphasisText>
+                            {" for Stanford's Machine Learning and AI Principles courses."}
                         </p>
                     </div>
                 </CardContent>

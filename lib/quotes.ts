@@ -1,23 +1,24 @@
-import { quotesData } from '@/content/quotes-data'
+import { getQuotesFromNotion } from './notion'
 
 export interface QuoteData {
   quote: string
   author: string
 }
 
-
-export function getAllQuotes(): QuoteData[] {
-  return quotesData
+export async function getAllQuotes(): Promise<QuoteData[]> {
+  return await getQuotesFromNotion()
 }
 
-export function searchQuotes(query: string): QuoteData[] {
+export async function searchQuotes(query: string): Promise<QuoteData[]> {
+  const allQuotes = await getAllQuotes()
+  
   if (!query.trim()) {
-    return getAllQuotes()
+    return allQuotes
   }
 
   const searchTerm = query.toLowerCase()
   
-  return getAllQuotes().filter((quote) => {
+  return allQuotes.filter((quote) => {
     const quoteMatch = quote.quote.toLowerCase().includes(searchTerm)
     const authorMatch = quote.author.toLowerCase().includes(searchTerm)
     return quoteMatch || authorMatch

@@ -4,10 +4,10 @@ export const timelineItems = [
     endDate: "Present",
     image: "/images/taxrise.jpeg",
     title: "Machine Learning Engineer",
-    location: "TaxRise - Irvine, CA",
+    location: "TaxRise",
     bullets: [
-      "Built a full-stack internal application that delivers LLM-generated coaching for sales calls, supporting both text-to-text and voice-to-voice modalities—automating what was previously manual manager call reviews",
-      "Developed a backend system that processes over 5,000 daily calls, generating transcripts, summaries, and insights—fully integrated with Salesforce",
+      "Built a full-stack internal application that delivers LLM-generated coaching for sales calls, supporting both text-to-text and voice-to-voice modalities, automating what was previously manual manager call reviews",
+      "Developed a backend system that processes over 5,000 daily calls, generating transcripts, summaries, and insights, with full integration with Salesforce",
       "Created a client-facing, full-stack application for document upload and classification using a custom ML model, also supporting views for internal document requests and matching",
       "Led ML efforts to support Legal by building a compliance and sentiment analysis model for all company calls, with real-time dashboards for analysis and auditability, allowing departments to catch potential issues before external escalation",
       "Designed workflows to automate both inbound and outbound calls via autonomous agents, with support for tool invocation and database integrations"
@@ -28,7 +28,7 @@ export const timelineItems = [
     endDate: "November 2024",
     image: "/images/ventris.png",
     title: "Lead AI Engineer",
-    location: "Ventris Medical - Newport Beach, CA",
+    location: "Ventris Medical",
     bullets: [
       "Engineered a mobile application to streamline data entry, utilizing object detection algorithms, compression techniques, and OCR partners, to reduce manual data processing time by over 10 hours per week per employee",
       "Supported R&D by automating weekly analysis of published journal articles in the bone graft industry",
@@ -64,7 +64,7 @@ export const timelineItems = [
     endDate: "January 2023",
     image: "/images/beckman.png",
     title: "Data Science Intern",
-    location: "Beckman Coulter Diagnostics - Brea, CA",
+    location: "Beckman Coulter Diagnostics",
     bullets: [
       "Developed and implemented a predictive ML model in collaboration with HR to enhance employee retention strategies",
       "Automated monthly cloud cost ML forecasts and integrated results with PowerBI reports for L1s",

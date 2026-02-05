@@ -10,8 +10,8 @@ const ComingSoon = () => (
                 </div>
                 <h3 className="text-2xl font-semibold text-foreground">Coming Soon</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                    I&apos;m currently curating my best projects for this showcase.
-                    In the meantime, feel free to explore my GitHub for active repositories and contributions.
+                    I&apos;m working on putting together some projects I can share publicly (most of my work is internal-only, so bear with me!).
+                    In the meantime, check out my experience timeline for project overviews, or explore my GitHub for contribution history.
                 </p>
                 <a
                     href="https://github.com/jakebodea"

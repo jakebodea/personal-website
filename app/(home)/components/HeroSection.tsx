@@ -6,14 +6,14 @@ import { motion } from "framer-motion";
 export default function HeroSection(): React.ReactNode {
   return (
     <motion.div
-      className="mb-16"
+      className="mb-8 md:mb-16"
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
     >
       <div className="mb-8">
         <motion.div
-          className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6"
+          className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 md:mb-6"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -41,7 +41,7 @@ export default function HeroSection(): React.ReactNode {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           {/* Building cool stuff that both look good and solve real problems, from algorithms to web & iOS apps... and some totally unnecessary but fun side projects too! */}
-          Great work that doesn&apos;t look great isn&apos;t truly great yet. This mantra guides my projects, whether it&apos;s designing user interfaces, developing models, or tidying up codebases.
+          {"Build fast, ship fast, and fix fast, but it has to look good throughout. Optimizing every element from the user's perspective, be it frontend interfaces, backends, or machine learning models, is key to an end product that's actually useful."}
         </motion.p>
       </div>
     </motion.div>

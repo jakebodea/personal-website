@@ -1,6 +1,10 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileTimeline from "./MobileTimeline";
 
 interface TimelineItem {
   startDate: string;
@@ -16,6 +20,14 @@ interface TimelineProps {
 }
 
 const Timeline: React.FC<TimelineProps> = ({ items }) => {
+  const isMobile = useIsMobile();
+
+  // Render mobile timeline for mobile devices
+  if (isMobile) {
+    return <MobileTimeline items={items} />;
+  }
+
+  // Desktop timeline (original layout)
   return (
     <div className="relative max-w-6xl mx-auto">
       {/* Main Timeline Line - centered */}
