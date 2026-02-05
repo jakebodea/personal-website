@@ -4,12 +4,11 @@ import { PageTitle } from "./page-title"
 
 interface BlogPostTitleProps {
   children: string
-  className?: string
 }
 
-export function BlogPostTitle({ children, className }: BlogPostTitleProps) {
+export function BlogPostTitle({ children }: BlogPostTitleProps) {
   return (
-    <PageTitle className={className}>
+    <PageTitle variant="blog">
       {children}
     </PageTitle>
   )

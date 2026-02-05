@@ -52,9 +52,7 @@ export default async function BlogPostPage({ params }: { params: Promise<PagePro
         </div>
         
         <article className="prose prose-neutral dark:prose-invert max-w-none">
-          <BlogPostTitle className="font-serif font-light text-4xl md:text-5xl text-foreground mb-2">
-            {title}
-          </BlogPostTitle>
+          <BlogPostTitle>{title}</BlogPostTitle>
           <p className="text-sm text-muted-foreground mb-8 font-sans">
             {new Date(date + 'T00:00:00').toLocaleDateString(undefined, {
               weekday: 'long',
