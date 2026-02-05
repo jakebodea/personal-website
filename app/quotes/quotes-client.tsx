@@ -3,6 +3,7 @@
 import type { QuoteData } from '@/lib/quotes'
 import { useState, useEffect, useMemo } from 'react'
 import { SearchInput } from '@/components/common/search-input'
+import { PageTitle } from '@/components/layout/page-title'
 import type { ReactNode } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { NotionSyncBrag } from '@/components/layout/notion-sync-brag'
@@ -161,7 +162,7 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
   return (
     <div className="min-h-full">
       <div className="container mx-auto max-w-3xl px-6 py-8">
-        <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">quotes</h1>
+        <PageTitle className="text-4xl md:text-5xl font-serif text-foreground mb-4">quotes</PageTitle>
         <p className="text-lg text-muted-foreground mb-3">
           a collection of quotes and sources that have inspired me.
         </p>

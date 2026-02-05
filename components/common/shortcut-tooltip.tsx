@@ -6,6 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useIsTouchDevice } from "@/hooks/use-mobile"
 
 interface ShortcutTooltipProps {
   shortcut: string
@@ -13,6 +14,13 @@ interface ShortcutTooltipProps {
 }
 
 export function ShortcutTooltip({ shortcut, children }: ShortcutTooltipProps) {
+  const isTouchDevice = useIsTouchDevice()
+
+  // On touch devices, just render children without tooltip
+  if (isTouchDevice) {
+    return <>{children}</>
+  }
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>

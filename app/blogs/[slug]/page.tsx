@@ -11,6 +11,7 @@ import remarkMath from 'remark-math'
 import rehypeMathjax from 'rehype-mathjax'
 import { CodeBlock } from '@/components/ui/code-block'
 import { CopyMarkdownButton } from '@/components/common/copy-markdown-button'
+import { BlogPostTitle } from '@/components/layout/blog-post-title'
 
 interface PageProps {
   slug: string
@@ -51,9 +52,9 @@ export default async function BlogPostPage({ params }: { params: Promise<PagePro
         </div>
         
         <article className="prose prose-neutral dark:prose-invert max-w-none">
-          <h1 className="font-serif font-light text-4xl md:text-5xl text-foreground mb-2">
+          <BlogPostTitle className="font-serif font-light text-4xl md:text-5xl text-foreground mb-2">
             {title}
-          </h1>
+          </BlogPostTitle>
           <p className="text-sm text-muted-foreground mb-8 font-sans">
             {new Date(date + 'T00:00:00').toLocaleDateString(undefined, {
               weekday: 'long',

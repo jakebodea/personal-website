@@ -7,8 +7,10 @@ import { useTheme } from "next-themes"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Sun, Moon } from "lucide-react"
+import { MenuIcon } from "@/components/ui/menu-icon"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { ShortcutTooltip } from "@/components/common/shortcut-tooltip"
+import { MobileMenu } from "@/components/layout/mobile-menu"
 
 const navItems = [
   { title: "home", href: "/" },
@@ -23,6 +25,7 @@ export function TopNav() {
   const router = useRouter()
   const { setTheme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
   React.useEffect(() => {
     setMounted(true)
@@ -51,60 +54,101 @@ export function TopNav() {
     return pathname.startsWith(href)
   }
 
-  return (
-    <nav className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-sm">
-      <div className="mx-auto max-w-4xl px-6">
-        <div className="flex h-14 items-center justify-center">
-          {/* Navigation Tabs - horizontal scroll on mobile */}
-          <TooltipProvider delayDuration={300}>
-            <div className="flex items-center gap-1 overflow-x-auto scrollbar-thin">
-              {navItems.map((item, index) => (
-                <ShortcutTooltip key={item.href} shortcut={String(index + 1)}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "relative px-3 py-1.5 text-sm whitespace-nowrap transition-colors rounded-md",
-                      isActive(item.href)
-                        ? "text-accent"
-                        : "text-muted-foreground hover:text-foreground"
-                    )}
-                  >
-                    {isActive(item.href) && (
-                      <motion.span
-                        layoutId="nav-indicator"
-                        className="absolute inset-0 bg-accent/10 rounded-md"
-                        transition={{
-                          type: "spring",
-                          stiffness: 350,
-                          damping: 30,
-                        }}
-                      />
-                    )}
-                    <span className="relative z-10">{item.title}</span>
-                  </Link>
-                </ShortcutTooltip>
-              ))}
+  const closeMobileMenu = React.useCallback(() => {
+    setMobileMenuOpen(false)
+  }, [])
 
-              {/* Theme toggle */}
-              {mounted && (
-                <ShortcutTooltip shortcut="t">
+  return (
+    <>
+      <nav className="sticky top-0 z-[80] w-full bg-transparent md:bg-background">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className="flex h-14 items-center justify-center">
+            {/* Desktop Navigation */}
+            <TooltipProvider delayDuration={300}>
+              <div className="hidden md:flex items-center gap-1">
+                {navItems.map((item, index) => (
+                  <ShortcutTooltip key={item.href} shortcut={String(index + 1)}>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "relative px-3 py-1.5 text-sm whitespace-nowrap transition-colors rounded-md",
+                        isActive(item.href)
+                          ? "text-accent"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {isActive(item.href) && (
+                        <motion.span
+                          layoutId="nav-indicator"
+                          className="absolute inset-0 bg-accent/10 rounded-md"
+                          transition={{
+                            type: "spring",
+                            stiffness: 350,
+                            damping: 30,
+                          }}
+                        />
+                      )}
+                      <span className="relative z-10">{item.title}</span>
+                    </Link>
+                  </ShortcutTooltip>
+                ))}
+
+                {/* Desktop Theme toggle */}
+                {mounted && (
+                  <ShortcutTooltip shortcut="t">
+                    <button
+                      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                      className="ml-2 p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md shrink-0"
+                      aria-label="Toggle theme"
+                    >
+                      {resolvedTheme === "dark" ? (
+                        <Sun className="h-4 w-4" />
+                      ) : (
+                        <Moon className="h-4 w-4" />
+                      )}
+                    </button>
+                  </ShortcutTooltip>
+                )}
+              </div>
+            </TooltipProvider>
+
+            {/* Mobile Header */}
+            <div className="flex md:hidden items-center justify-end w-full">
+              <div className="flex items-center gap-2 -mr-2">
+                {/* Mobile Theme toggle */}
+                {mounted && (
                   <button
                     onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-                    className="ml-2 p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md shrink-0"
+                    className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md"
                     aria-label="Toggle theme"
                   >
                     {resolvedTheme === "dark" ? (
-                      <Sun className="h-4 w-4" />
+                      <Sun className="h-5 w-5" />
                     ) : (
-                      <Moon className="h-4 w-4" />
+                      <Moon className="h-5 w-5" />
                     )}
                   </button>
-                </ShortcutTooltip>
-              )}
+                )}
+                {/* Hamburger button */}
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md"
+                  aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                >
+                  <MenuIcon isOpen={mobileMenuOpen} />
+                </button>
+              </div>
             </div>
-          </TooltipProvider>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <MobileMenu
+        navItems={navItems}
+        isOpen={mobileMenuOpen}
+        onClose={closeMobileMenu}
+      />
+    </>
   )
 }
