@@ -5,11 +5,12 @@ import { cn } from "@/lib/utils"
 interface PageTitleProps {
   children: string
   as?: "h1" | "h2" | "h3"
-  variant?: "home" | "blog"
+  variant?: "home" | "page" | "blog"
 }
 
 const variantStyles = {
   home: "text-4xl md:text-5xl font-serif mb-8 text-foreground",
+  page: "text-4xl md:text-5xl font-serif mb-4 text-foreground",
   blog: "font-serif font-light text-4xl md:text-5xl text-foreground mb-2",
 }
 
