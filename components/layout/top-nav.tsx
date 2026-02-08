@@ -3,14 +3,13 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { useTheme } from "next-themes"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { Sun, Moon } from "lucide-react"
 import { MenuIcon } from "@/components/ui/menu-icon"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { ShortcutTooltip } from "@/components/common/shortcut-tooltip"
 import { MobileMenu } from "@/components/layout/mobile-menu"
+import { ThemeToggle } from "@/components/layout/theme-toggle"
 
 const navItems = [
   { title: "home", href: "/" },
@@ -23,13 +22,7 @@ const navItems = [
 export function TopNav() {
   const pathname = usePathname()
   const router = useRouter()
-  const { setTheme, resolvedTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
-
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -40,14 +33,11 @@ export function TopNav() {
       if (num >= 1 && num <= navItems.length) {
         router.push(navItems[num - 1].href)
       }
-      if (e.key === "t") {
-        setTheme(resolvedTheme === "dark" ? "light" : "dark")
-      }
     }
 
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [resolvedTheme, setTheme, router])
+  }, [router])
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/"
@@ -94,21 +84,11 @@ export function TopNav() {
                 ))}
 
                 {/* Desktop Theme toggle */}
-                {mounted && (
-                  <ShortcutTooltip shortcut="t">
-                    <button
-                      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-                      className="ml-2 p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md shrink-0"
-                      aria-label="Toggle theme"
-                    >
-                      {resolvedTheme === "dark" ? (
-                        <Sun className="h-4 w-4" />
-                      ) : (
-                        <Moon className="h-4 w-4" />
-                      )}
-                    </button>
-                  </ShortcutTooltip>
-                )}
+                <ShortcutTooltip shortcut="t">
+                  <div className="ml-2 shrink-0">
+                    <ThemeToggle />
+                  </div>
+                </ShortcutTooltip>
               </div>
             </TooltipProvider>
 
@@ -116,19 +96,7 @@ export function TopNav() {
             <div className="flex md:hidden items-center justify-end w-full">
               <div className="flex items-center gap-2 -mr-2">
                 {/* Mobile Theme toggle */}
-                {mounted && (
-                  <button
-                    onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-                    className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md"
-                    aria-label="Toggle theme"
-                  >
-                    {resolvedTheme === "dark" ? (
-                      <Sun className="h-5 w-5" />
-                    ) : (
-                      <Moon className="h-5 w-5" />
-                    )}
-                  </button>
-                )}
+                <ThemeToggle iconSize="md" />
                 {/* Hamburger button */}
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
