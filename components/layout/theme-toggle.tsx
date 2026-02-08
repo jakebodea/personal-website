@@ -43,6 +43,7 @@ export function ThemeToggle({
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const leaveTimer = useRef<ReturnType<typeof setTimeout>>(null)
 
   useEffect(() => {
     setMounted(true)
@@ -94,7 +95,16 @@ export function ThemeToggle({
   const sizeClass = iconSizeClasses[iconSize]
 
   return (
-    <div ref={containerRef} className="relative">
+    <div
+      ref={containerRef}
+      className="relative"
+      onMouseLeave={() => {
+        leaveTimer.current = setTimeout(() => setIsOpen(false), 100)
+      }}
+      onMouseEnter={() => {
+        if (leaveTimer.current) clearTimeout(leaveTimer.current)
+      }}
+    >
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md"

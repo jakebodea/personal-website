@@ -17,13 +17,13 @@ interface ShortcutTooltipProps {
 export function ShortcutTooltip({ shortcut, children, disabled }: ShortcutTooltipProps) {
   const isMobile = useIsMobile()
 
-  // On mobile screens or when disabled, just render children without tooltip
-  if (isMobile || disabled) {
+  // On mobile screens, just render children without tooltip
+  if (isMobile) {
     return <>{children}</>
   }
 
   return (
-    <Tooltip>
+    <Tooltip open={disabled ? false : undefined}>
       <TooltipTrigger asChild>
         {children}
       </TooltipTrigger>
