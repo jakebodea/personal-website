@@ -26,10 +26,30 @@ export function TopNav() {
   const { setTheme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  const navContainerRef = React.useRef<HTMLDivElement>(null)
+  const [indicator, setIndicator] = React.useState({ left: 0, width: 0, opacity: 0 })
 
   React.useEffect(() => {
     setMounted(true)
   }, [])
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/"
+    return pathname.startsWith(href)
+  }
+
+  const activeIndex = navItems.findIndex(item => isActive(item.href))
+
+  // Measure active tab position (scroll-independent via offsetLeft/offsetWidth)
+  React.useLayoutEffect(() => {
+    const container = navContainerRef.current
+    if (!container || activeIndex === -1) return
+    const links = container.querySelectorAll<HTMLAnchorElement>("a")
+    const activeLink = links[activeIndex]
+    if (activeLink) {
+      setIndicator({ left: activeLink.offsetLeft, width: activeLink.offsetWidth, opacity: 1 })
+    }
+  }, [activeIndex])
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -38,6 +58,7 @@ export function TopNav() {
 
       const num = parseInt(e.key)
       if (num >= 1 && num <= navItems.length) {
+        window.scrollTo(0, 0)
         router.push(navItems[num - 1].href)
       }
       if (e.key === "t") {
@@ -48,11 +69,6 @@ export function TopNav() {
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [resolvedTheme, setTheme, router])
-
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === "/"
-    return pathname.startsWith(href)
-  }
 
   const closeMobileMenu = React.useCallback(() => {
     setMobileMenuOpen(false)
@@ -65,11 +81,17 @@ export function TopNav() {
           <div className="flex h-14 items-center justify-center">
             {/* Desktop Navigation */}
             <TooltipProvider delayDuration={300}>
-              <div className="hidden md:flex items-center gap-1">
+              <div ref={navContainerRef} className="relative hidden md:flex items-center gap-1">
+                <motion.span
+                  className="absolute top-0 bottom-0 bg-accent/10 rounded-md"
+                  animate={indicator}
+                  transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                />
                 {navItems.map((item, index) => (
                   <ShortcutTooltip key={item.href} shortcut={String(index + 1)}>
                     <Link
                       href={item.href}
+                      onClick={() => window.scrollTo(0, 0)}
                       className={cn(
                         "relative px-3 py-1.5 text-sm whitespace-nowrap transition-colors rounded-md",
                         isActive(item.href)
@@ -77,17 +99,6 @@ export function TopNav() {
                           : "text-muted-foreground hover:text-foreground"
                       )}
                     >
-                      {isActive(item.href) && (
-                        <motion.span
-                          layoutId="nav-indicator"
-                          className="absolute inset-0 bg-accent/10 rounded-md"
-                          transition={{
-                            type: "spring",
-                            stiffness: 350,
-                            damping: 30,
-                          }}
-                        />
-                      )}
                       <span className="relative z-10">{item.title}</span>
                     </Link>
                   </ShortcutTooltip>
