@@ -108,7 +108,7 @@ export function ThemeToggle({
   )
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
+    <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
       {shortcut ? (
         <ShortcutTooltip shortcut={shortcut} disabled={open}>
           {trigger}
@@ -117,7 +117,8 @@ export function ThemeToggle({
         trigger
       )}
       <DropdownMenuContent
-        align="end"
+        align="start"
+        className="z-[90]"
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         onCloseAutoFocus={(e) => e.preventDefault()}
@@ -131,7 +132,7 @@ export function ThemeToggle({
               className={
                 isActive
                   ? "text-accent focus:text-accent bg-accent/10 focus:bg-accent/10"
-                  : "text-muted-foreground"
+                  : "text-muted-foreground focus:text-foreground focus:bg-muted"
               }
             >
               <option.icon className="h-4 w-4" />
