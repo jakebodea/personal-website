@@ -42,7 +42,7 @@ export function TopNav() {
     if (activeLink) {
       setIndicator({ left: activeLink.offsetLeft, width: activeLink.offsetWidth, opacity: 1 })
     }
-  }, [activeIndex])
+  }, [activeIndex, pathname])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -66,7 +66,7 @@ export function TopNav() {
 
   return (
     <>
-      <nav className="sticky top-0 z-[80] w-full bg-transparent md:bg-background">
+      <nav className="sticky top-0 z-[80] w-full bg-transparent">
         <div className="mx-auto max-w-4xl px-6">
           <div className="flex h-14 items-center justify-center">
             {/* Desktop Navigation */}
@@ -105,7 +105,7 @@ export function TopNav() {
             <div className="flex md:hidden items-center justify-end w-full">
               <div className="flex items-center gap-2 -mr-2">
                 {/* Mobile Theme toggle */}
-                <ThemeToggle iconSize="md" />
+                <ThemeToggle iconSize="md" align="end" />
                 {/* Hamburger button */}
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
