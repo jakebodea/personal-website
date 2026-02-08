@@ -18,17 +18,8 @@ export function PageTitle({ children, as: Tag = "h1", variant = "home" }: PageTi
   const styles = variantStyles[variant]
 
   return (
-    <>
-      {/* Mobile: sticky title that stays in header area */}
-      <div className="md:hidden sticky top-0 z-50 bg-background -mx-6 px-6 h-14 flex items-center">
-        <Tag className={cn(styles, "!m-0")}>
-          {children}
-        </Tag>
-      </div>
-      {/* Desktop: normal static title */}
-      <Tag className={cn("hidden md:block", styles)}>
-        {children}
-      </Tag>
-    </>
+    <div className="sticky top-0 z-50 bg-background -mx-6 px-6 h-14 flex items-center">
+      <Tag className={cn(styles, "!m-0")}>{children}</Tag>
+    </div>
   )
 }
