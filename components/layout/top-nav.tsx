@@ -23,7 +23,6 @@ export function TopNav() {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [themeDropdownOpen, setThemeDropdownOpen] = useState(false)
   const navContainerRef = useRef<HTMLDivElement>(null)
   const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 })
 
@@ -96,11 +95,9 @@ export function TopNav() {
                 ))}
 
                 {/* Desktop Theme toggle */}
-                <ShortcutTooltip shortcut="t" disabled={themeDropdownOpen}>
-                  <div className="ml-2 shrink-0">
-                    <ThemeToggle onOpenChange={setThemeDropdownOpen} />
-                  </div>
-                </ShortcutTooltip>
+                <div className="ml-2 shrink-0">
+                  <ThemeToggle shortcut="t" />
+                </div>
               </div>
             </TooltipProvider>
 

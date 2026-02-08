@@ -4,6 +4,13 @@ import { useState, useEffect, useRef } from "react"
 import { useTheme } from "next-themes"
 import { AnimatePresence, motion } from "framer-motion"
 import { Moon, Sun, Monitor } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { ShortcutTooltip } from "@/components/common/shortcut-tooltip"
 
 const iconSizeClasses = {
   sm: "h-4 w-4",
@@ -20,12 +27,6 @@ const iconTransition = {
   duration: 0.15,
 }
 
-const dropdownTransition = {
-  type: "spring" as const,
-  stiffness: 300,
-  damping: 20,
-}
-
 function ThemeIcon({ theme, className }: { theme: string; className: string }) {
   const option = themeOptions.find((o) => o.value === theme)
   const Icon = option?.icon ?? Moon
@@ -34,43 +35,21 @@ function ThemeIcon({ theme, className }: { theme: string; className: string }) {
 
 export function ThemeToggle({
   iconSize = "sm",
-  onOpenChange,
+  shortcut,
 }: {
   iconSize?: "sm" | "md"
-  onOpenChange?: (open: boolean) => void
+  shortcut?: string
 }) {
   const { theme, resolvedTheme, setTheme } = useTheme()
-  const [isOpen, setIsOpen] = useState(false)
+  const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const leaveTimer = useRef<ReturnType<typeof setTimeout>>(null)
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  useEffect(() => {
-    onOpenChange?.(isOpen)
-  }, [isOpen, onOpenChange])
-
-  // Click-outside dismissal
-  useEffect(() => {
-    if (!isOpen) return
-
-    const handleMouseDown = (e: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setIsOpen(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleMouseDown)
-    return () => document.removeEventListener("mousedown", handleMouseDown)
-  }, [isOpen])
-
-  // Keyboard handling
+  // 't' keyboard shortcut for quick toggle
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement
@@ -78,11 +57,7 @@ export function ThemeToggle({
 
       if (e.key === "t") {
         setTheme(resolvedTheme === "dark" ? "light" : "dark")
-        setIsOpen(false)
-      }
-
-      if (e.key === "Escape") {
-        setIsOpen(false)
+        setOpen(false)
       }
     }
 
@@ -90,25 +65,32 @@ export function ThemeToggle({
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [resolvedTheme, setTheme])
 
+  // Cleanup leave timer on unmount
+  useEffect(() => {
+    return () => {
+      if (leaveTimer.current) clearTimeout(leaveTimer.current)
+    }
+  }, [])
+
   if (!mounted) return null
 
   const sizeClass = iconSizeClasses[iconSize]
 
-  return (
-    <div
-      ref={containerRef}
-      className="relative"
-      onMouseLeave={() => {
-        leaveTimer.current = setTimeout(() => setIsOpen(false), 100)
-      }}
-      onMouseEnter={() => {
-        if (leaveTimer.current) clearTimeout(leaveTimer.current)
-      }}
-    >
+  const handlePointerEnter = () => {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current)
+  }
+
+  const handlePointerLeave = () => {
+    leaveTimer.current = setTimeout(() => setOpen(false), 100)
+  }
+
+  const trigger = (
+    <DropdownMenuTrigger asChild>
       <button
-        onClick={() => setIsOpen((prev) => !prev)}
         className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md"
         aria-label="Toggle theme"
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -122,39 +104,42 @@ export function ThemeToggle({
           </motion.div>
         </AnimatePresence>
       </button>
+    </DropdownMenuTrigger>
+  )
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: -4 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -4 }}
-            transition={dropdownTransition}
-            className="absolute right-0 top-full mt-1 z-[90] bg-popover border border-border rounded-md shadow-md p-1"
-          >
-            {themeOptions.map((option) => {
-              const isActive = theme === option.value
-              return (
-                <button
-                  key={option.value}
-                  onClick={() => {
-                    setTheme(option.value)
-                    setIsOpen(false)
-                  }}
-                  className={`flex items-center gap-2 w-full px-3 py-1.5 text-sm rounded-sm transition-colors ${
-                    isActive
-                      ? "text-accent bg-accent/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                  }`}
-                >
-                  <option.icon className="h-4 w-4" />
-                  {option.label}
-                </button>
-              )
-            })}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+  return (
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      {shortcut ? (
+        <ShortcutTooltip shortcut={shortcut} disabled={open}>
+          {trigger}
+        </ShortcutTooltip>
+      ) : (
+        trigger
+      )}
+      <DropdownMenuContent
+        align="end"
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
+        {themeOptions.map((option) => {
+          const isActive = theme === option.value
+          return (
+            <DropdownMenuItem
+              key={option.value}
+              onSelect={() => setTheme(option.value)}
+              className={
+                isActive
+                  ? "text-accent focus:text-accent bg-accent/10 focus:bg-accent/10"
+                  : "text-muted-foreground"
+              }
+            >
+              <option.icon className="h-4 w-4" />
+              {option.label}
+            </DropdownMenuItem>
+          )
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
