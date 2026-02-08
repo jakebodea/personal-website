@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useState, useEffect, useRef } from "react"
 import { useTheme } from "next-themes"
 import { AnimatePresence, motion } from "framer-motion"
 import { Moon, Sun, Monitor } from "lucide-react"
@@ -32,18 +32,28 @@ function ThemeIcon({ theme, className }: { theme: string; className: string }) {
   return <Icon className={className} />
 }
 
-export function ThemeToggle({ iconSize = "sm" }: { iconSize?: "sm" | "md" }) {
+export function ThemeToggle({
+  iconSize = "sm",
+  onOpenChange,
+}: {
+  iconSize?: "sm" | "md"
+  onOpenChange?: (open: boolean) => void
+}) {
   const { theme, resolvedTheme, setTheme } = useTheme()
-  const [isOpen, setIsOpen] = React.useState(false)
-  const [mounted, setMounted] = React.useState(false)
-  const containerRef = React.useRef<HTMLDivElement>(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true)
   }, [])
 
+  useEffect(() => {
+    onOpenChange?.(isOpen)
+  }, [isOpen, onOpenChange])
+
   // Click-outside dismissal
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isOpen) return
 
     const handleMouseDown = (e: MouseEvent) => {
@@ -60,7 +70,7 @@ export function ThemeToggle({ iconSize = "sm" }: { iconSize?: "sm" | "md" }) {
   }, [isOpen])
 
   // Keyboard handling
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement
       if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return

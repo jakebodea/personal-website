@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useState, useRef, useLayoutEffect, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { motion } from "framer-motion"
@@ -22,9 +22,10 @@ const navItems = [
 export function TopNav() {
   const pathname = usePathname()
   const router = useRouter()
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
-  const navContainerRef = React.useRef<HTMLDivElement>(null)
-  const [indicator, setIndicator] = React.useState({ left: 0, width: 0, opacity: 0 })
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [themeDropdownOpen, setThemeDropdownOpen] = useState(false)
+  const navContainerRef = useRef<HTMLDivElement>(null)
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 })
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/"
@@ -34,7 +35,7 @@ export function TopNav() {
   const activeIndex = navItems.findIndex(item => isActive(item.href))
 
   // Measure active tab position (scroll-independent via offsetLeft/offsetWidth)
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     const container = navContainerRef.current
     if (!container || activeIndex === -1) return
     const links = container.querySelectorAll<HTMLAnchorElement>("a")
@@ -44,7 +45,7 @@ export function TopNav() {
     }
   }, [activeIndex])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement
       if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return
@@ -60,7 +61,7 @@ export function TopNav() {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [router])
 
-  const closeMobileMenu = React.useCallback(() => {
+  const closeMobileMenu = useCallback(() => {
     setMobileMenuOpen(false)
   }, [])
 
@@ -95,9 +96,9 @@ export function TopNav() {
                 ))}
 
                 {/* Desktop Theme toggle */}
-                <ShortcutTooltip shortcut="t">
+                <ShortcutTooltip shortcut="t" disabled={themeDropdownOpen}>
                   <div className="ml-2 shrink-0">
-                    <ThemeToggle />
+                    <ThemeToggle onOpenChange={setThemeDropdownOpen} />
                   </div>
                 </ShortcutTooltip>
               </div>

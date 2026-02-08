@@ -1,6 +1,7 @@
 "use client"
 
-import * as React from "react"
+import { createContext, useContext, useRef, useMemo } from "react"
+import type { ReactNode } from "react"
 import { usePathname } from "next/navigation"
 
 type Direction = "left" | "right" | "none"
@@ -10,13 +11,13 @@ interface NavigationContextType {
   setDirection: (direction: Direction) => void
 }
 
-const NavigationContext = React.createContext<NavigationContextType>({
+const NavigationContext = createContext<NavigationContextType>({
   direction: "none",
   setDirection: () => {},
 })
 
 export function useNavigation() {
-  return React.useContext(NavigationContext)
+  return useContext(NavigationContext)
 }
 
 // Order of nav items for determining direction
@@ -28,10 +29,10 @@ function getNavIndex(pathname: string): number {
   return navOrder.indexOf(baseRoute)
 }
 
-export function NavigationProvider({ children }: { children: React.ReactNode }) {
+export function NavigationProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname()
-  const prevPathRef = React.useRef(pathname)
-  const directionRef = React.useRef<Direction>("none")
+  const prevPathRef = useRef(pathname)
+  const directionRef = useRef<Direction>("none")
 
   // Calculate direction synchronously during render
   if (prevPathRef.current !== pathname) {
@@ -44,7 +45,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     prevPathRef.current = pathname
   }
 
-  const contextValue = React.useMemo(
+  const contextValue = useMemo(
     () => ({
       direction: directionRef.current,
       setDirection: (dir: Direction) => {

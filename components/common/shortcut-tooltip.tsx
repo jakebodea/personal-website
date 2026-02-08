@@ -11,13 +11,14 @@ import { useIsMobile } from "@/hooks/use-mobile"
 interface ShortcutTooltipProps {
   shortcut: string
   children: React.ReactNode
+  disabled?: boolean
 }
 
-export function ShortcutTooltip({ shortcut, children }: ShortcutTooltipProps) {
+export function ShortcutTooltip({ shortcut, children, disabled }: ShortcutTooltipProps) {
   const isMobile = useIsMobile()
 
-  // On mobile screens, just render children without tooltip
-  if (isMobile) {
+  // On mobile screens or when disabled, just render children without tooltip
+  if (isMobile || disabled) {
     return <>{children}</>
   }
 
