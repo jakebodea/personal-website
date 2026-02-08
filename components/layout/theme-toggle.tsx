@@ -36,9 +36,11 @@ function ThemeIcon({ theme, className }: { theme: string; className: string }) {
 export function ThemeToggle({
   iconSize = "sm",
   shortcut,
+  align = "start",
 }: {
   iconSize?: "sm" | "md"
   shortcut?: string
+  align?: "start" | "end"
 }) {
   const { theme, resolvedTheme, setTheme } = useTheme()
   const [open, setOpen] = useState(false)
@@ -76,11 +78,13 @@ export function ThemeToggle({
 
   const sizeClass = iconSizeClasses[iconSize]
 
-  const handlePointerEnter = () => {
+  const handlePointerEnter = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return
     if (leaveTimer.current) clearTimeout(leaveTimer.current)
   }
 
-  const handlePointerLeave = () => {
+  const handlePointerLeave = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return
     leaveTimer.current = setTimeout(() => setOpen(false), 100)
   }
 
@@ -117,7 +121,7 @@ export function ThemeToggle({
         trigger
       )}
       <DropdownMenuContent
-        align="start"
+        align={align}
         className="z-[90]"
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}

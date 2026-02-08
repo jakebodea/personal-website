@@ -105,7 +105,7 @@ export function TopNav() {
             <div className="flex md:hidden items-center justify-end w-full">
               <div className="flex items-center gap-2 -mr-2">
                 {/* Mobile Theme toggle */}
-                <ThemeToggle iconSize="md" />
+                <ThemeToggle iconSize="md" align="end" />
                 {/* Hamburger button */}
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
