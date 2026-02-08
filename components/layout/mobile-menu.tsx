@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
@@ -21,12 +21,12 @@ export function MobileMenu({ navItems, isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname()
 
   // Close on route change
-  React.useEffect(() => {
+  useEffect(() => {
     onClose()
   }, [pathname, onClose])
 
   // Prevent body scroll when open
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden"
     } else {
@@ -38,7 +38,7 @@ export function MobileMenu({ navItems, isOpen, onClose }: MobileMenuProps) {
   }, [isOpen])
 
   // Close on Escape
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
         onClose()
