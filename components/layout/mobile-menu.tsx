@@ -76,6 +76,7 @@ export function MobileMenu({ navItems, isOpen, onClose }: MobileMenuProps) {
               >
                 <Link
                   href={item.href}
+                  onClick={() => window.scrollTo(0, 0)}
                   className={cn(
                     "block py-4 text-2xl font-medium transition-colors",
                     isActive(item.href)
