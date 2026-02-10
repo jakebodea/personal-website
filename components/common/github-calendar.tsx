@@ -1,8 +1,15 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { GitHubCalendar } from "react-github-calendar"
 
 export function GithubContributions() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
@@ -10,7 +17,7 @@ export function GithubContributions() {
         but my github contribution calendar gives an idea of my output.
       </p>
       <a href="https://github.com/jakebodea" target="_blank" rel="noopener noreferrer" className="block overflow-x-auto">
-        <GitHubCalendar username="jakebodea" colorScheme="dark" />
+        {mounted && <GitHubCalendar username="jakebodea" colorScheme="dark" />}
       </a>
     </div>
   )
