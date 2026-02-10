@@ -16,7 +16,7 @@ const contactLinks = [
   {
     url: "https://github.com/jakebodea",
     display: "github.com/jakebodea",
-    easterEgg: "idek if this has dms so don't reach out here but check out my commit history maps"
+    easterEgg: "don't DM me here but check out my commit history map"
   },
   {
     url: "https://x.com/jakebodea",
