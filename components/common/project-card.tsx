@@ -13,7 +13,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
-        <h2 className="text-2xl font-serif text-primary">{project.title}</h2>
+        <h2 className="text-2xl font-serif text-foreground">{project.title}</h2>
 
         <p className="text-sm text-muted-foreground">
           {project.description}
