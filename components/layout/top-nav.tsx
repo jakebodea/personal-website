@@ -17,6 +17,7 @@ const navItems = [
   { title: "projects", href: "/projects" },
   { title: "blogs", href: "/blogs" },
   { title: "quotes", href: "/quotes" },
+  { title: "contact", href: "/contact" },
 ]
 
 export function TopNav() {
