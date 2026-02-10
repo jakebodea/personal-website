@@ -1,5 +1,8 @@
-import { ComingSoon } from "@/components/common/coming-soon";
+import { GithubContributions } from "@/components/common/github-calendar";
+import { ProjectList } from "@/components/common/project-list";
 import { PageWrapper } from "@/components/layout/page-wrapper";
+import { Separator } from "@/components/ui/separator";
+import { projects } from "@/content/projects-data";
 
 export const metadata = {
   title: 'projects',
@@ -9,7 +12,13 @@ export const metadata = {
 export default function ProjectsPage(): React.ReactNode {
   return (
     <PageWrapper title="projects" subtitle="a showcase of my technical work.">
-      <ComingSoon />
+      <div className="space-y-8">
+        <Separator />
+        <GithubContributions />
+        <Separator />
+        <ProjectList projects={projects} />
+        <p className="text-sm text-muted-foreground text-center">and more...</p>
+      </div>
     </PageWrapper>
   )
 }

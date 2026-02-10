@@ -340,3 +340,28 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* react-tweet theme overrides */
+:root .react-tweet-theme {
+  --tweet-bg-color: #F0EFEA;
+  --tweet-bg-color-hover: #EBEAE5;
+  --tweet-quoted-bg-color-hover: rgba(0, 0, 0, 0.03);
+  --tweet-border: 1px solid hsl(45 8% 80%);
+  --tweet-font-color: #26251E;
+  --tweet-font-color-secondary: #3B3A33;
+  --tweet-color-blue-primary: #F54E00;
+  --tweet-color-blue-primary-hover: #dc4600;
+  --tweet-font-family: inherit;
+}
+
+.dark .react-tweet-theme {
+  --tweet-bg-color: #1B1913;
+  --tweet-bg-color-hover: #201E18;
+  --tweet-quoted-bg-color-hover: rgba(255, 255, 255, 0.03);
+  --tweet-border: 1px solid hsl(40 8% 25%);
+  --tweet-font-color: #EDECEC;
+  --tweet-font-color-secondary: #969592;
+  --tweet-color-blue-primary: #F54E00;
+  --tweet-color-blue-primary-hover: #dc4600;
+  --tweet-font-family: inherit;
+}

@@ -10,11 +10,12 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { ShortcutTooltip } from "@/components/common/shortcut-tooltip"
 import { MobileMenu } from "@/components/layout/mobile-menu"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
+import { useStickyTitle } from "@/components/providers/sticky-title-provider"
 
 const navItems = [
   { title: "home", href: "/" },
-  { title: "timeline", href: "/timeline" },
   { title: "projects", href: "/projects" },
+  { title: "timeline", href: "/timeline" },
   { title: "blogs", href: "/blogs" },
   { title: "quotes", href: "/quotes" },
   { title: "contact", href: "/contact" },
@@ -23,6 +24,7 @@ const navItems = [
 export function TopNav() {
   const pathname = usePathname()
   const router = useRouter()
+  const { hasStickyTitle } = useStickyTitle()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const navContainerRef = useRef<HTMLDivElement>(null)
   const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 })
@@ -67,7 +69,10 @@ export function TopNav() {
 
   return (
     <>
-      <nav className="sticky top-0 z-[80] w-full bg-transparent">
+      <nav className={cn("sticky top-0 z-[80] w-full", hasStickyTitle ? "bg-transparent" : "bg-background")}>
+        {!hasStickyTitle && (
+          <div className="absolute bottom-0 left-0 right-0 h-16 translate-y-full bg-gradient-to-b from-background to-transparent pointer-events-none" />
+        )}
         <div className="mx-auto max-w-4xl px-6">
           <div className="flex h-14 items-center justify-center">
             {/* Desktop Navigation */}
