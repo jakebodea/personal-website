@@ -5,22 +5,27 @@ import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import "./contact-link.css"
 
-function generateRandomKeyframes(textLength: number): string {
+function generateRandomKeyframes(): string {
   let keyframes = "0% { width: 0; }"
   let currentWidth = 0
-  const steps = Math.ceil(textLength * 1.5)
+  const numSteps = Math.floor(Math.random() * 15) + 15 // 15-29 steps
+  const widths: number[] = []
 
-  for (let i = 1; i < steps; i++) {
-    const randomPercent = Math.random() * 4 + 1
-    currentWidth += randomPercent
-    if (currentWidth >= 100) {
-      keyframes += ` 100% { width: 100%; }`
-      break
-    }
-    const keyframePercent = (i / steps) * 100
-    keyframes += ` ${keyframePercent.toFixed(1)}% { width: ${currentWidth.toFixed(1)}%; }`
+  // Generate random widths for each step
+  for (let i = 0; i < numSteps; i++) {
+    const randomIncrement = Math.random() * 4 + 1 // 1-5%
+    currentWidth += randomIncrement
+    widths.push(Math.min(currentWidth, 100))
+    if (currentWidth >= 100) break
   }
 
+  // Generate keyframes from the random widths
+  widths.forEach((width, index) => {
+    const keyframePercent = ((index + 1) / widths.length) * 100
+    keyframes += ` ${keyframePercent.toFixed(1)}% { width: ${width.toFixed(1)}%; }`
+  })
+
+  // Ensure we end at 100%
   if (!keyframes.includes("100%")) {
     keyframes += " 100% { width: 100%; }"
   }
@@ -44,7 +49,7 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
       const animationId = `typing-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
       animationIdRef.current = animationId
 
-      const keyframes = generateRandomKeyframes(easterEgg.length)
+      const keyframes = generateRandomKeyframes()
       const css = `@keyframes ${animationId} { ${keyframes} }`
 
       // Remove old style element if it exists
