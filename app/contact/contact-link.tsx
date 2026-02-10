@@ -60,8 +60,6 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
       styleRef.current = document.createElement("style")
       styleRef.current.textContent = css
       document.head.appendChild(styleRef.current)
-
-      console.log("Generated animation:", animationId, keyframes.substring(0, 100))
     }
 
     return () => {
