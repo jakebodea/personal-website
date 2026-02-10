@@ -17,6 +17,7 @@ export default function ProjectsPage(): React.ReactNode {
         <GithubContributions />
         <Separator />
         <ProjectList projects={projects} />
+        <p className="text-sm text-muted-foreground text-center">and more...</p>
       </div>
     </PageWrapper>
   )
