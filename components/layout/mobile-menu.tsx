@@ -60,7 +60,7 @@ export function MobileMenu({ navItems, isOpen, onClose }: MobileMenuProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 0.15 } }}
           exit={{ opacity: 0, transition: { duration: 0.1, delay: 0.1 } }}
-          className="fixed inset-0 z-[70] bg-background md:hidden"
+          className="fixed inset-0 z-[70] bg-background lg:hidden"
         >
           {/* Spacer for nav header */}
           <div className="h-14" />
