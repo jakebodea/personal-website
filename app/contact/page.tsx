@@ -69,8 +69,9 @@ export default function ContactPage() {
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
                     >
-                      <div className="pl-6 py-1 text-muted-foreground/70 text-xs italic">
-                        # unfortunately i still need this platform
+                      <div className="flex items-center gap-2 py-1 text-muted-foreground/70 text-xs italic">
+                        <span>#</span>
+                        <span>unfortunately i still need this platform</span>
                       </div>
                     </motion.div>
                   )}
