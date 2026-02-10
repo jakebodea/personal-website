@@ -14,8 +14,8 @@ import { useStickyTitle } from "@/components/providers/sticky-title-provider"
 
 const navItems = [
   { title: "home", href: "/" },
-  { title: "timeline", href: "/timeline" },
   { title: "projects", href: "/projects" },
+  { title: "timeline", href: "/timeline" },
   { title: "blogs", href: "/blogs" },
   { title: "quotes", href: "/quotes" },
   { title: "contact", href: "/contact" },
