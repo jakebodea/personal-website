@@ -7,28 +7,27 @@ import "./contact-link.css"
 
 function generateRandomKeyframes(): string {
   let keyframes = "0% { width: 0; }"
-  let currentWidth = 0
   const numSteps = Math.floor(Math.random() * 15) + 15 // 15-29 steps
-  const widths: number[] = []
+  const increments: number[] = []
+  let total = 0
 
-  // Generate random widths for each step
+  // Generate random increments (1-5%) for each step
   for (let i = 0; i < numSteps; i++) {
-    const randomIncrement = Math.random() * 4 + 1 // 1-5%
-    currentWidth += randomIncrement
-    widths.push(Math.min(currentWidth, 100))
-    if (currentWidth >= 100) break
+    const increment = Math.random() * 4 + 1 // 1-5%
+    increments.push(increment)
+    total += increment
   }
 
-  // Generate keyframes from the random widths
-  widths.forEach((width, index) => {
-    const keyframePercent = ((index + 1) / widths.length) * 100
-    keyframes += ` ${keyframePercent.toFixed(1)}% { width: ${width.toFixed(1)}%; }`
+  // Normalize increments to sum to 100%
+  const normalized = increments.map(inc => (inc / total) * 100)
+
+  // Generate keyframes with cumulative widths
+  let currentWidth = 0
+  normalized.forEach((increment, index) => {
+    currentWidth += increment
+    const keyframePercent = ((index + 1) / numSteps) * 100
+    keyframes += ` ${keyframePercent.toFixed(1)}% { width: ${currentWidth.toFixed(1)}%; }`
   })
-
-  // Ensure we end at 100%
-  if (!keyframes.includes("100%")) {
-    keyframes += " 100% { width: 100%; }"
-  }
 
   return keyframes
 }
