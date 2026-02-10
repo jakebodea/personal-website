@@ -6,7 +6,12 @@ import { ContactLink } from "./contact-link"
 const contactLinks = [
   {
     url: "mailto:jakebodea@gmail.com",
-    display: "jakebodea@gmail.com"
+    display: "jakebodea@gmail.com",
+    easterEgg: "no spam pls"
+  },
+  {
+    url: "https://x.com/jakebodea",
+    display: "x.com/jakebodea"
   },
   {
     url: "https://www.linkedin.com/in/jakebodea/",
@@ -17,10 +22,6 @@ const contactLinks = [
     url: "https://github.com/jakebodea",
     display: "github.com/jakebodea",
     easterEgg: "don't DM me here but check out my commit history map"
-  },
-  {
-    url: "https://x.com/jakebodea",
-    display: "x.com/jakebodea"
   }
 ]
 
