@@ -29,6 +29,10 @@ function getNavIndex(pathname: string): number {
   return navOrder.indexOf(baseRoute)
 }
 
+function getPathDepth(pathname: string): number {
+  return pathname.split("/").filter(Boolean).length
+}
+
 export function NavigationProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const prevPathRef = useRef(pathname)
@@ -39,8 +43,20 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
     const prevIndex = getNavIndex(prevPathRef.current)
     const currentIndex = getNavIndex(pathname)
 
-    if (prevIndex !== -1 && currentIndex !== -1 && prevIndex !== currentIndex) {
-      directionRef.current = currentIndex > prevIndex ? "right" : "left"
+    if (prevIndex !== -1 && currentIndex !== -1) {
+      if (prevIndex !== currentIndex) {
+        // Different main sections
+        directionRef.current = currentIndex > prevIndex ? "right" : "left"
+      } else if (prevIndex === currentIndex) {
+        // Same main section - check path depth for sub-routes
+        const prevDepth = getPathDepth(prevPathRef.current)
+        const currentDepth = getPathDepth(pathname)
+        if (currentDepth > prevDepth) {
+          directionRef.current = "right"
+        } else if (currentDepth < prevDepth) {
+          directionRef.current = "left"
+        }
+      }
     }
     prevPathRef.current = pathname
   }
