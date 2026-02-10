@@ -32,7 +32,11 @@ export default function ContactPage() {
       <div className="container max-w-2xl mx-auto px-6 py-12">
         <PageTitle>contact</PageTitle>
 
-        <div className="mt-12 rounded-lg border border-accent/10 bg-muted/20 p-4 font-mono text-sm">
+        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-12">
+          i'm always interested in connecting. here's where you can find me:
+        </p>
+
+        <div className="rounded-lg border border-accent/10 bg-muted/20 p-4 font-mono text-sm">
           <div className="space-y-2">
             {contactLinks.map((link) => (
               <div key={link.url} className="flex items-center gap-2">
