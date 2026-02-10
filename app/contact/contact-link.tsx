@@ -44,7 +44,7 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 py-1 px-2 text-muted-foreground/70 text-xs hover:bg-accent/10 rounded transition-colors group font-mono"
+              className="flex items-center gap-2 py-1 text-muted-foreground/70 text-xs font-mono"
             >
               <span>#</span>
               <span className="flex items-center">
