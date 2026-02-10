@@ -32,25 +32,23 @@ export default function ContactPage() {
       <div className="container max-w-2xl mx-auto px-6 py-12">
         <PageTitle>contact</PageTitle>
 
-        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-12">
-          i'm always interested in connecting. here's where you can find me:
-        </p>
-
-        <div className="space-y-3">
-          {contactLinks.map((link) => (
-            <Link
-              key={link.url}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 py-2 px-3 rounded-md hover:bg-accent/5 transition-colors"
-            >
-              <span className="text-muted-foreground group-hover:text-accent transition-colors">→</span>
-              <code className="font-mono text-sm text-muted-foreground group-hover:text-accent transition-colors">
-                {link.display}
-              </code>
-            </Link>
-          ))}
+        <div className="mt-12 rounded-lg border border-accent/10 bg-muted/20 p-4 font-mono text-sm">
+          <div className="space-y-2">
+            {contactLinks.map((link) => (
+              <div key={link.url} className="flex items-center gap-2">
+                <span className="text-accent/60">$</span>
+                <Link
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group text-muted-foreground hover:text-accent transition-colors"
+                >
+                  <span className="text-accent/70 group-hover:text-accent">open</span>
+                  <span className="ml-2 group-hover:underline">{link.display}</span>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
