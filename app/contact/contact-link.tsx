@@ -39,10 +39,15 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="flex items-center gap-2 py-1 text-muted-foreground/70 text-xs italic">
+            <Link
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 py-1 text-muted-foreground/70 text-xs italic hover:text-accent/70 transition-colors"
+            >
               <span>#</span>
               <span>{easterEgg}</span>
-            </div>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
