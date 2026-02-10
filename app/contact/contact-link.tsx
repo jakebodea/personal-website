@@ -1,9 +1,32 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import "./contact-link.css"
+
+function generateRandomKeyframes(textLength: number): string {
+  let keyframes = "0% { width: 0; }"
+  let currentWidth = 0
+  const steps = Math.ceil(textLength * 1.5)
+
+  for (let i = 1; i < steps; i++) {
+    const randomPercent = Math.random() * 4 + 1
+    currentWidth += randomPercent
+    if (currentWidth >= 100) {
+      keyframes += ` 100% { width: 100%; }`
+      break
+    }
+    const keyframePercent = (i / steps) * 100
+    keyframes += ` ${keyframePercent.toFixed(1)}% { width: ${currentWidth.toFixed(1)}%; }`
+  }
+
+  if (!keyframes.includes("100%")) {
+    keyframes += " 100% { width: 100%; }"
+  }
+
+  return keyframes
+}
 
 interface ContactLinkProps {
   url: string
@@ -13,6 +36,25 @@ interface ContactLinkProps {
 
 export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const styleRef = useRef<HTMLStyleElement | null>(null)
+  const animationIdRef = useRef<string>("")
+
+  useEffect(() => {
+    if (isHovered && easterEgg) {
+      const animationId = `typing-${Math.random().toString(36).substr(2, 9)}`
+      animationIdRef.current = animationId
+
+      const keyframes = generateRandomKeyframes(easterEgg.length)
+      const css = `@keyframes ${animationId} { ${keyframes} }`
+
+      if (!styleRef.current) {
+        styleRef.current = document.createElement("style")
+        document.head.appendChild(styleRef.current)
+      }
+
+      styleRef.current.textContent = css
+    }
+  }, [isHovered, easterEgg])
 
   return (
     <div
@@ -52,10 +94,13 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
                   initial={{ width: 0 }}
                   animate={{ width: "auto" }}
                   transition={{
-                    duration: 0.5,
-                    ease: "easeInOut",
+                    duration: 0.6,
+                    ease: "linear",
                   }}
-                  className="inline-block overflow-hidden whitespace-nowrap typing-container"
+                  className="inline-block overflow-hidden whitespace-nowrap"
+                  style={{
+                    animation: isHovered && easterEgg ? `${animationIdRef.current} 0.6s linear forwards` : "none",
+                  }}
                 >
                   {easterEgg}
                 </motion.span>
