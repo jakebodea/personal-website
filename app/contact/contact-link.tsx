@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
+import "./contact-link.css"
 
 interface ContactLinkProps {
   url: string
@@ -43,10 +44,13 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 py-1 text-muted-foreground/70 text-xs italic hover:text-accent/70 transition-colors"
+              className="flex items-center gap-2 py-1 px-2 text-muted-foreground/70 text-xs italic hover:bg-accent/10 rounded transition-colors group"
             >
               <span>#</span>
-              <span>{easterEgg}</span>
+              <span className="flex items-center">
+                {easterEgg}
+                <span className="cursor ml-1" />
+              </span>
             </Link>
           </motion.div>
         )}
