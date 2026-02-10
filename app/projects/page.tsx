@@ -1,5 +1,6 @@
-import { ComingSoon } from "@/components/common/coming-soon";
+import { ProjectList } from "@/components/common/project-list";
 import { PageWrapper } from "@/components/layout/page-wrapper";
+import { projects } from "@/content/projects-data";
 
 export const metadata = {
   title: 'projects',
@@ -9,7 +10,7 @@ export const metadata = {
 export default function ProjectsPage(): React.ReactNode {
   return (
     <PageWrapper title="projects" subtitle="a showcase of my technical work.">
-      <ComingSoon />
+      <ProjectList projects={projects} />
     </PageWrapper>
   )
 }
