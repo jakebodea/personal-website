@@ -33,7 +33,7 @@ export default function ContactPage() {
         <PageTitle>contact</PageTitle>
 
         <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-12">
-          i'm always interested in connecting. here's where you can find me:
+          i&apos;m always interested in connecting. here&apos;s where you can find me:
         </p>
 
         <div className="rounded-lg border border-accent/10 bg-muted/20 p-4 font-mono text-sm">
