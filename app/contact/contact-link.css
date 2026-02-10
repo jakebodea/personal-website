@@ -1,3 +1,12 @@
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 @keyframes blink {
   0%, 49% {
     opacity: 1;
@@ -7,10 +16,18 @@
   }
 }
 
-.cursor {
+.typing-text {
   display: inline-block;
-  width: 2px;
-  height: 0.75em;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 1.5s steps(100, end) 0.2s forwards;
+}
+
+.cursor-block {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.9em;
+  margin-left: 0.1em;
   background-color: currentColor;
-  animation: blink 1s infinite;
+  animation: blink 1s infinite 0.2s;
 }
