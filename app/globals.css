@@ -301,6 +301,33 @@
   }
 }
 
+/* Theme transition - circular reveal from toggle button */
+@property --reveal-size {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+  mask: radial-gradient(
+    circle at var(--reveal-x, 50%) var(--reveal-y, 50%),
+    black 0,
+    black calc(var(--reveal-size) - 160px),
+    transparent var(--reveal-size)
+  );
+}
+
 @layer base {
   * {
     @apply border-border;

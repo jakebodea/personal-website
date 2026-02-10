@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
+import { flushSync } from "react-dom"
 import { useTheme } from "next-themes"
 import { AnimatePresence, motion } from "framer-motion"
 import { Moon, Sun, Monitor } from "lucide-react"
@@ -46,26 +47,96 @@ export function ThemeToggle({
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const triggerRectRef = useRef<DOMRect | null>(null)
+
+  // Capture button position on pointer down, before dropdown interaction moves things
+  const capturePosition = useCallback(() => {
+    if (triggerRef.current) {
+      triggerRectRef.current = triggerRef.current.getBoundingClientRect()
+    }
+  }, [])
+
+  const setThemeWithTransition = useCallback(
+    (newTheme: string) => {
+      const supportsViewTransition =
+        typeof document !== "undefined" &&
+        "startViewTransition" in document
+
+      if (!supportsViewTransition) {
+        setTheme(newTheme)
+        return
+      }
+
+      // Use captured position, fall back to live measurement
+      const rect =
+        triggerRectRef.current ??
+        triggerRef.current?.getBoundingClientRect()
+
+      if (!rect || (rect.x === 0 && rect.y === 0 && rect.width === 0)) {
+        setTheme(newTheme)
+        return
+      }
+
+      const x = rect.left + rect.width / 2
+      const y = rect.top + rect.height / 2
+      const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y),
+      )
+
+      // Set the circle origin for the CSS mask
+      const root = document.documentElement
+      root.style.setProperty("--reveal-x", `${x}px`)
+      root.style.setProperty("--reveal-y", `${y}px`)
+
+      const transition = (document as any).startViewTransition(() => {
+        flushSync(() => {
+          setTheme(newTheme)
+        })
+      })
+
+      transition.ready
+        .then(() => {
+          root.animate(
+            { "--reveal-size": [`0px`, `${endRadius + 80}px`] },
+            {
+              duration: 350,
+              easing: "ease-out",
+              fill: "forwards",
+              pseudoElement: "::view-transition-new(root)",
+            },
+          )
+        })
+        .catch(() => {})
+
+      // Clear captured position after use
+      triggerRectRef.current = null
+    },
+    [setTheme],
+  )
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // 't' keyboard shortcut for quick toggle
+  // 't' keyboard shortcut for quick toggle (only one instance registers)
   useEffect(() => {
+    if (!shortcut) return
+
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement
       if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return
 
       if (e.key === "t") {
-        setTheme(resolvedTheme === "dark" ? "light" : "dark")
+        setThemeWithTransition(resolvedTheme === "dark" ? "light" : "dark")
         setOpen(false)
       }
     }
 
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [resolvedTheme, setTheme])
+  }, [shortcut, resolvedTheme, setThemeWithTransition])
 
   // Cleanup leave timer on unmount
   useEffect(() => {
@@ -91,9 +162,14 @@ export function ThemeToggle({
   const trigger = (
     <DropdownMenuTrigger asChild>
       <button
+        ref={triggerRef}
         className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md"
         aria-label="Toggle theme"
-        onPointerEnter={handlePointerEnter}
+        onPointerDown={capturePosition}
+        onPointerEnter={(e) => {
+          capturePosition()
+          handlePointerEnter(e)
+        }}
         onPointerLeave={handlePointerLeave}
       >
         <AnimatePresence mode="wait">
@@ -132,7 +208,7 @@ export function ThemeToggle({
           return (
             <DropdownMenuItem
               key={option.value}
-              onSelect={() => setTheme(option.value)}
+              onSelect={() => setThemeWithTransition(option.value)}
               className={
                 isActive
                   ? "text-accent focus:text-accent bg-accent/10 focus:bg-accent/10"

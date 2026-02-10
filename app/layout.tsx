@@ -79,7 +79,6 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           enableSystem
-          disableTransitionOnChange
         >
           <NavigationProvider>
             {process.env.VERCEL_GIT_COMMIT_REF === "dev" && (
