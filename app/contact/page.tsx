@@ -43,12 +43,12 @@ export default function ContactPage() {
         <div className="rounded-lg border border-accent/10 bg-muted/20 p-4 font-mono text-sm">
           <div className="space-y-2">
             {contactLinks.map((link) => (
-              <div key={link.url}>
-                <div
-                  className="flex items-center gap-2"
-                  onMouseEnter={() => link.display.includes("linkedin") && setLinkedInHovered(true)}
-                  onMouseLeave={() => setLinkedInHovered(false)}
-                >
+              <div
+                key={link.url}
+                onMouseEnter={() => link.display.includes("linkedin") && setLinkedInHovered(true)}
+                onMouseLeave={() => setLinkedInHovered(false)}
+              >
+                <div className="flex items-center gap-2">
                   <span className="text-accent/60">$</span>
                   <Link
                     href={link.url}
