@@ -6,22 +6,12 @@ import { motion, AnimatePresence } from "framer-motion"
 import "./contact-link.css"
 
 function generateRandomKeyframes(): string {
-  let keyframes = "0% { width: 0; }"
-  const numSteps = Math.floor(Math.random() * 15) + 15 // 15-29 steps
-  const increments: number[] = []
-  let total = 0
-
-  // Generate random increments (1-5%) for each step
-  for (let i = 0; i < numSteps; i++) {
-    const increment = Math.random() * 4 + 1 // 1-5%
-    increments.push(increment)
-    total += increment
-  }
-
-  // Normalize increments to sum to 100%
+  const numSteps = Math.floor(Math.random() * 15) + 15
+  const increments = Array.from({ length: numSteps }, () => Math.random() * 4 + 1)
+  const total = increments.reduce((a, b) => a + b, 0)
   const normalized = increments.map(inc => (inc / total) * 100)
 
-  // Generate keyframes with cumulative widths
+  let keyframes = "0% { width: 0; }"
   let currentWidth = 0
   normalized.forEach((increment, index) => {
     currentWidth += increment
