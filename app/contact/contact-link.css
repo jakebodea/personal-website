@@ -20,7 +20,7 @@
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  animation: typing 1.5s steps(100, end) 0.2s forwards;
+  animation: typing 0.8s steps(45, end) 0.2s forwards;
 }
 
 .cursor-block {
