@@ -10,6 +10,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { ShortcutTooltip } from "@/components/common/shortcut-tooltip"
 import { MobileMenu } from "@/components/layout/mobile-menu"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
+import { useStickyTitle } from "@/components/providers/sticky-title-provider"
 
 const navItems = [
   { title: "home", href: "/" },
@@ -23,6 +24,7 @@ const navItems = [
 export function TopNav() {
   const pathname = usePathname()
   const router = useRouter()
+  const { hasStickyTitle } = useStickyTitle()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const navContainerRef = useRef<HTMLDivElement>(null)
   const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 })
@@ -67,9 +69,9 @@ export function TopNav() {
 
   return (
     <>
-      <nav className="sticky top-0 z-[80] w-full bg-transparent">
+      <nav className={cn("sticky top-0 z-[80] w-full", hasStickyTitle ? "bg-transparent" : "bg-background")}>
         <div className="mx-auto max-w-4xl px-6">
-          <div className="flex h-14 items-center justify-center">
+          <div className="flex h-14 lg:h-20 items-center justify-center">
             {/* Desktop Navigation */}
             <TooltipProvider delayDuration={300}>
               <div ref={navContainerRef} className="relative hidden lg:flex items-center gap-1">

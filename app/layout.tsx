@@ -1,6 +1,7 @@
 import "./globals.css"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { NavigationProvider } from "@/components/providers/navigation-provider"
+import { StickyTitleProvider } from "@/components/providers/sticky-title-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { Montserrat, Instrument_Serif } from "next/font/google"
 import { TopNav } from "@/components/layout/top-nav"
@@ -81,17 +82,19 @@ export default function RootLayout({
           enableSystem
         >
           <NavigationProvider>
-            {process.env.VERCEL_GIT_COMMIT_REF === "dev" && (
-              <div className="fixed top-2 left-2 z-[100] bg-accent text-white text-xs font-bold px-2 py-1 rounded">
-                dev
-              </div>
-            )}
-            <TopNav />
-            <main className="min-h-[calc(100vh-3.5rem)]">
-              <PageTransition>{children}</PageTransition>
-            </main>
-            <Toaster />
-            <GPTSlopToast />
+            <StickyTitleProvider>
+              {process.env.VERCEL_GIT_COMMIT_REF === "dev" && (
+                <div className="fixed top-2 left-2 z-[100] bg-accent text-white text-xs font-bold px-2 py-1 rounded">
+                  dev
+                </div>
+              )}
+              <TopNav />
+              <main className="min-h-[calc(100vh-3.5rem)]">
+                <PageTransition>{children}</PageTransition>
+              </main>
+              <Toaster />
+              <GPTSlopToast />
+            </StickyTitleProvider>
           </NavigationProvider>
         </ThemeProvider>
         <Analytics />
