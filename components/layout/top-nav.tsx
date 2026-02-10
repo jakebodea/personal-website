@@ -17,6 +17,7 @@ const navItems = [
   { title: "projects", href: "/projects" },
   { title: "blogs", href: "/blogs" },
   { title: "quotes", href: "/quotes" },
+  { title: "contact", href: "/contact" },
 ]
 
 export function TopNav() {
@@ -71,7 +72,7 @@ export function TopNav() {
           <div className="flex h-14 items-center justify-center">
             {/* Desktop Navigation */}
             <TooltipProvider delayDuration={300}>
-              <div ref={navContainerRef} className="relative hidden md:flex items-center gap-1">
+              <div ref={navContainerRef} className="relative hidden lg:flex items-center gap-1">
                 <motion.span
                   className="absolute top-0 bottom-0 bg-accent/10 rounded-md"
                   animate={indicator}
@@ -102,7 +103,7 @@ export function TopNav() {
             </TooltipProvider>
 
             {/* Mobile Header */}
-            <div className="flex md:hidden items-center justify-end w-full">
+            <div className="flex lg:hidden items-center justify-end w-full">
               <div className="flex items-center gap-2 -mr-2">
                 {/* Mobile Theme toggle */}
                 <ThemeToggle iconSize="md" align="end" />
