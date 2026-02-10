@@ -48,8 +48,26 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
             >
               <span>#</span>
               <span className="flex items-center">
-                <span className="typing-text">{easterEgg}</span>
-                <span className="cursor-block" />
+                <motion.span
+                  initial={{ width: 0 }}
+                  animate={{ width: "auto" }}
+                  transition={{
+                    duration: 0.5,
+                    ease: "easeInOut",
+                  }}
+                  className="inline-block overflow-hidden whitespace-nowrap typing-container"
+                >
+                  {easterEgg}
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    duration: 0.1,
+                    delay: 0.1,
+                  }}
+                  className="cursor-block"
+                />
               </span>
             </Link>
           </motion.div>
