@@ -41,18 +41,31 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
 
   useEffect(() => {
     if (isHovered && easterEgg) {
-      const animationId = `typing-${Math.random().toString(36).substr(2, 9)}`
+      const animationId = `typing-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
       animationIdRef.current = animationId
 
       const keyframes = generateRandomKeyframes(easterEgg.length)
       const css = `@keyframes ${animationId} { ${keyframes} }`
 
-      if (!styleRef.current) {
-        styleRef.current = document.createElement("style")
-        document.head.appendChild(styleRef.current)
+      // Remove old style element if it exists
+      if (styleRef.current) {
+        styleRef.current.remove()
       }
 
+      // Create new style element each time
+      styleRef.current = document.createElement("style")
       styleRef.current.textContent = css
+      document.head.appendChild(styleRef.current)
+
+      console.log("Generated animation:", animationId, keyframes.substring(0, 100))
+    }
+
+    return () => {
+      // Cleanup on unmount
+      if (styleRef.current) {
+        styleRef.current.remove()
+        styleRef.current = null
+      }
     }
   }, [isHovered, easterEgg])
 
