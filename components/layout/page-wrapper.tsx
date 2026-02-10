@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import { PageTitle } from "@/components/layout/page-title"
 import { useStickyTitle } from "@/components/providers/sticky-title-provider"
-import { cn } from "@/lib/utils"
 
 interface PageWrapperProps {
   title: string
@@ -37,10 +36,10 @@ export function PageWrapper({ title, subtitle, children }: PageWrapperProps) {
     <div className="min-h-full">
       <div className="container mx-auto max-w-4xl px-6 py-8">
         <div ref={sentinelRef} className="h-0" />
-        <div className={cn(
-          "relative sticky top-0 z-50 bg-background -mx-6 px-6 h-14 lg:h-20 flex items-center",
-          isStuck && "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-16 after:translate-y-full after:bg-gradient-to-b after:from-background after:to-transparent after:pointer-events-none"
-        )}>
+        <div className="relative sticky top-0 z-50 bg-background -mx-6 px-6 h-14 flex items-center">
+          {isStuck && (
+            <div className="absolute bottom-0 left-0 right-0 h-16 translate-y-full bg-gradient-to-b from-background to-transparent pointer-events-none" />
+          )}
           <PageTitle variant="page" className="!m-0">{title}</PageTitle>
         </div>
         {subtitle && (

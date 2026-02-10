@@ -74,7 +74,7 @@ export function TopNav() {
           <div className="absolute bottom-0 left-0 right-0 h-16 translate-y-full bg-gradient-to-b from-background to-transparent pointer-events-none" />
         )}
         <div className="mx-auto max-w-4xl px-6">
-          <div className="flex h-14 lg:h-20 items-center justify-center">
+          <div className="flex h-14 items-center justify-center">
             {/* Desktop Navigation */}
             <TooltipProvider delayDuration={300}>
               <div ref={navContainerRef} className="relative hidden lg:flex items-center gap-1">
