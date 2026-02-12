@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
@@ -16,10 +16,10 @@ interface CodeBlockProps {
 
 export function CodeBlock({ language, code }: CodeBlockProps) {
   const { theme } = useTheme()
-  const [isCopied, setIsCopied] = React.useState(false)
-  const [mounted, setMounted] = React.useState(false)
+  const [isCopied, setIsCopied] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true)
   }, [])
 
@@ -106,7 +106,7 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
         codeTagProps={{
           style: {
             fontFamily: "var(--font-mono)",
-          }
+          },
         }}
       >
         {String(code).replace(/\n$/, "")}

@@ -24,6 +24,9 @@ const config: Config = {
         foreground: 'hsl(var(--foreground))',
         card: {
           DEFAULT: 'hsl(var(--card))',
+          '02': 'hsl(var(--card-02))',
+          '03': 'hsl(var(--card-03))',
+          '04': 'hsl(var(--card-04))',
           foreground: 'hsl(var(--card-foreground))'
         },
         popover: {
@@ -60,21 +63,6 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))'
         },
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))'
-        },
-        contrast: {
-          light: 'hsl(var(--contrast-light))',
-          lighter: 'hsl(var(--contrast-lighter))',
-          lightest: 'hsl(var(--contrast-lightest))'
-        }
       },
       borderRadius: {
         lg: 'var(--radius)',
