@@ -339,6 +339,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+  }
 }
 
 /* react-tweet theme overrides */
