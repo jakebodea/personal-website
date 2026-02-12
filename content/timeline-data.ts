@@ -20,7 +20,7 @@ export const timelineItems = [
     title: "Course Facilitator",
     location: "Stanford Online",
     bullets: [
-      "Teaching XCS229: Machine Learning and XCS221: Principles of AI and Stanford University Center for Global & Online Education (CGOE)"
+      "Teaching XCS229: Machine Learning and XCS221: Principles of AI at Stanford University Center for Global & Online Education (CGOE)"
     ]
   },
   {
