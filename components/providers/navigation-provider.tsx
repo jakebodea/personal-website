@@ -3,6 +3,7 @@
 import { createContext, useContext, useRef, useMemo } from "react"
 import type { ReactNode } from "react"
 import { usePathname } from "next/navigation"
+import { navOrder } from "@/lib/nav-config"
 
 type Direction = "left" | "right" | "none"
 
@@ -19,9 +20,6 @@ const NavigationContext = createContext<NavigationContextType>({
 export function useNavigation() {
   return useContext(NavigationContext)
 }
-
-// Order of nav items for determining direction
-const navOrder = ["/", "/timeline", "/projects", "/blogs", "/quotes"]
 
 function getNavIndex(pathname: string): number {
   if (pathname === "/") return 0
