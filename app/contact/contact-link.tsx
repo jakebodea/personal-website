@@ -41,19 +41,16 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
       const keyframes = generateRandomKeyframes()
       const css = `@keyframes ${animationId} { ${keyframes} }`
 
-      // Remove old style element if it exists
       if (styleRef.current) {
         styleRef.current.remove()
       }
 
-      // Create new style element each time
       styleRef.current = document.createElement("style")
       styleRef.current.textContent = css
       document.head.appendChild(styleRef.current)
     }
 
     return () => {
-      // Cleanup on unmount
       if (styleRef.current) {
         styleRef.current.remove()
         styleRef.current = null
@@ -65,6 +62,7 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      className="min-h-[3rem]"
     >
       <div className="flex items-center gap-2">
         <span className="text-accent/60">$</span>
@@ -78,51 +76,55 @@ export function ContactLink({ url, display, easterEgg }: ContactLinkProps) {
           <span className="ml-2 group-hover:underline">{display}</span>
         </Link>
       </div>
-      <AnimatePresence>
-        {isHovered && easterEgg && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden"
-          >
-            <Link
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 py-1 text-muted-foreground/70 text-xs font-mono"
-            >
-              <span>#</span>
-              <span className="flex items-center">
-                <motion.span
-                  initial={{ width: 0 }}
-                  animate={{ width: "auto" }}
-                  transition={{
-                    duration: 0.6,
-                    ease: "linear",
-                  }}
-                  className="inline-block overflow-hidden whitespace-nowrap"
-                  style={{
-                    animation: isHovered && easterEgg ? `${animationIdRef.current} 0.6s linear forwards` : "none",
-                  }}
+      <div className="h-6 overflow-hidden">
+        {easterEgg && (
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <Link
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 py-1 text-muted-foreground/70 text-xs font-mono"
                 >
-                  {easterEgg}
-                </motion.span>
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{
-                    duration: 0.1,
-                    delay: 0.1,
-                  }}
-                  className="cursor-block"
-                />
-              </span>
-            </Link>
-          </motion.div>
+                  <span>#</span>
+                  <span className="flex items-center">
+                    <motion.span
+                      initial={{ width: 0 }}
+                      animate={{ width: "auto" }}
+                      transition={{
+                        duration: 0.6,
+                        ease: "linear",
+                      }}
+                      className="inline-block overflow-hidden whitespace-nowrap"
+                      style={{
+                        animation: isHovered && easterEgg ? `${animationIdRef.current} 0.6s linear forwards` : "none",
+                      }}
+                    >
+                      {easterEgg}
+                    </motion.span>
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        duration: 0.1,
+                        delay: 0.1,
+                      }}
+                      className="cursor-block"
+                    />
+                  </span>
+                </Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
         )}
-      </AnimatePresence>
+      </div>
     </div>
   )
 }

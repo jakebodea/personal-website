@@ -7,7 +7,7 @@ const contactLinks = [
   {
     url: "mailto:jakebodea@gmail.com",
     display: "jakebodea@gmail.com",
-    easterEgg: "no spam pls"
+    easterEgg: "pls no spam thanks"
   },
   {
     url: "https://x.com/jakebodea",
@@ -16,12 +16,12 @@ const contactLinks = [
   {
     url: "https://www.linkedin.com/in/jakebodea/",
     display: "linkedin.com/in/jakebodea",
-    easterEgg: "unfortunately i still need this platform"
+    easterEgg: "unfortunately"
   },
   {
     url: "https://github.com/jakebodea",
     display: "github.com/jakebodea",
-    easterEgg: "don't DM me here but check out my commit history map"
+    easterEgg: "check out my commit history map"
   }
 ]
 
