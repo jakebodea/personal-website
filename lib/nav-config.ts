@@ -5,6 +5,6 @@ export const navItems = [
   { title: "blogs", href: "/blogs" },
   { title: "quotes", href: "/quotes" },
   { title: "contact", href: "/contact" },
-] as const
+]
 
 export const navOrder = navItems.map((item) => item.href)
