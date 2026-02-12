@@ -70,15 +70,15 @@
   }
 
   [data-sonner-toast][data-type="success"] {
-    background: #E4E3D4 !important;
-    color: #2C2C2C !important;
-    border: 2px solid #E4E3D4 !important;
+    background: hsl(var(--card)) !important;
+    color: hsl(var(--foreground)) !important;
+    border: 1px solid hsl(var(--border)) !important;
   }
 
   [data-sonner-toast][data-type="error"] {
     background: hsl(var(--destructive) / 0.95) !important;
     color: hsl(var(--destructive-foreground)) !important;
-    border: 2px solid hsl(var(--destructive)) !important;
+    border: 1px solid hsl(var(--destructive)) !important;
   }
 
   [data-sonner-toast] [data-description] {
@@ -89,16 +89,13 @@
 
   /* Dark mode specific enhancements */
   .dark [data-sonner-toast][data-type="success"] {
-    background: rgba(228, 227, 212, 0.18) !important;
-    color: #E4E3D4 !important;
-    border: 2px solid rgba(228, 227, 212, 0.4) !important;
-    backdrop-filter: blur(12px) !important;
-    box-shadow: 0 0 20px rgba(228, 227, 212, 0.3) !important;
+    background: hsl(var(--card-02)) !important;
+    color: hsl(var(--foreground)) !important;
+    border: 1px solid hsl(var(--border)) !important;
   }
 
   .dark [data-sonner-toast][data-type="error"] {
     background: hsl(var(--destructive) / 0.9) !important;
-    box-shadow: 0 0 20px hsl(var(--destructive) / 0.3) !important;
   }
 
   /* Override Sonner close button positioning */
@@ -204,129 +201,131 @@
 
 @layer base {
   :root {
-    /* Perplexity core palette */
-    /* Base neutrals */
-    --background: 52 19% 88%; /* Light Green (#E4E3D4) */
-    --foreground: 180 45% 6%; /* Offblack (#091717) */
+    /* Warm light theme */
+    --background: 60 10% 97%; /* #F7F7F4 */
+    --foreground: 47 15% 13%; /* #26251E */
+    --foreground-secondary: 46 8% 22%; /* #3B3A33 */
 
-    /* Core brand turquoise */
-    --primary: 188 63% 34%; /* True Turquoise (#20808D) */
-    --primary-foreground: 0 0% 100%; /* white */
-
-    /* Supporting blues */
-    --secondary: 193 41% 17%; /* Inky Blue (#19343B) */
-    --secondary-foreground: 48 28% 97%; /* Paper White */
-
-    /* Surface colors */
-    --card: var(--background);
+    /* Card hierarchy */
+    --card: 48 11% 93%; /* #F0EFEA */
+    --card-02: 48 10% 91%; /* #EBEAE5 */
+    --card-03: 48 9% 89%; /* #E6E5E0 */
+    --card-04: 48 8% 87%; /* #E1E0DB */
     --card-foreground: var(--foreground);
 
-    --popover: var(--background);
+    --popover: var(--card);
     --popover-foreground: var(--foreground);
 
-    /* Accent cyan (Plex Blue) */
-    --accent: 188 80% 45%; /* Plex Blue (#1FB8CD) */
+    /* Accent - orange-red */
+    --accent: 19 100% 48%; /* #F54E00 */
     --accent-foreground: 0 0% 100%;
 
-    /* Muted state (light Peacock tint) */
-    --muted: 30 12% 75%; /* Warm gray (#7B756F) */
-    --muted-foreground: 193 25% 30%;
+    /* Primary uses accent */
+    --primary: var(--accent);
+    --primary-foreground: 0 0% 100%;
 
-    /* Light contrast colors from palette - more contrast */
-    --contrast-light: 180 19% 86%; /* Sky (#BADEDD) */
-    --contrast-lighter: 194 14% 84%; /* Peacock 20 (#D5DDDF) */
-    --contrast-lightest: 200 17% 93%; /* Paper White (#FBFAF4) */
+    /* Secondary */
+    --secondary: var(--card-02);
+    --secondary-foreground: var(--foreground);
 
-    /* Destructive (Terra Cotta) */
-    --destructive: 13 60% 43%; /* Terra Cotta (#A84B2F) */
-    --destructive-foreground: 0 0% 98%;
+    /* Muted */
+    --muted: 45 5% 85%;
+    --muted-foreground: 45 6% 13%; /* #23221E */
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
     /* Borders & inputs */
-    --border: 188 25% 88%;
-    --input: 188 25% 88%;
-    --ring: var(--primary);
+    --border: 45 8% 88%;
+    --input: 45 8% 88%;
+    --ring: var(--accent);
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
     /* Charts */
-    --chart-1: var(--primary);
-    --chart-2: 193 41% 17%; /* Inky Blue */
-    --chart-3: 188 80% 45%; /* Plex Blue */
-    --chart-4: 48 28% 97%; /* Paper White */
-    --chart-5: 13 60% 43%; /* Terra Cotta */
-
-    /* Sidebar */
-    --sidebar-background: var(--background); /* same as global background */
-    --sidebar-foreground: var(--foreground);
-    --sidebar-primary: var(--primary);
-    --sidebar-primary-foreground: var(--background);
-    --sidebar-accent: var(--accent);
-    --sidebar-accent-foreground: var(--background);
-    --sidebar-border: var(--border);
-    --sidebar-ring: var(--primary);
-
-    /* Custom sidebar variables */
-    --sidebar-border: hsl(var(--border));
-    --sidebar: hsl(var(--card));
-    
-    /* Vintage white for light mode only */
-    --vintage-white: #F3F3EE;
+    --chart-1: var(--accent);
+    --chart-2: 47 15% 13%;
+    --chart-3: 19 80% 55%;
+    --chart-4: 48 11% 93%;
+    --chart-5: 0 84% 60%;
   }
 
   .dark {
-    /* Dark mode */
-    --background: 180 45% 6%; /* Offblack (#091717) */
-    --foreground: 210 20% 90%; /* near-white for text */
+    /* Warm dark theme */
+    --background: 40 27% 6%; /* #14120B */
+    --foreground: 0 2% 93%; /* #EDECEC */
+    --foreground-secondary: 0 1% 84%; /* #D7D6D5 */
 
-    --card: 193 41% 17%; /* Inky Blue (#19343B) - pops against offblack */
+    /* Card hierarchy */
+    --card: 40 14% 9%; /* #1B1913 */
+    --card-02: 40 12% 11%; /* #201E18 */
+    --card-03: 40 11% 13%; /* #26241E */
+    --card-04: 40 10% 15%; /* #2B2923 */
     --card-foreground: var(--foreground);
 
-    --popover: 193 41% 17%; /* Inky Blue */
+    --popover: var(--card);
     --popover-foreground: var(--foreground);
 
-    --primary: 188 63% 48%; /* vivid turquoise stands out on dark */
-    --primary-foreground: 180 45% 6%; /* Offblack for contrast */
+    /* Accent - same orange-red */
+    --accent: 19 100% 48%; /* #F54E00 */
+    --accent-foreground: 0 0% 100%;
 
-    --secondary: 193 41% 17%; /* Inky Blue (#19343B) */
+    /* Primary uses accent */
+    --primary: var(--accent);
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary */
+    --secondary: var(--card-02);
     --secondary-foreground: var(--foreground);
 
-    --muted: 200 6% 22%;
-    --muted-foreground: 210 15% 70%;
+    /* Muted */
+    --muted: 40 8% 20%;
+    --muted-foreground: 40 2% 58%; /* #969592 */
 
-    --accent: 188 80% 50%;
-    --accent-foreground: var(--foreground);
+    /* Destructive */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    /* Dark mode contrast colors - more contrast against offblack */
-    --contrast-light: 194 41% 22%; /* Peacock (#2E666E) */
-    --contrast-lighter: 193 41% 17%; /* Inky Blue (#19343B) base */
-    --contrast-lightest: 195 48% 15%; /* Dark Teal (#13343B) */
+    /* Borders & inputs */
+    --border: 40 8% 18%;
+    --input: 40 8% 18%;
+    --ring: var(--accent);
 
-    --destructive: 13 60% 55%;
-    --destructive-foreground: var(--foreground);
-
-    --border: 200 6% 22%;
-    --input: 200 6% 22%;
-    --ring: var(--primary);
-
-    --chart-1: var(--primary);
-    --chart-2: 188 80% 50%;
-    --chart-3: 193 41% 17%;
-    --chart-4: 48 28% 97%;
-    --chart-5: 13 60% 55%;
-
-    --sidebar-background: var(--background); /* same as global background */
-    --sidebar-foreground: var(--foreground);
-    --sidebar-primary: var(--primary);
-    --sidebar-primary-foreground: 180 45% 6%; /* Offblack */
-    --sidebar-accent: var(--accent);
-    --sidebar-accent-foreground: 180 45% 6%; /* Offblack */
-    --sidebar-border: var(--border);
-    --sidebar-ring: var(--primary);
-
-    /* Custom sidebar variables */
-    --sidebar-border: hsl(var(--border));
-    --sidebar: hsl(var(--card));
+    /* Charts */
+    --chart-1: var(--accent);
+    --chart-2: 0 2% 93%;
+    --chart-3: 19 80% 55%;
+    --chart-4: 40 14% 9%;
+    --chart-5: 0 72% 51%;
   }
+}
+
+/* Theme transition - circular reveal from toggle button */
+@property --reveal-size {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+  mask: radial-gradient(
+    circle at var(--reveal-x, 50%) var(--reveal-y, 50%),
+    black 0,
+    black calc(var(--reveal-size) - 160px),
+    transparent var(--reveal-size)
+  );
 }
 
 @layer base {
@@ -334,9 +333,38 @@
     @apply border-border;
   }
   html {
-    scroll-behavior: smooth; /* Added smooth scrolling */
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
   }
   body {
     @apply bg-background text-foreground;
   }
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+  }
+}
+
+/* react-tweet theme overrides */
+:root .react-tweet-theme {
+  --tweet-bg-color: #F0EFEA;
+  --tweet-bg-color-hover: #EBEAE5;
+  --tweet-quoted-bg-color-hover: rgba(0, 0, 0, 0.03);
+  --tweet-border: 1px solid hsl(45 8% 80%);
+  --tweet-font-color: #26251E;
+  --tweet-font-color-secondary: #3B3A33;
+  --tweet-color-blue-primary: #F54E00;
+  --tweet-color-blue-primary-hover: #dc4600;
+  --tweet-font-family: inherit;
+}
+
+.dark .react-tweet-theme {
+  --tweet-bg-color: #1B1913;
+  --tweet-bg-color-hover: #201E18;
+  --tweet-quoted-bg-color-hover: rgba(255, 255, 255, 0.03);
+  --tweet-border: 1px solid hsl(40 8% 25%);
+  --tweet-font-color: #EDECEC;
+  --tweet-font-color-secondary: #969592;
+  --tweet-color-blue-primary: #F54E00;
+  --tweet-color-blue-primary-hover: #dc4600;
+  --tweet-font-family: inherit;
 }

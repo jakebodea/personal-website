@@ -1,10 +1,53 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
+  "plugins": ["check-file"],
+  "rules": {
+    "max-lines": ["warn", { "max": 300, "skipBlankLines": true, "skipComments": true }],
+    "check-file/filename-naming-convention": [
+      "error",
+      { "**/*.{js,ts,jsx,tsx}": "KEBAB_CASE" },
+      { "ignoreMiddleExtensions": true }
+    ],
+    "check-file/folder-naming-convention": [
+      "error",
+      { "src/**/!(*\\[*\\]|*\\(*\\))": "KEBAB_CASE", "app/**/!(*\\[*\\]|*\\(*\\))": "KEBAB_CASE" }
+    ],
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/consistent-type-imports": ["error", { "prefer": "type-imports" }],
+    "react/self-closing-comp": ["error", { "component": true, "html": true }],
+    "react/jsx-boolean-value": ["error", "never"],
+    "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "never" }],
+    "react/hook-use-state": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/forbid-component-props": ["error", {
+      "forbid": [{
+        "propName": "className",
+        "allowedFor": ["div", "span", "button", "input", "a", "img", "ul", "li", "ol", "p", "h1", "h2", "h3", "h4", "h5", "h6", "section", "article", "nav", "header", "footer", "main", "form", "label", "table", "thead", "tbody", "tr", "td", "th", "svg", "path", "textarea", "select", "option", "pre", "code", "blockquote", "hr", "br", "strong", "em", "small", "sup", "sub", "cite", "Link", "Image", "motion.div", "motion.span", "motion.section", "motion.article", "motion.ul", "motion.li", "motion.p", "motion.button", "motion.a", "motion.nav", "motion.header", "ArrowLeft", "Check", "CheckSquare", "Copy", "Search", "Square", "Sun", "Moon", "Database", "Skeleton"],
+        "message": "Use variant props instead of className on design system components"
+      }]
+    }]
+  },
   "overrides": [
     {
       "files": ["next-env.d.ts"],
       "rules": {
-        "@typescript-eslint/triple-slash-reference": "off"
+        "@typescript-eslint/triple-slash-reference": "off",
+        "check-file/filename-naming-convention": "off"
+      }
+    },
+    {
+      "files": ["components/**/*.tsx"],
+      "rules": {
+        "react/forbid-component-props": "off"
+      }
+    },
+    {
+      "files": ["lib/notion.ts"],
+      "rules": {
+        "max-lines": "off",
+        "@typescript-eslint/no-explicit-any": "off"
       }
     }
   ]

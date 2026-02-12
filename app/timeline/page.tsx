@@ -1,9 +1,9 @@
 import React from "react";
-import TimelineWrapper from "./components/TimelineWrapper";
+import { TimelineWrapper } from "@/components/common/timeline-wrapper";
 
 export const metadata = {
-  title: 'Timeline',
-  description: 'Jake Bodea\'s timeline of experiences'
+  title: 'timeline',
+  description: 'jake bodea\'s timeline of experiences'
 }
 
 export default function TimelinePage(): React.ReactNode {

@@ -1,5 +1,5 @@
 import { getAllBlogs } from '@/lib/blogs'
-import BlogsPageClient from './BlogsClient'
+import BlogsPageClient from './blogs-client'
 
 export default async function BlogsPage() {
   const posts = getAllBlogs()
