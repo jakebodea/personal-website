@@ -11,15 +11,7 @@ import { ShortcutTooltip } from "@/components/common/shortcut-tooltip"
 import { MobileMenu } from "@/components/layout/mobile-menu"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { useStickyTitle } from "@/components/providers/sticky-title-provider"
-
-const navItems = [
-  { title: "home", href: "/" },
-  { title: "projects", href: "/projects" },
-  { title: "timeline", href: "/timeline" },
-  { title: "blogs", href: "/blogs" },
-  { title: "quotes", href: "/quotes" },
-  { title: "contact", href: "/contact" },
-]
+import { navItems } from "@/lib/nav-config"
 
 export function TopNav() {
   const pathname = usePathname()
