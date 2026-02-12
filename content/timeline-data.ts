@@ -20,7 +20,7 @@ export const timelineItems = [
     title: "Course Facilitator",
     location: "Stanford Online",
     bullets: [
-      "Course Facilitator for XCS229: Machine Learning and XCS221: Principles of AI at Stanford University Center for Global & Online Education (CGOE)"
+      "Teaching XCS229: Machine Learning and XCS221: Principles of AI and Stanford University Center for Global & Online Education (CGOE)"
     ]
   },
   {
@@ -39,11 +39,14 @@ export const timelineItems = [
     startDate: "March 2024",
     endDate: "Present",
     image: "/images/stanford.png",
-    title: "NDO Student",
+    title: "Student",
     location: "Stanford University",
     bullets: [
-      "Pursuing Graduate Certificate in AI with a 4.0 GPA",
-      "Completed courses: CS229: Machine Learning and CS221: Principles and Techniques in Artificial Intelligence"
+      "Pursuing Graduate Certificate in AI",
+      "Enrolled in CS224N: Natural Language Processing",
+      "Completed CS329H: Machine Learning with Human Preferences with an A",
+      "Completed CS229: Machine Learning with an A+",
+      "Completed CS221: Principles and Techniques in Artificial Intelligence with an A"
     ]
   },
   {
