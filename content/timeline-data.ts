@@ -72,6 +72,16 @@ export const timelineItems = [
     ]
   },
   {
+    startDate: "August 2021",
+    endDate: "December 2021",
+    image: "/images/concordia.png",
+    title: "Tutor",
+    location: "Concordia University Irvine",
+    bullets: [
+      "Tutored Calculus 2 and Programming Languages"
+    ]
+  },
+  {
     startDate: "August 2019",
     endDate: "December 2022",
     image: "/images/concordia.png",
