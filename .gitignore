@@ -42,3 +42,7 @@ next-env.d.ts
 resume/resume.*
 !resume/resume.tex
 !resume/resume.pdf
+
+# linkedin automation
+.linkedin-profile/
+scripts/linkedin/experience.json
