@@ -90,7 +90,7 @@ export function ThemeToggle({
       root.style.setProperty("--reveal-x", `${x}px`)
       root.style.setProperty("--reveal-y", `${y}px`)
 
-      const transition = (document as any).startViewTransition(() => {
+      const transition = (document).startViewTransition(() => {
         flushSync(() => {
           setTheme(newTheme)
         })

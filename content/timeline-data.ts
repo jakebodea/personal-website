@@ -3,7 +3,7 @@ export const timelineItems = [
     startDate: "November 2024",
     endDate: "Present",
     image: "/images/taxrise.jpeg",
-    title: "Machine Learning Engineer",
+    title: "Technical Staff",
     location: "TaxRise",
     bullets: [
       "Built a full-stack internal application that delivers LLM-generated coaching for sales calls, supporting both text-to-text and voice-to-voice modalities, automating what was previously manual manager call reviews",
