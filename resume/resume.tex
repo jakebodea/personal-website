@@ -1,0 +1,161 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{graphicx}
+\setlength{\multicolsep}{-3pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+\vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2}\\
+      \textit{#3} & \textit{#4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textit{#1} & \textbf{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubheadingWithDesc}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2}\\
+      \text{#3} & \text{#4}
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[3]{
+    \item
+     \vspace{-4pt}\begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} | \textit{#2} & \textbf{#3}
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.12in, rightmargin=0in]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+\begin{center}
+    {\Huge \scshape Jake Bodea} \\ \vspace{1pt}
+    Irvine, CA $\cdot$ \href{mailto:jakebodea@gmail.com}{\underline{jakebodea@gmail.com}} $\cdot$ \href{tel:9492980911}{\underline{949-298-0911}} $\cdot$ \href{https://www.jakebodea.com}{\underline{jakebodea.com}} $\cdot$
+    \href{https://www.linkedin.com/in/jakebodea}{\underline{LinkedIn}} $\cdot$
+    \href{https://github.com/jakebodea}{\underline{GitHub}}
+\end{center}
+
+\section{Education}
+\resumeSubHeadingListStart
+  \resumeSubheadingWithDesc
+    {Stanford University}{Stanford, CA}
+    {Graduate Certificate in Artificial Intelligence}{2026}
+  \item
+  \textit{Coursework: Artificial Intelligence: Principles and Techniques, Machine Learning, Natural Language Processing with Deep Learning, Machine Learning from Human Preferences. GPA 4.0}
+  \resumeSubheadingWithDesc
+    {Concordia University Irvine}{Irvine, CA}
+    {Bachelor of Arts in Mathematics | Minors in Computer Science, Business Data Analytics, and Music}{2022}
+  \item
+  \textit{Summa Cum Laude, Outstanding Mathematics Graduate Award. GPA 3.94}
+\resumeSubHeadingListEnd
+
+\section{Experience}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {TaxRise}{November 2024 - Present}
+    {Technical Staff}{Irvine, CA}
+    \resumeItemListStart
+        \resumeItem{Built ElevenLabs + Twilio + Talkdesk voice and text agents with a custom MCP tool server that executes core client-care actions; currently handling 500+ calls/day with about 80\% resolved without human transfer.}
+        \resumeItem{Built a call-intelligence backend processing 5,000+ calls/day into transcripts, summaries, compliance checks, and coaching signals, eliminating about 10 hours/week of manual call review per call-facing employee.}
+        \resumeItem{Built AI coaching workflows for 20+ sales reps that simulate failed calls from transcript-derived objections, replacing manual review loops and saving about 1 hour/day per rep.}
+        \resumeItem{Owned the full client-platform rebuild by replacing a 60-page Salesforce Experience Cloud portal (Aura/LWC) with custom React/Next.js monorepo applications and leading architecture, implementation, and production cutover.}
+        \resumeItem{Established a unified design system and interaction model across intake, status, payment, and document workflows, reducing median time to exit key onboarding statuses from 23 hours to 40 minutes.}
+        \resumeItem{Built payment workflows (card, ACH, Plaid, schedule/change/cancel actions) and clearer status UX, shifting operations from rep-managed handling to self-serve and agent-assisted paths.}
+        \resumeItem{Built OCR + LLM document pre-screening that auto-matches about 90\% of uploads in 7-10 seconds client-side and reduced manual review staffing from about 40 full-time reviewers to 2 part-time reviewers.}
+        \resumeItem{Implemented PostHog feature flags, staged rollouts, and AB-tested kill switches; engineered shared Salesforce auth/session reliability (Redis pooling, distributed locks, retries), reducing org logins from about 6,000/day to about 300/day and eliminating auth-limit outages.}
+    \resumeItemListEnd
+  \resumeSubheading
+    {Stanford University}{October 2024 - Present}
+    {Course Facilitator}{Remote}
+    \resumeItemListStart
+        \resumeItem{Teach, mentor, and grade assignments in XCS229 (Machine Learning) and XCS221 (Principles of AI), guiding students through model formulation, optimization tradeoffs, and implementation debugging.}
+    \resumeItemListEnd
+  \resumeSubheading
+    {Beckman Coulter Diagnostics}{January 2023 - August 2024}
+    {Data Scientist}{Brea, CA}
+    \resumeItemListStart
+        \resumeItem{Led AI Operations delivery as Scrum Master, driving cross-functional execution of internal AI systems from problem framing through deployment and production monitoring across multiple business units.}
+        \resumeItem{Built a BERT-based ticket triage API and integrated it into an internal LLM assistant, reducing traditional IT ticket creation by 20\%+ and accelerating mean time to first response for common issues.}
+        \resumeItem{Implemented enterprise RAG infrastructure (embedding, vectorization, retrieval, translation) to improve answer quality for the IT assistant, reduce escalation rates for common queries, and cut resolution time.}
+        \resumeItem{Developed computer vision inspection models with Manufacturing for automated quality-control and compliance workflows.}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+
+\section{Projects}
+\resumeSubHeadingListStart
+  \resumeProjectHeading{Super Simple Secret Santa}{TypeScript, TanStack Start}{November 2025}
+  \resumeItemListStart
+    \resumeItem{Designed and implemented the assignment engine (constraint validation + deterministic pairing rules) to guarantee valid Secret Santa outcomes with exclusion constraints.}
+    \resumeItem{Shipped the product end-to-end at \href{https://supersimplesecretsanta.com}{\underline{supersimplesecretsanta.com}} (open-source on \href{https://github.com/jakebodea/secret-santa}{\underline{GitHub}}), reaching about 100 users.}
+  \resumeItemListEnd
+\resumeSubHeadingListEnd
+
+\section{Technical Skillset}
+\scriptsize{
+\textbf{AI/ML \& LLM:} OpenAI, Anthropic Claude, Claude Code, Gemini, Codex, Cursor, BERT, RAG, OCR, AI agents, MCP tooling, embeddings, vector search; \textbf{Languages:} TypeScript, Python, SQL; \textbf{Frontend:} React, Next.js; \textbf{Backend \& APIs:} Node.js, NestJS, REST APIs, GraphQL; \textbf{Cloud/DevOps:} AWS, Cloudflare, Railway, Fly.io, Docker, Kubernetes, GitHub Actions, S3, Lambda, ECS, IAM, RDS, CloudWatch; \textbf{Data:} PostgreSQL, NeonDB, Redis, Databricks; \textbf{Platforms:} Salesforce (Aura, LWC), Stripe, Plaid, Twilio, ElevenLabs, PostHog, Git, Vercel, Bun, Linux
+}
+
+\end{document}

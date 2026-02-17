@@ -37,3 +37,8 @@ next-env.d.ts
 
 # cursor
 .cursor*
+
+# latex 
+resume/resume.*
+!resume/resume.tex
+!resume/resume.pdf
