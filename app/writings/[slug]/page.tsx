@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getBlogSlugs, getBlogData } from '@/lib/blogs'
+import { getBlogSlugs, getBlogWriting } from '@/lib/writings'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -23,16 +23,16 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<PageProps> }) {
   const { slug } = await params
-  const { title } = getBlogData(slug)
+  const { title } = getBlogWriting(slug)
   return {
     title,
-    description: `${title} - Blog post by Jake Bodea`,
+    description: `${title} - Writing by Jake Bodea`,
   }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<PageProps> }) {
   const { slug } = await params
-  const { title, date, content } = getBlogData(slug)
+  const { title, date, content } = getBlogWriting(slug)
 
   // Check if content has footnotes
   // const hasFootnotes = content.includes('[^') && content.includes(']:')
@@ -42,11 +42,11 @@ export default async function BlogPostPage({ params }: { params: Promise<PagePro
       <div className="container mx-auto max-w-3xl px-6 py-8">
         <div className="flex justify-between items-center mb-6">
           <Link 
-            href="/blogs" 
+            href="/writings"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
           >
             <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="font-sans text-sm">Back to Blogs</span>
+            <span className="font-sans text-sm">Back to Writing</span>
           </Link>
           <CopyMarkdownButton content={content} />
         </div>
