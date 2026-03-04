@@ -1,45 +1,76 @@
 'use client'
 
 import Link from 'next/link'
-import type { BlogData } from '@/lib/blogs'
+import type { Writing } from '@/lib/writings'
 
 interface PostListProps {
-  posts: BlogData[];
+  writings: Writing[];
   searchQuery: string;
 }
 
-export function PostList({ posts, searchQuery }: PostListProps) {
+export function PostList({ writings, searchQuery }: PostListProps) {
   return (
     <ul className="space-y-8">
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <li key={post.slug}>
-            <Link href={`/blogs/${post.slug}`} className="group block hover:bg-muted/20 rounded-lg p-4 transition-colors">
-              <div className="flex items-baseline justify-between mb-2">
-                <h2 className="text-2xl font-serif text-primary group-hover:text-primary/80 transition-colors">
-                  {post.title}
-                </h2>
+      {writings.length > 0 ? (
+        writings.map((writing) => {
+          if (writing.type === 'paper') {
+            return (
+              <li key={writing.title}>
+                <a
+                  href={writing.pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block hover:bg-muted/20 rounded-lg p-4 transition-colors"
+                >
+                  <div className="flex items-baseline justify-between mb-2">
+                    <h2 className="text-2xl font-serif text-primary group-hover:text-primary/80 transition-colors">
+                      {writing.title}
+                    </h2>
+                    <p className="text-sm text-muted-foreground font-sans shrink-0 ml-4">
+                      {new Date(writing.date + 'T00:00:00').toLocaleDateString(undefined, {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </p>
+                  </div>
+                  <p className="text-sm text-muted-foreground font-sans">
+                    {writing.description}
+                  </p>
+                </a>
+              </li>
+            )
+          }
+
+          return (
+            <li key={writing.slug}>
+              <Link href={`/writings/${writing.slug}`} className="group block hover:bg-muted/20 rounded-lg p-4 transition-colors">
+                <div className="flex items-baseline justify-between mb-2">
+                  <h2 className="text-2xl font-serif text-primary group-hover:text-primary/80 transition-colors">
+                    {writing.title}
+                  </h2>
+                  <p className="text-sm text-muted-foreground font-sans shrink-0 ml-4">
+                    {new Date(writing.date + 'T00:00:00').toLocaleDateString(undefined, {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </p>
+                </div>
                 <p className="text-sm text-muted-foreground font-sans">
-                  {new Date(post.date + 'T00:00:00').toLocaleDateString(undefined, {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
+                  {writing.description}
                 </p>
-              </div>
-              <p className="text-sm text-muted-foreground font-sans">
-                {post.description}
-              </p>
-            </Link>
-          </li>
-        ))
+              </Link>
+            </li>
+          )
+        })
       ) : (
         <li className="text-center py-8">
           <p className="text-muted-foreground font-sans">
-            No blog posts found matching &ldquo;{searchQuery}&rdquo;
+            No writings found matching &ldquo;{searchQuery}&rdquo;
           </p>
         </li>
       )}
     </ul>
   )
-} 
+}
