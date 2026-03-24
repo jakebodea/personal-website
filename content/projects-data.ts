@@ -34,6 +34,7 @@ export const projects: ProjectData[] = [
     title: "Worship Admin",
     description:
       "Planning Center is widely used church software for service planning and team scheduling. Worship Admin is a more pleasant UI for building schedules, reviewing availability, and assigning people to positions, while using Planning Center's API as the backend. It includes authenticated account connections and OAuth, but it's still in active development and not ready to demo publicly yet.",
+    liveUrl: "https://worshipadmin.com",
     repoUrl: "https://github.com/jakebodea/worship-admin",
     techStack: ["TypeScript", "Next.js", "Planning Center API", "Postgres"],
   },
