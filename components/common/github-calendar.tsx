@@ -1,10 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
 import { GitHubCalendar } from "react-github-calendar"
 
 export function GithubContributions() {
   const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
@@ -17,7 +19,12 @@ export function GithubContributions() {
         but my github contribution calendar gives an idea of my output.
       </p>
       <a href="https://github.com/jakebodea" target="_blank" rel="noopener noreferrer" className="block overflow-x-auto">
-        {mounted && <GitHubCalendar username="jakebodea" colorScheme="dark" />}
+        {mounted && (
+          <GitHubCalendar
+            username="jakebodea"
+            colorScheme={resolvedTheme === "light" ? "light" : "dark"}
+          />
+        )}
       </a>
     </div>
   )
