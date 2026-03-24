@@ -42,3 +42,4 @@ next-env.d.ts
 resume/resume.*
 !resume/resume.tex
 !resume/resume.pdf
+resume/cover.md
