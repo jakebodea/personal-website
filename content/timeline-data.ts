@@ -42,9 +42,9 @@ export const timelineItems = [
     title: "Student",
     location: "Stanford University",
     bullets: [
-      "Pursuing Graduate Certificate in AI",
-      { text: "Completed CS224N: Natural Language Processing with an A", href: "/papers/council-gpt-2.pdf" },
-      { text: "Completed CS329H: Machine Learning with Human Preferences with an A", href: "/papers/tts-optimized-language-generation.pdf" },
+      "Completed Graduate Certificate in AI",
+      { text: "Completed CS224N: Natural Language Processing with an A", paper: "/papers/council-gpt-2.pdf" },
+      { text: "Completed CS329H: Machine Learning with Human Preferences with an A", paper: "/papers/tts-optimized-language-generation.pdf" },
       "Completed CS229: Machine Learning with an A+",
       "Completed CS221: Principles and Techniques in Artificial Intelligence with an A"
     ]

@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
-type Bullet = string | { text: string; href: string };
+type Bullet = string | { text: string; paper?: string };
 
 interface TimelineItem {
   startDate: string;
@@ -99,10 +99,15 @@ const MobileTimeline: React.FC<MobileTimelineProps> = ({ items }) => {
                       <ul className="list-disc pl-4 text-muted-foreground leading-relaxed space-y-1">
                         {item.bullets.map((bullet, bulletIndex) => (
                           <li key={bulletIndex} className="text-sm leading-relaxed break-words">
-                            {typeof bullet === "string" ? bullet : (
-                              <a href={bullet.href} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
-                                {bullet.text}
-                              </a>
+                            {typeof bullet === "string" ? bullet : bullet.text}
+                            {typeof bullet !== "string" && bullet.paper && (
+                              <ul className="list-disc pl-5 mt-0.5">
+                                <li>
+                                  <a href={bullet.paper} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
+                                    research paper
+                                  </a>
+                                </li>
+                              </ul>
                             )}
                           </li>
                         ))}
