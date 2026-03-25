@@ -5,13 +5,15 @@ import Image from "next/image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { MobileTimeline } from "./mobile-timeline";
 
+type Bullet = string | { text: string; href: string };
+
 interface TimelineItem {
   startDate: string;
   endDate?: string;
   image: string;
   title: string;
   location: string;
-  bullets: string[];
+  bullets: Bullet[];
 }
 
 interface TimelineProps {
@@ -106,7 +108,11 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
                           <ul className="list-disc pl-5 text-muted-foreground leading-relaxed text-sm">
                             {item.bullets.map((bullet, bulletIndex) => (
                               <li key={bulletIndex}>
-                                {bullet}
+                                {typeof bullet === "string" ? bullet : (
+                                  <a href={bullet.href} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
+                                    {bullet.text}
+                                  </a>
+                                )}
                               </li>
                             ))}
                           </ul>
