@@ -1,8 +1,10 @@
 ---
-
-## title: "Building a Custom CMS for TaxRise"
+title: "Building a Custom CMS for TaxRise"
 date: "2026-04-27"
 description: "How I turned a WordPress migration into a custom CMS and marketing platform built around raw MDX, better tooling, and a much cleaner operating model"
+---
+
+I currently work at TaxRise, and this started as part of rebuilding the company's marketing site.
 
 Getting close to the old WordPress site was the easy part.
 
@@ -10,11 +12,11 @@ The harder part was realizing that a faithful cutover still would not solve the 
 
 So this stopped being a migration project pretty quickly.
 
-What I actually built for TaxRise was a custom CMS and marketing platform around raw MDX, Postgres, Cloudflare R2, our own internal auth, and a codebase structured so both humans and LLMs can make useful changes without casually breaking the architecture underneath. The result is a much cleaner system for publishing, editing, reviewing, revising, and evolving the site, and it gave the people closest to the work a lot more control over it.
+What I actually built at TaxRise was a custom CMS and marketing platform around raw MDX, Postgres, Cloudflare R2, our own internal auth, and a codebase structured so both humans and LLMs can make useful changes without casually breaking the architecture underneath. The result is a much cleaner system for publishing, editing, reviewing, revising, and evolving the site, and it gave the people closest to the work a lot more control over it.
 
 That is the part I am proud of.
 
-[Media placeholder: public-site montage or strong article/blog visuals]
+> Media placeholder: public-site montage or strong article/blog visuals
 
 I used Cursor throughout the project. Early on, that meant more autonomous agent-driven work to get the existing site recreated quickly enough to stop debating abstractions and start looking at something real. Later, it became more synchronous AI-assisted building, where the work was less about "generate me a page" and more about product decisions, architecture, refactors, UX, and shaping the codebase into something durable.
 
@@ -80,7 +82,7 @@ Instead of treating the site like a hard-coded frontend with a bolted-on editori
 
 Today that system is carrying **234 published content entries** across blogs, case studies, articles, glossary pages, legal pages, and IRS notices. That is enough surface area that this stops being a toy internal tool and starts being a real operating system for a serious marketing site.
 
-[Media placeholder: architecture diagram showing admin -> auth -> Postgres MDX -> Next.js render -> R2 assets]
+> Media placeholder: architecture diagram showing admin -> auth -> Postgres MDX -> Next.js render -> R2 assets
 
 The content model is intentionally not a freeform page-builder mess.
 
@@ -106,11 +108,11 @@ There is an admin surface for content types. There are drafts, previews, revisio
 
 I am mostly going to let the screenshots and recordings do that talking when I publish this for real, because I think the visuals make the point better than prose.
 
-[Media placeholder: admin dashboard screenshot or GIF]
+> Media placeholder: admin dashboard screenshot or GIF
 
-[Media placeholder: editor draft / preview / publish flow GIF]
+> Media placeholder: editor draft / preview / publish flow GIF
 
-[Media placeholder: asset manager GIF]
+> Media placeholder: asset manager GIF
 
 The point is not just that I built a CMS. Plenty of people can say that.
 
@@ -130,9 +132,9 @@ A lot of internal tooling projects quietly assume the public-facing result can b
 
 The homepage is still more of a living surface, and that is actually part of the point. Marketing can now shape more of it over time. But the article and blog experience already show what I wanted this system to enable: strong editorial design, good content structure, and a workflow where better presentation does not require heroics every time.
 
-[Media placeholder: blog/article montage]
+> Media placeholder: blog/article montage
 
-[Media placeholder: current homepage draft]
+> Media placeholder: current homepage draft
 
 ## The More Interesting Part: I Tried To Make The Codebase LLM-Friendly
 
