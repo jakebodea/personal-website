@@ -9,12 +9,17 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeMathjax from 'rehype-mathjax'
+import rehypeRaw from 'rehype-raw'
 import { CodeBlock } from '@/components/ui/code-block'
 import { CopyMarkdownButton } from '@/components/common/copy-markdown-button'
 import { BlogPostTitle } from '@/components/layout/blog-post-title'
 
 interface PageProps {
   slug: string
+}
+
+function isGif(src?: string) {
+  return src?.split('?')[0]?.toLowerCase().endsWith('.gif') ?? false
 }
 
 export async function generateStaticParams() {
@@ -64,7 +69,7 @@ export default async function BlogPostPage({ params }: { params: Promise<PagePro
           <div className="markdown-content">
             <ReactMarkdown
               remarkPlugins={[remarkGfm, remarkMath]}
-              rehypePlugins={[rehypeMathjax as any]}
+              rehypePlugins={[rehypeRaw, rehypeMathjax as any]}
               components={{
                 // Headings
                 h1: ({ className, node, ...props }: any) => (
@@ -241,18 +246,41 @@ export default async function BlogPostPage({ params }: { params: Promise<PagePro
                   )
                 },
                 
-                // Images
-                img: ({ className, node, ...props }: any) => (
-                  <Image
+                // Images and GIFs
+                img: ({ className, node, ...props }: any) => {
+                  const src = String(props.src || '')
+                  const alt = props.alt || "Blog image"
+
+                  if (isGif(src)) {
+                    return (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        {...props}
+                        alt={alt}
+                        className={cn("my-8 w-full rounded-lg border shadow-md", className)}
+                      />
+                    )
+                  }
+
+                  return (
+                    <Image
+                      {...props}
+                      alt={alt}
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{ width: '100%', height: 'auto' }}
+                      className={cn("my-8 rounded-lg shadow-md border", className)}
+                    />
+                  )
+                },
+                video: ({ className, node, ...props }: any) => (
+                  <video
                     {...props}
-                    alt={props.alt || "Blog image"}
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: '100%', height: 'auto' }}
-                    className={cn("my-8 rounded-lg shadow-md border", className)}
+                    className={cn("my-8 w-full rounded-lg border shadow-md", className)}
                   />
                 ),
+                source: ({ node, ...props }: any) => <source {...props} />,
                 
                 // Tables
                 table: ({ className, node, ...props }: any) => (
