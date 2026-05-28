@@ -1,8 +1,8 @@
 ---
-title: "Building a Custom CMS for TaxRise"
+
+## title: "Building a Custom CMS for TaxRise"
 date: "2026-04-27"
 description: "How I turned a WordPress migration into a custom CMS and marketing platform built around raw MDX, better tooling, and a much cleaner operating model"
----
 
 I currently work at TaxRise, and this started as part of rebuilding the company's marketing site.
 
