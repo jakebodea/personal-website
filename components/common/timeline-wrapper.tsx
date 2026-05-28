@@ -7,7 +7,7 @@ import { PageWrapper } from "@/components/layout/page-wrapper";
 
 export function TimelineWrapper(): React.ReactNode {
   return (
-    <PageWrapper title="timeline" subtitle="a chronological journey through my career experiences.">
+    <PageWrapper title="timeline" subtitle="A chronological journey through my career experiences.">
       <Timeline items={timelineItems} />
     </PageWrapper>
   );
