@@ -1,7 +1,9 @@
 import { ExternalLink, Github } from 'lucide-react'
+import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { ProjectGallery } from '@/components/common/project-gallery'
 import { XEmbed } from '@/components/common/x-embed'
 import type { ProjectData } from '@/content/projects-data'
 
@@ -56,6 +58,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {project.media?.type === 'x-embed' && (
           <XEmbed url={project.media.url} />
+        )}
+
+        {project.media?.type === 'image' && (
+          <figure className="mt-4 overflow-hidden rounded-lg border border-border">
+            <Image
+              src={project.media.url}
+              alt={project.media.alt ?? project.title}
+              width={1200}
+              height={675}
+              className="h-auto w-full"
+            />
+          </figure>
+        )}
+
+        {project.media?.type === 'gallery' && (
+          <ProjectGallery images={project.media.images} />
         )}
       </CardContent>
     </Card>
