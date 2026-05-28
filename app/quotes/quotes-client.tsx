@@ -160,7 +160,7 @@ export default function QuotesPageClient({ initialQuotes }: QuotesPageProps) {
   }, [searchQuery, baseQuotes])
 
   return (
-    <PageWrapper title="quotes" subtitle="a collection of quotes and sources that have inspired me.">
+    <PageWrapper title="quotes" subtitle="A collection of quotes and sources that have inspired me.">
       <NotionSyncBrag />
       <SearchInput value={searchQuery} onChange={setSearchQuery} placeholder="search quotes..." />
 
