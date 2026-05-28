@@ -1,13 +1,12 @@
+"use client"
+
+import { useEffect, useState } from 'react'
 import { EmbeddedTweet } from 'react-tweet'
 import { getTweet } from 'react-tweet/api'
+import type { Tweet } from 'react-tweet/api'
 
 interface XEmbedProps {
   url: string
-}
-
-function extractTweetId(url: string): string | null {
-  const match = url.match(/status\/(\d+)/)
-  return match?.[1] ?? null
 }
 
 type TweetWithEntities = {
@@ -19,6 +18,11 @@ type TweetWithEntities = {
     media?: unknown[]
   }
   quoted_tweet?: TweetWithEntities
+}
+
+function extractTweetId(url: string): string | null {
+  const match = url.match(/status\/(\d+)/)
+  return match?.[1] ?? null
 }
 
 function normalizeTweetEntities<T extends TweetWithEntities>(tweet: T): T {
@@ -40,14 +44,22 @@ function normalizeTweetEntities<T extends TweetWithEntities>(tweet: T): T {
   return tweet
 }
 
-export async function XEmbed({ url }: XEmbedProps) {
+export function XEmbed({ url }: XEmbedProps) {
   const tweetId = extractTweetId(url)
-  if (!tweetId) return null
+  const [tweet, setTweet] = useState<Tweet | null>(null)
 
-  const rawTweet = await getTweet(tweetId).catch(() => null)
-  if (!rawTweet) return null
+  useEffect(() => {
+    if (!tweetId) return
 
-  const tweet = normalizeTweetEntities(rawTweet)
+    getTweet(tweetId)
+      .then((rawTweet) => {
+        if (!rawTweet) return
+        setTweet(normalizeTweetEntities(rawTweet))
+      })
+      .catch(() => {})
+  }, [tweetId])
+
+  if (!tweetId || !tweet) return null
 
   return (
     <div className="mt-4 flex justify-center [&>div]:!m-0">
