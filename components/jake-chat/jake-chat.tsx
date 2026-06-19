@@ -5,6 +5,7 @@ import { DefaultChatTransport } from "ai"
 import { Check, Copy, Info, MessageCirclePlus, X } from "lucide-react"
 import Image from "next/image"
 import { useEffect, useMemo, useRef, useState } from "react"
+import { toast } from "sonner"
 
 import {
   PromptInput,
@@ -49,11 +50,38 @@ export function JakeChat({
   const [isLoadingFollowUps, setIsLoadingFollowUps] = useState(false)
   const [isConversationCopied, setIsConversationCopied] = useState(false)
   const lastFollowUpMessageId = useRef<string | null>(null)
+  const queuedRetryCount = useRef(0)
+  const queuedRetryTimeout = useRef<number | null>(null)
+  const queuedWarningTimeout = useRef<number | null>(null)
+  const queuedWarningShown = useRef(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const scrollEndRef = useRef<HTMLDivElement>(null)
 
-  const { messages, regenerate, sendMessage, setMessages, status } = useChat({
+  const {
+    clearError,
+    messages,
+    regenerate,
+    sendMessage,
+    setMessages,
+    status,
+  } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chat" }),
+    onError: () => {
+      queuedWarningShown.current = true
+      showQueuedWarning()
+
+      clearError()
+
+      if (queuedRetryCount.current >= 2 || queuedRetryTimeout.current) {
+        return
+      }
+
+      queuedRetryCount.current += 1
+      queuedRetryTimeout.current = window.setTimeout(() => {
+        queuedRetryTimeout.current = null
+        regenerate()
+      }, 12_000)
+    },
   })
 
   const isBusy = status === "submitted" || status === "streaming"
@@ -61,6 +89,24 @@ export function JakeChat({
     () => messages.findLast((message) => message.role === "assistant"),
     [messages]
   )
+
+  useEffect(() => {
+    if (!isBusy) {
+      clearQueuedWarning()
+      queuedWarningShown.current = false
+      return
+    }
+
+    if (queuedWarningShown.current || queuedWarningTimeout.current) return
+
+    queuedWarningTimeout.current = window.setTimeout(() => {
+      queuedWarningTimeout.current = null
+      queuedWarningShown.current = true
+      showQueuedWarning()
+    }, 8_000)
+
+    return clearQueuedWarning
+  }, [isBusy])
 
   useEffect(() => {
     if (
@@ -113,11 +159,38 @@ export function JakeChat({
   function submitPrompt(prompt: string) {
     const trimmedPrompt = prompt.trim()
     if (!trimmedPrompt || isBusy) return
+    clearQueuedRetry()
+    clearQueuedWarning()
+    queuedRetryCount.current = 0
+    queuedWarningShown.current = false
     sendMessage({ text: trimmedPrompt })
     setInput("")
   }
 
+  function showQueuedWarning() {
+    toast("still working on it", {
+      description:
+        "Groq is moving a little slowly, so your request is queued and should show up shortly.",
+    })
+  }
+
+  function clearQueuedRetry() {
+    if (!queuedRetryTimeout.current) return
+    window.clearTimeout(queuedRetryTimeout.current)
+    queuedRetryTimeout.current = null
+  }
+
+  function clearQueuedWarning() {
+    if (!queuedWarningTimeout.current) return
+    window.clearTimeout(queuedWarningTimeout.current)
+    queuedWarningTimeout.current = null
+  }
+
   function startNewConversation() {
+    clearQueuedRetry()
+    clearQueuedWarning()
+    queuedRetryCount.current = 0
+    queuedWarningShown.current = false
     setMessages([])
     setInput("")
     setFollowUps(initialFollowUps)
@@ -141,6 +214,13 @@ export function JakeChat({
       window.setTimeout(() => setIsConversationCopied(false), 1600)
     })
   }
+
+  useEffect(() => {
+    return () => {
+      clearQueuedRetry()
+      clearQueuedWarning()
+    }
+  }, [])
 
   return (
     <section

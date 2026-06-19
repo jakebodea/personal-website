@@ -2,6 +2,10 @@ import { groq, type GroqLanguageModelOptions } from "@ai-sdk/groq"
 import { convertToModelMessages, streamText, type UIMessage } from "ai"
 
 import { getJakeChatSystemPrompt } from "@/lib/jake-chat/persona"
+import {
+  GROQ_RATE_LIMIT_ERROR_CODE,
+  isGroqRateLimitError,
+} from "@/lib/jake-chat/rate-limit"
 
 export const maxDuration = 30
 
@@ -20,5 +24,13 @@ export async function POST(req: Request) {
     },
   })
 
-  return result.toUIMessageStreamResponse()
+  return result.toUIMessageStreamResponse({
+    onError: (error) => {
+      if (isGroqRateLimitError(error)) {
+        return GROQ_RATE_LIMIT_ERROR_CODE
+      }
+
+      return "CHAT_RESPONSE_FAILED"
+    },
+  })
 }
