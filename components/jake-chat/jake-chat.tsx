@@ -1,6 +1,6 @@
 "use client"
 
-import { useChat } from "@ai-sdk/react"
+import { type UIMessage, useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { Check, Copy, Info, MessageCirclePlus, X } from "lucide-react"
 import Image from "next/image"
@@ -34,10 +34,50 @@ import { getMessageMarkdown } from "@/lib/jake-chat/message-markdown"
 import type { FollowUp } from "@/lib/jake-chat/types"
 import { cn } from "@/lib/utils"
 
+const CHAT_CACHE_KEY = "jake-chat:messages"
+
 interface JakeChatProps {
   variant?: "page" | "widget"
   className?: string
   onClose?: () => void
+}
+
+function getCachedMessages(): UIMessage[] {
+  if (typeof window === "undefined") return []
+
+  try {
+    const cachedMessages = window.localStorage.getItem(CHAT_CACHE_KEY)
+    if (!cachedMessages) return []
+
+    const parsedMessages: unknown = JSON.parse(cachedMessages)
+    if (!Array.isArray(parsedMessages)) return []
+
+    return parsedMessages.filter(
+      (message): message is UIMessage =>
+        typeof message === "object" &&
+        message !== null &&
+        "id" in message &&
+        "role" in message &&
+        "parts" in message
+    )
+  } catch {
+    return []
+  }
+}
+
+function cacheMessages(messages: UIMessage[]) {
+  if (typeof window === "undefined") return
+
+  try {
+    if (messages.length === 0) {
+      window.localStorage.removeItem(CHAT_CACHE_KEY)
+      return
+    }
+
+    window.localStorage.setItem(CHAT_CACHE_KEY, JSON.stringify(messages))
+  } catch {
+    // Chat should keep working even if browser storage is unavailable.
+  }
 }
 
 export function JakeChat({
@@ -45,6 +85,7 @@ export function JakeChat({
   className,
   onClose,
 }: JakeChatProps) {
+  const [initialMessages] = useState<UIMessage[]>(() => getCachedMessages())
   const [input, setInput] = useState("")
   const [followUps, setFollowUps] = useState<FollowUp[]>(initialFollowUps)
   const [isLoadingFollowUps, setIsLoadingFollowUps] = useState(false)
@@ -65,6 +106,8 @@ export function JakeChat({
     setMessages,
     status,
   } = useChat({
+    id: "jake-chat",
+    messages: initialMessages,
     transport: new DefaultChatTransport({ api: "/api/chat" }),
     onError: () => {
       queuedWarningShown.current = true
@@ -89,6 +132,10 @@ export function JakeChat({
     () => messages.findLast((message) => message.role === "assistant"),
     [messages]
   )
+
+  useEffect(() => {
+    cacheMessages(messages)
+  }, [messages])
 
   useEffect(() => {
     if (!isBusy) {
@@ -192,6 +239,7 @@ export function JakeChat({
     queuedRetryCount.current = 0
     queuedWarningShown.current = false
     setMessages([])
+    cacheMessages([])
     setInput("")
     setFollowUps(initialFollowUps)
     setIsLoadingFollowUps(false)
