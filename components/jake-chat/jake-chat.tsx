@@ -85,7 +85,7 @@ export function JakeChat({
   className,
   onClose,
 }: JakeChatProps) {
-  const [initialMessages] = useState<UIMessage[]>(() => getCachedMessages())
+  const initialMessages = useMemo(() => getCachedMessages(), [])
   const [input, setInput] = useState("")
   const [followUps, setFollowUps] = useState<FollowUp[]>(initialFollowUps)
   const [isLoadingFollowUps, setIsLoadingFollowUps] = useState(false)
