@@ -1,4 +1,10 @@
-import { Tweet } from 'react-tweet'
+"use client"
+
+import dynamic from "next/dynamic"
+
+const Tweet = dynamic(() => import("react-tweet").then((mod) => mod.Tweet), {
+  ssr: false,
+})
 
 interface XEmbedProps {
   url: string
