@@ -2,7 +2,8 @@
 
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
-import { Check, Copy, MessageCirclePlus } from "lucide-react"
+import { Check, Copy, MessageCirclePlus, X } from "lucide-react"
+import Image from "next/image"
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import {
@@ -30,9 +31,14 @@ import { cn } from "@/lib/utils"
 interface JakeChatProps {
   variant?: "page" | "widget"
   className?: string
+  onClose?: () => void
 }
 
-export function JakeChat({ variant = "page", className }: JakeChatProps) {
+export function JakeChat({
+  variant = "page",
+  className,
+  onClose,
+}: JakeChatProps) {
   const [input, setInput] = useState("")
   const [followUps, setFollowUps] = useState<FollowUp[]>(initialFollowUps)
   const [isLoadingFollowUps, setIsLoadingFollowUps] = useState(false)
@@ -141,46 +147,81 @@ export function JakeChat({ variant = "page", className }: JakeChatProps) {
         className
       )}
     >
-      <div className="flex shrink-0 justify-end gap-1.5">
+      <div className="flex shrink-0 items-center justify-between gap-3">
+        {variant === "widget" ? (
+          <div className="flex min-w-0 items-center gap-2 text-sm font-medium">
+            <Image
+              alt="Jake Bodea"
+              className="size-7 shrink-0 rounded-full border border-border/70 object-cover object-[50%_24%]"
+              height={28}
+              src="/images/jake-chat-avatar.jpeg"
+              unoptimized
+              width={28}
+            />
+            <span className="truncate">ask jake</span>
+          </div>
+        ) : (
+          <div aria-hidden="true" />
+        )}
+
         <TooltipProvider delayDuration={200}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                aria-label="copy conversation as markdown"
-                className="size-8 shrink-0 rounded-full text-muted-foreground/70 hover:bg-card-02 hover:text-foreground"
-                disabled={messages.length === 0}
-                onClick={copyConversation}
-                size="icon"
-                type="button"
-                variant="ghost"
-              >
-                {isConversationCopied ? (
-                  <Check className="size-4" />
-                ) : (
-                  <Copy className="size-4" />
-                )}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              {isConversationCopied ? "copied" : "copy conversation"}
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                aria-label="start a new conversation"
-                className="size-8 shrink-0 rounded-full text-muted-foreground/70 hover:bg-card-02 hover:text-foreground"
-                disabled={isBusy && messages.length === 0}
-                onClick={startNewConversation}
-                size="icon"
-                type="button"
-                variant="ghost"
-              >
-                <MessageCirclePlus className="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>new conversation</TooltipContent>
-          </Tooltip>
+          <div className="flex shrink-0 justify-end gap-1.5">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  aria-label="copy conversation as markdown"
+                  className="size-8 shrink-0 rounded-full text-muted-foreground/70 hover:bg-card-02 hover:text-foreground"
+                  disabled={messages.length === 0}
+                  onClick={copyConversation}
+                  size="icon"
+                  type="button"
+                  variant="ghost"
+                >
+                  {isConversationCopied ? (
+                    <Check className="size-4" />
+                  ) : (
+                    <Copy className="size-4" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {isConversationCopied ? "copied" : "copy conversation"}
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  aria-label="start a new conversation"
+                  className="size-8 shrink-0 rounded-full text-muted-foreground/70 hover:bg-card-02 hover:text-foreground"
+                  disabled={isBusy && messages.length === 0}
+                  onClick={startNewConversation}
+                  size="icon"
+                  type="button"
+                  variant="ghost"
+                >
+                  <MessageCirclePlus className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>new conversation</TooltipContent>
+            </Tooltip>
+            {variant === "widget" && onClose && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    aria-label="close chat"
+                    className="size-8 shrink-0 rounded-full text-muted-foreground/70 hover:bg-card-02 hover:text-foreground"
+                    onClick={onClose}
+                    size="icon"
+                    type="button"
+                    variant="ghost"
+                  >
+                    <X className="size-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>close chat</TooltipContent>
+              </Tooltip>
+            )}
+          </div>
         </TooltipProvider>
       </div>
 
