@@ -1,4 +1,4 @@
-import { groq } from "@ai-sdk/groq"
+import { groq, type GroqLanguageModelOptions } from "@ai-sdk/groq"
 import { convertToModelMessages, streamText, type UIMessage } from "ai"
 
 import { getJakeChatSystemPrompt } from "@/lib/jake-chat/persona"
@@ -12,6 +12,12 @@ export async function POST(req: Request) {
     model: groq("openai/gpt-oss-120b"),
     system: getJakeChatSystemPrompt(),
     messages: await convertToModelMessages(messages),
+    providerOptions: {
+      groq: {
+        reasoningEffort: "medium",
+        reasoningFormat: "hidden",
+      } satisfies GroqLanguageModelOptions,
+    },
   })
 
   return result.toUIMessageStreamResponse()

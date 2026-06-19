@@ -4,20 +4,20 @@ export const initialFollowUps: FollowUp[] = [
   {
     id: "work",
     type: "button",
-    title: "your work",
-    prompt: "what kind of work do you care about most?",
+    title: "why jake?",
+    prompt: "why should someone want to work with jake?",
   },
   {
     id: "projects",
     type: "button",
-    title: "what you've built",
-    prompt: "what have you built, and which project should i look at first?",
+    title: "best proof",
+    prompt: "what is the strongest proof that jake can build useful things?",
   },
   {
     id: "ai",
     type: "button",
-    title: "ai background",
-    prompt: "what is your background in ai and machine learning?",
+    title: "ai taste",
+    prompt: "what are jake's strongest opinions about AI product work?",
   },
   {
     id: "years-at",
@@ -39,14 +39,14 @@ export const fallbackFollowUps: FollowUp[] = [
   {
     id: "representative",
     type: "button",
-    title: "best signal",
-    prompt: "what is the best signal on this site for what you're good at?",
+    title: "hire signal",
+    prompt: "what is the best signal on this site that jake would be good to hire?",
   },
   {
     id: "contact",
     type: "button",
     title: "reach out",
-    prompt: "what would be a good reason to reach out to you?",
+    prompt: "what would be a good reason to reach out to jake?",
   },
   {
     id: "compare",

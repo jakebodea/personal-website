@@ -35,30 +35,30 @@ export function FollowUpPills({
         {loading && <FollowUpLoadingPills />}
         {!loading &&
           followUps.map((followUp) => {
-          if (followUp.type === "button") {
-            return (
-              <PillButton
-                key={followUp.id}
-                disabled={disabled}
-                onClick={() => onSend(followUp.prompt)}
-              >
-                {followUp.title}
-              </PillButton>
-            )
-          }
+            if (followUp.type === "button") {
+              return (
+                <PillButton
+                  key={followUp.id}
+                  disabled={disabled}
+                  onClick={() => onSend(followUp.prompt)}
+                >
+                  {followUp.title}
+                </PillButton>
+              )
+            }
 
-          if (followUp.type === "select") {
-            return (
-              <SelectFollowUp
-                key={followUp.id}
-                disabled={disabled}
-                followUp={followUp}
-                onSend={onSend}
-              />
-            )
-          }
+            if (followUp.type === "select") {
+              return (
+                <SelectFollowUp
+                  key={followUp.id}
+                  disabled={disabled}
+                  followUp={followUp}
+                  onSend={onSend}
+                />
+              )
+            }
 
-          return null
+            return null
           })}
       </div>
     </div>
