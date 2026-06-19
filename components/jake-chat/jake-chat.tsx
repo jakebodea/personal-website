@@ -2,7 +2,7 @@
 
 import { useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
-import { Check, Copy, MessageCirclePlus, X } from "lucide-react"
+import { Check, Copy, Info, MessageCirclePlus, X } from "lucide-react"
 import Image from "next/image"
 import { useEffect, useMemo, useRef, useState } from "react"
 
@@ -16,6 +16,11 @@ import {
   ThinkingMessage,
 } from "@/components/jake-chat/chat-message"
 import { FollowUpPills } from "@/components/jake-chat/follow-up-pills"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 import { Button } from "@/components/ui/button"
 import {
   Tooltip,
@@ -159,6 +164,52 @@ export function JakeChat({
               width={28}
             />
             <span className="truncate">ask jake</span>
+            <HoverCard openDelay={100} closeDelay={100}>
+              <HoverCardTrigger asChild>
+                <button
+                  aria-label="show chat provider"
+                  className="flex size-5 shrink-0 items-center justify-center rounded-full text-muted-foreground/70 outline-none transition-colors hover:bg-card-02 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  type="button"
+                >
+                  <Info className="size-3.5" />
+                </button>
+              </HoverCardTrigger>
+              <HoverCardContent
+                align="start"
+                className="w-auto p-3"
+                side="bottom"
+              >
+                <div className="flex flex-col gap-1.5 text-xs leading-none">
+                  <div className="flex items-center gap-2 whitespace-nowrap">
+                    <span>powered by</span>
+                    <a
+                      aria-label="Visit Groq"
+                      className="rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      href="https://groq.com/"
+                      onClick={(event) => {
+                        event.preventDefault()
+                        window.open(
+                          "https://groq.com/",
+                          "_blank",
+                          "noopener,noreferrer"
+                        )
+                      }}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <Image
+                        alt="Groq"
+                        className="h-3.5 w-auto dark:invert"
+                        height={14}
+                        src="/images/groq-logo.svg"
+                        width={38}
+                      />
+                    </a>
+                  </div>
+                  <span className="text-muted-foreground">paid for by me</span>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
           </div>
         ) : (
           <div aria-hidden="true" />
