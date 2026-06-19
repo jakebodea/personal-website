@@ -33,6 +33,31 @@
     text-wrap: balance;
   }
 
+  .shimmer-fill {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--foreground) / 0.08),
+      transparent
+    );
+    animation: shimmer-fill 1.35s ease-in-out infinite;
+  }
+
+  @keyframes shimmer-fill {
+    to {
+      transform: translateX(100%);
+    }
+  }
+
   /* Modern scrollbar styling */
   .scrollbar-thin {
     scrollbar-width: thin;
