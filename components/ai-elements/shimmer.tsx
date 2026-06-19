@@ -1,7 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
-import type { ElementType } from "react"
+import type { CSSProperties, ElementType } from "react"
 import { memo } from "react"
 
 import { cn } from "@/lib/utils"
@@ -22,28 +21,20 @@ export const Shimmer = memo(function Shimmer({
   spread,
 }: ShimmerProps) {
   const calculatedSpread = spread ?? Math.max(children.length * 2, 36)
+  const style = {
+    "--shimmer-duration": `${duration}s`,
+    "--shimmer-spread": `${calculatedSpread}%`,
+  } as CSSProperties
 
   return (
     <Component
       className={cn(
-        "relative inline-block overflow-hidden text-transparent",
+        "shimmer-text inline-block text-transparent",
         className
       )}
+      style={style}
     >
-      <span className="bg-[linear-gradient(110deg,hsl(var(--muted-foreground)/0.42),hsl(var(--foreground)/0.92),hsl(var(--muted-foreground)/0.42))] bg-clip-text">
-        {children}
-      </span>
-      <motion.span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent,hsl(var(--background)/0.85),transparent)]"
-        initial={{ x: `-${calculatedSpread}%` }}
-        animate={{ x: `${calculatedSpread}%` }}
-        transition={{
-          duration,
-          ease: "linear",
-          repeat: Infinity,
-        }}
-      />
+      {children}
     </Component>
   )
 })

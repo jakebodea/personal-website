@@ -1,7 +1,7 @@
 "use client"
 
 import { ChevronDown } from "lucide-react"
-import { useState } from "react"
+import { type CSSProperties, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -27,39 +27,51 @@ export function FollowUpPills({
   loading,
   onSend,
 }: FollowUpPillsProps) {
-  if (!followUps.length && !loading) return null
+  if (loading || !followUps.length) return null
 
   return (
     <div className="-mx-6 overflow-x-auto px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <div className="flex w-max min-w-full items-center gap-2">
-        {loading && <FollowUpLoadingPills />}
-        {!loading &&
-          followUps.map((followUp) => {
-            if (followUp.type === "button") {
-              return (
+        {followUps.map((followUp, index) => {
+          const style = {
+            "--follow-up-enter-delay": `${index * 45}ms`,
+          } as CSSProperties
+
+          if (followUp.type === "button") {
+            return (
+              <div
+                key={followUp.id}
+                className="follow-up-pill-enter shrink-0"
+                style={style}
+              >
                 <PillButton
-                  key={followUp.id}
                   disabled={disabled}
                   onClick={() => onSend(followUp.prompt)}
                 >
                   {followUp.title}
                 </PillButton>
-              )
-            }
+              </div>
+            )
+          }
 
-            if (followUp.type === "select") {
-              return (
+          if (followUp.type === "select") {
+            return (
+              <div
+                key={followUp.id}
+                className="follow-up-pill-enter shrink-0"
+                style={style}
+              >
                 <SelectFollowUp
-                  key={followUp.id}
                   disabled={disabled}
                   followUp={followUp}
                   onSend={onSend}
                 />
-              )
-            }
+              </div>
+            )
+          }
 
-            return null
-          })}
+          return null
+        })}
       </div>
     </div>
   )
@@ -80,16 +92,6 @@ function PillButton({
       variant="outline"
       {...props}
     />
-  )
-}
-
-function FollowUpLoadingPills() {
-  return (
-    <>
-      <span className="shimmer-fill h-8 w-20 shrink-0 rounded-full border border-border/60 bg-card-02/70" />
-      <span className="shimmer-fill h-8 w-28 shrink-0 rounded-full border border-border/60 bg-card-02/70" />
-      <span className="shimmer-fill h-8 w-24 shrink-0 rounded-full border border-border/60 bg-card-02/70" />
-    </>
   )
 }
 
