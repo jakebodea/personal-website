@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function ProjectsPage(): React.ReactNode {
   return (
-    <PageWrapper title="projects" subtitle="a showcase of my technical work.">
+    <PageWrapper title="projects" subtitle="A showcase of my technical work.">
       <div className="space-y-8">
         <Separator />
         <GithubContributions />

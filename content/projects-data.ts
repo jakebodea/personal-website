@@ -1,16 +1,40 @@
+type ProjectMedia =
+  | { type: "x-embed"; url: string }
+  | { type: "image"; url: string; alt?: string }
+  | { type: "youtube"; url: string }
+  | { type: "gallery"; images: { url: string; alt: string }[] }
+
 export interface ProjectData {
   title: string
   description: string
-  media?: {
-    type: "x-embed" | "image" | "youtube"
-    url: string
-  }
+  media?: ProjectMedia
   liveUrl?: string
   repoUrl?: string
   techStack: string[]
 }
 
 export const projects: ProjectData[] = [
+  {
+    title: "TaxRise.com",
+    description:
+      "Marketing website for TaxRise that I built and maintain, including a custom CMS for managing the site. Content lives as MDX in Neon with draft/publish workflows, typed models for service pages, blog posts, IRS notices, and more, plus custom MDX components like Callouts. Assets are managed through a file browser built on Cloudflare R2.",
+    liveUrl: "https://taxrise.com",
+    media: {
+      type: "gallery",
+      images: [
+        { url: "/images/taxrise-hero.png", alt: "Homepage hero" },
+        { url: "/images/taxrise-services-hub.png", alt: "Services page" },
+        { url: "/images/taxrise-contact.png", alt: "Contact page" },
+        {
+          url: "/images/taxrise-services.png",
+          alt: "Tax levy service page",
+        },
+        { url: "/images/taxrise-cms-editor.png", alt: "CMS editor" },
+        { url: "/images/taxrise-cms-assets.png", alt: "R2 assets browser" },
+      ],
+    },
+    techStack: ["TypeScript", "Next.js", "Tailwind CSS", "Neon", "MDX", "R2"],
+  },
   {
     title: "Super Simple Secret Santa",
     description:

@@ -15,8 +15,8 @@ export function GithubContributions() {
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        many of my company projects are under NDA and can&apos;t be shown here,
-        but my github contribution calendar gives an idea of my output.
+        Many of my company projects are under NDA and can&apos;t be shown here,
+        but my GitHub contribution calendar gives an idea of my output.
       </p>
       <a href="https://github.com/jakebodea" target="_blank" rel="noopener noreferrer" className="block overflow-x-auto">
         {mounted && (
