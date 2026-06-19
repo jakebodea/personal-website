@@ -7,7 +7,12 @@ import {
   JAKE_CHAT_MODEL,
 } from "@/lib/jake-chat/model"
 import { JAKE_CHAT_PROMPT_CACHE_KEY } from "@/lib/jake-chat/prompt-cache"
-import { isChatRateLimitError } from "@/lib/jake-chat/rate-limit"
+import { getBoundedChatMessages } from "@/lib/jake-chat/request"
+import {
+  getChatClientId,
+  isChatRateLimitError,
+  isChatRequestAllowed,
+} from "@/lib/jake-chat/rate-limit"
 
 export const maxDuration = 30
 
@@ -78,7 +83,12 @@ function getMessageText(message: UIMessage) {
 }
 
 export async function POST(req: Request) {
-  const { messages }: { messages: UIMessage[] } = await req.json()
+  const clientId = getChatClientId(req)
+  if (!isChatRequestAllowed(clientId)) {
+    return Response.json({ followUps: fallbackFollowUps }, { status: 429 })
+  }
+
+  const messages: UIMessage[] = await getBoundedChatMessages(req)
   const recentMessages = messages.slice(-6).map((message) => ({
     role: message.role,
     text: getMessageText(message),
