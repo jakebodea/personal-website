@@ -1,9 +1,8 @@
-import { groq } from "@ai-sdk/groq"
 import { generateText, Output, type UIMessage } from "ai"
 import { z } from "zod"
 
 import { fallbackFollowUps } from "@/lib/jake-chat/follow-ups"
-import { isGroqRateLimitError } from "@/lib/jake-chat/rate-limit"
+import { isChatRateLimitError } from "@/lib/jake-chat/rate-limit"
 
 export const maxDuration = 30
 
@@ -82,7 +81,7 @@ export async function POST(req: Request) {
 
   try {
     const result = await generateText({
-      model: groq("openai/gpt-oss-120b"),
+      model: "openai/gpt-oss-120b",
       system: followUpSystemPrompt,
       prompt: `conversation so far:\n${JSON.stringify(recentMessages, null, 2)}\n\ngenerate the next follow-up controls.`,
       output: Output.object({ schema: followUpSchema }),
@@ -90,7 +89,7 @@ export async function POST(req: Request) {
 
     return Response.json(result.output)
   } catch (error) {
-    if (isGroqRateLimitError(error)) {
+    if (isChatRateLimitError(error)) {
       return Response.json({ followUps: fallbackFollowUps }, { status: 202 })
     }
 

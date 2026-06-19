@@ -10,7 +10,6 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/groq": "^3.0.42",
     "@ai-sdk/react": "^3.0.210",
     "@notionhq/client": "^5.1.0",
     "@radix-ui/react-collapsible": "^1.1.1",

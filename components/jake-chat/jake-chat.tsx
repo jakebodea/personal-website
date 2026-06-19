@@ -170,7 +170,7 @@ export function JakeChat({
   function showQueuedWarning() {
     toast("still working on it", {
       description:
-        "Groq is moving a little slowly, so your request is queued and should show up shortly.",
+        "The model provider is moving a little slowly, so your request is queued and should show up shortly.",
     })
   }
 
@@ -263,13 +263,13 @@ export function JakeChat({
                   <div className="flex items-center gap-2 whitespace-nowrap">
                     <span>powered by</span>
                     <a
-                      aria-label="Visit Groq"
+                      aria-label="Visit Vercel AI Gateway"
                       className="rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                      href="https://groq.com/"
+                      href="https://vercel.com/ai-gateway"
                       onClick={(event) => {
                         event.preventDefault()
                         window.open(
-                          "https://groq.com/",
+                          "https://vercel.com/ai-gateway",
                           "_blank",
                           "noopener,noreferrer"
                         )
@@ -277,13 +277,9 @@ export function JakeChat({
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      <Image
-                        alt="Groq"
-                        className="h-3.5 w-auto dark:invert"
-                        height={14}
-                        src="/images/groq-logo.svg"
-                        width={38}
-                      />
+                      <span className="font-medium text-foreground">
+                        Vercel AI Gateway
+                      </span>
                     </a>
                   </div>
                   <span className="text-muted-foreground">paid for by me</span>

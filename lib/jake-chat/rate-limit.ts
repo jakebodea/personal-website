@@ -1,14 +1,11 @@
 import { APICallError } from "ai"
 
-export const GROQ_RATE_LIMIT_ERROR_CODE = "GROQ_RATE_LIMIT_BACKLOG"
+export const CHAT_RATE_LIMIT_ERROR_CODE = "CHAT_RATE_LIMIT_BACKLOG"
 
-export function isGroqRateLimitError(error: unknown) {
+export function isChatRateLimitError(error: unknown) {
   if (
     APICallError.isInstance(error) &&
-    error.statusCode === 429 &&
-    /groq|api\.groq\.com/i.test(
-      `${error.url} ${error.message} ${error.responseBody ?? ""}`
-    )
+    error.statusCode === 429
   ) {
     return true
   }
@@ -23,6 +20,6 @@ export function isGroqRateLimitError(error: unknown) {
 
   return (
     error.message.includes("429") &&
-    /groq|rate limit|too many requests/i.test(error.message)
+    /rate limit|too many requests/i.test(error.message)
   )
 }
