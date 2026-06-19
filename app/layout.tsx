@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { Montserrat, Instrument_Serif } from "next/font/google"
 import { TopNav } from "@/components/layout/top-nav"
 import { PageTransition } from "@/components/layout/page-transition"
-import { GPTSlopToast } from "@/components/gpt-slop-toast"
+import { JakeChatWidget } from "@/components/jake-chat/jake-chat-widget"
 import { Analytics } from "@vercel/analytics/next"
 
 const montserrat = Montserrat({
@@ -93,7 +93,7 @@ export default function RootLayout({
                 <PageTransition>{children}</PageTransition>
               </main>
               <Toaster />
-              <GPTSlopToast />
+              <JakeChatWidget />
             </StickyTitleProvider>
           </NavigationProvider>
         </ThemeProvider>

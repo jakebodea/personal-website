@@ -1,0 +1,136 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\pagestyle{empty}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+3385 Michelson Dr\\
+Irvine, CA 92612\\
+\href{tel:+19492980911}{(949) 298-0911}\\
+\href{mailto:jakebodea@gmail.com}{\nolinkurl{jakebodea@gmail.com}},
+\href{http://jakebodea.com}{jakebodea.com}
+
+March 24, 2026
+
+Anduril Industries\\
+1400 Anduril\\
+Costa Mesa, CA 92626
+
+\vspace{\baselineskip}
+
+Dear Anduril Hiring Team:
+
+I am a product-oriented software engineer with a strong background in AI
+and mathematics, writing to express my interest in the Senior AI
+Engineer position at Anduril. I currently build and ship LLM-powered
+agentic systems at TaxRise, a fintech startup based --- fittingly - out
+of Anduril's old Irvine office. My experience taking AI products from
+prototype to production, combined with my post-grad studies at Stanford,
+make this role a natural fit.
+
+Having been an Orange County resident my entire life, I have long
+admired Anduril and Palmer Luckey; I've been following his work since
+Oculus' acquisition by Meta. I firmly believe Anduril is one of the most
+important companies in history. It's where the efficiency and
+``impossible'' dreams of the startup-style technology industry face off
+against the established military companies to build technology like real
+software: shipped fast, iterated in the field, and wired together into
+one living system that changes how wars are fought, instead of just
+updating the paint job on the last generation's hardware.
+
+I have long wanted to join Anduril, but hadn't found a position that
+aligned with my skillset --- until now. I sped through high school and
+college, finishing my B.A. in math with triple minors and a 3.96 GPA at
+20 years old, right as ChatGPT was released. During my time at Beckman
+Coulter, where I started as a senior-year intern and moved to full-time,
+my manager told me to go full-steam ahead on this ``AI thing'' and see
+how it could benefit the company. After delivering a company-wide
+chatbot (full-stack) for our 12,000 employees, I was moved to lead the
+internal AI team. Notable projects include a BERT-based ticket
+classification system as a tool for the chatbot (before tool use was
+common in the industry), RAG-based QA over company documentation, and
+computer vision algorithms to automate quality control for our
+manufacturing department.
+
+I am now at TaxRise, where our small team of four developers handles all
+software development for the company. I solely rebuilt and redesigned
+our entire technology suite as full-stack Next.js TypeScript
+applications, with repositories optimized for AI coding agents. Once the
+apps were mature, I built out a bug triage system turning Slack reports
+into Linear issues with PostHog recordings attached, then handing them
+off to a coding agent (Cursor, Claude Code, Codex), and finally
+producing a well-tested GitHub pull request with video recording for
+manual review --- end-to-end autonomous coding infrastructure, from bug
+discovery to deployable code. I also led an initiative to add
+LLM-powered virtual assistants to each client-facing application, backed
+by an MCP server that connects them to our business processes and lets
+them take real actions on behalf of clients. These initiatives allowed
+our development team to stay nimble and move extremely quickly.
+
+Part of my role is staying current with developments in the AI space and
+evangelizing what I find --- turning new ideas into experiments, then
+into products and lessons for the team. This is my favorite part of the
+job, and I understand it's central to this role as well. The opportunity
+to bring this energy to Anduril, where the systems matter and the pace
+matches how I naturally work, is what makes this position singular. My
+side projects and writing, visible on my website, reflect the same
+drive.
+
+I would be delighted to interview and discuss my candidacy in more
+detail. Thank you for your time and consideration.
+
+\vspace{\baselineskip}
+
+Sincerely,\\
+Jake Bodea
+
+\end{document}
