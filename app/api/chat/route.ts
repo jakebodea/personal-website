@@ -1,6 +1,7 @@
 import { convertToModelMessages, streamText, type UIMessage } from "ai"
 
 import { getJakeChatSystemPrompt } from "@/lib/jake-chat/persona"
+import { JAKE_CHAT_PROMPT_CACHE_KEY } from "@/lib/jake-chat/prompt-cache"
 import {
   CHAT_RATE_LIMIT_ERROR_CODE,
   isChatRateLimitError,
@@ -15,6 +16,11 @@ export async function POST(req: Request) {
     model: "openai/gpt-oss-120b",
     system: getJakeChatSystemPrompt(),
     messages: await convertToModelMessages(messages),
+    providerOptions: {
+      openai: {
+        promptCacheKey: JAKE_CHAT_PROMPT_CACHE_KEY,
+      },
+    },
   })
 
   return result.toUIMessageStreamResponse({

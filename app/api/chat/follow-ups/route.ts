@@ -2,6 +2,7 @@ import { generateText, Output, type UIMessage } from "ai"
 import { z } from "zod"
 
 import { fallbackFollowUps } from "@/lib/jake-chat/follow-ups"
+import { JAKE_CHAT_PROMPT_CACHE_KEY } from "@/lib/jake-chat/prompt-cache"
 import { isChatRateLimitError } from "@/lib/jake-chat/rate-limit"
 
 export const maxDuration = 30
@@ -84,6 +85,11 @@ export async function POST(req: Request) {
       model: "openai/gpt-oss-120b",
       system: followUpSystemPrompt,
       prompt: `conversation so far:\n${JSON.stringify(recentMessages, null, 2)}\n\ngenerate the next follow-up controls.`,
+      providerOptions: {
+        openai: {
+          promptCacheKey: `${JAKE_CHAT_PROMPT_CACHE_KEY}:follow-ups`,
+        },
+      },
       output: Output.object({ schema: followUpSchema }),
     })
 
