@@ -28,3 +28,10 @@ The integration handles Notion's rich text formatting:
 - Converts literal `\n` and `\t` to actual newlines/tabs
 - Preserves formatting while extracting plain text
 - Creates markdown-style links for authors
+
+## Resume Studio
+
+The repository also contains a private resume workflow driven by a coding agent.
+Its reusable skill and renderer are versioned here; career evidence and application
+records live in Notion. Read [How Resume Studio works](docs/resume-studio.md) for
+the workflow, approval steps, setup requirements, and review guide.
