@@ -1,0 +1,71 @@
+# Rendering
+
+From the repository root, run
+`python3 .agents/skills/resume-studio/scripts/render.py --help` for arguments.
+Complete the writing pass and fact check in [SKILL.md](../SKILL.md) before
+rendering. Python 3.9+ uses only its standard library.
+Executable discovery checks PATH and /Library/TeX/texbin.
+
+Required system tools: pdflatex, pdfinfo, pdftotext, pdftoppm, and macOS
+sandbox-exec. Use an existing TeX Live/MacTeX installation with the packages named
+in assets/classic.tex and Poppler. Website Bun dependencies are unrelated; no
+package installation or web server is needed for rendering.
+
+The renderer is adapted from the existing app's packages/api/src/studio/latex.ts
+and the earlier src/server/latex.ts. The classic template is reused from the app,
+with one width correction: project headings use 1.0 rather than 1.001 textwidth,
+which otherwise creates a 0.56 pt overfull box. Typography, margins, and spacing
+are unchanged. Original applications and backups remain intact.
+
+## Checks and outputs
+
+- Complete source of at most 150,000 bytes; two pdfLaTeX passes with a 45-second
+  timeout per command. Failure to compile fails the revision.
+- pdfinfo must report exactly one page.
+- pdftotext -layout must produce at least 80 non-whitespace characters, with no
+  replacement characters. Missing glyph warnings fail the revision.
+- TeX overfull horizontal/vertical boxes greater than 0.5 pt fail the revision.
+- Parse Poppler word bounds; fail unreadable or absent bounds, non-finite
+  coordinates, and words outside a page (1 pt right/bottom tolerance, matching
+  the old renderer). Visual inspection still catches overlaps and non-text
+  clipping that bounding boxes and TeX logs cannot establish.
+- Generate preview-1.png from the PDF, plus up to two additional page previews
+  to diagnose an overlong draft. A passing revision always has just one page.
+
+The output must be a new .resume-studio/applications/<slug>/revisions/<number>
+directory. Existing or symlinked destinations are refused. It contains immutable
+input snapshots, one canonical outer copy of the PDF/text/bounds/preview products,
+compile.log, quality.json, and a private compile/ directory for TeX diagnostics.
+Byte-identical compile products are pruned after the outer copy is verified;
+unique compiler logs and failed diagnostics remain available. Failed attempts
+retain source and findings; fix the working draft and use another revision number.
+The report includes input/PDF hashes and tool versions. Approval and visual review
+remain separate actions, never inferred by the script.
+
+## Compiler restrictions
+
+Preserve -no-shell-escape, openin_any=p, openout_any=p, a fixed source-date epoch,
+private TeX configuration/cache directories, bounded process runtime, and a
+20 MiB per-file output limit. Only TeX source enters the compile directory; the
+job and evidence snapshots remain outside it.
+
+On macOS the inherited sandbox blocks networking, reads of user/volume/temp data
+outside the compile directory, and writes outside it except devices. Environment
+variables are allowlisted; agent credentials are not passed to TeX. System TeX
+package reads remain available. This preserves the app's practical restrictions;
+it is not a general-purpose hostile-document sandbox.
+
+The conversation and file workflow is portable across coding agents. The current
+compiler sandbox is macOS-specific and fails closed on other platforms. Porting
+requires an equivalent tested sandbox, not an unsandboxed fallback.
+
+## Regression verification
+
+Run python3 .agents/skills/resume-studio/scripts/verify-render.py from the root.
+It copies the skill into an isolated temporary workspace, creates a fictional
+application there, exercises real rendering and failure cases, and checks
+revision preservation, security, and canonical artifact cleanup. Temporary
+artifacts are removed on success. Pass --keep-artifacts to retain the copied
+workspace under .resume-studio/tests/ for visual inspection; it is kept outside
+real application revisions. The verifier neither reads personal candidates nor
+edits the career bank.

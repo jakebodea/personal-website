@@ -44,3 +44,15 @@ resume/resume.*
 !resume/resume.pdf
 resume/cover.*
 !resume/cover.tex
+
+# Private Resume Studio data and older local resume drafts.
+# Already tracked public resume files remain tracked.
+/.resume-studio/
+/resume/
+/.scratch/resume-studio*/
+/output/pdf/
+/tmp/pdfs/
+/texput.log
+
+# Local Python helper caches
+__pycache__/

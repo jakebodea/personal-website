@@ -1,0 +1,54 @@
+query CareerEvidence(
+  $login: String!
+  $recentFrom: DateTime!
+  $yearFrom: DateTime!
+  $to: DateTime!
+  $mergedQuery: String!
+) {
+  user(login: $login) {
+    login
+    url
+    recent: contributionsCollection(from: $recentFrom, to: $to) {
+      ...Activity
+      commitContributionsByRepository(maxRepositories: 100) {
+        repository { nameWithOwner url isPrivate }
+        contributions { totalCount }
+      }
+    }
+    year: contributionsCollection(from: $yearFrom, to: $to) {
+      ...Activity
+    }
+    repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC,
+                 isFork: false, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      totalCount
+      pageInfo { hasNextPage endCursor }
+      nodes {
+        nameWithOwner url description isArchived createdAt pushedAt
+        stargazerCount forkCount
+        primaryLanguage { name }
+        releases(first: 3, orderBy: {field: CREATED_AT, direction: DESC}) {
+          nodes { name tagName publishedAt url isPrerelease isDraft }
+        }
+      }
+    }
+  }
+  recentlyMerged: search(query: $mergedQuery, type: ISSUE, first: 20) {
+    issueCount
+    pageInfo { hasNextPage endCursor }
+    nodes {
+      ... on PullRequest {
+        title url mergedAt
+        repository { nameWithOwner isPrivate }
+      }
+    }
+  }
+}
+
+fragment Activity on ContributionsCollection {
+  startedAt endedAt
+  totalCommitContributions totalPullRequestContributions
+  totalPullRequestReviewContributions totalIssueContributions
+  totalRepositoryContributions totalRepositoriesWithContributedCommits
+  restrictedContributionsCount
+  contributionCalendar { totalContributions }
+}

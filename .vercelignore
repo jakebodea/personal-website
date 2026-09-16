@@ -1,0 +1,27 @@
+# Preserve the existing local-only exclusions when uploading with Vercel CLI.
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+coverage/
+.next/
+out/
+build/
+.DS_Store
+*.pem
+*.log
+.env*.local
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+.cursor*
+
+# Resume Studio and historical application material never enter deployment.
+.resume-studio/
+resume/
+.scratch/
+output/pdf/
+tmp/pdfs/
+.agents/
+.claude/
+CONTEXT.md
