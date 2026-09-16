@@ -17,10 +17,9 @@ the public site and Git.
    On a fresh checkout, ask once for the hub URL; do not seed an empty bank.
 2. Read [notion.md](references/notion.md) for the schema and read/save contract.
 3. Fetch the full Approved Career Evidence set and the complete Profile, including
-   nested blocks, caveats,
-   attribution, and approval history. Approved imported text retains its
-   qualifications: `Approval=Approved` authorizes it as source context but does
-   not authorize an explicitly uncertain subclaim. Header/Profile caveats and
+   nested blocks, caveats, attribution, and approval history. Approved imported
+   text retains its qualifications: `Approval=Approved` authorizes source context,
+   not an explicitly uncertain subclaim. Header/Profile caveats and
    editorial `Reference` records still govern interpretation and cannot authorize
    facts. Read the immutable Job Snapshot and current Application record for an
    existing application. A view snippet or local Markdown copy is not a complete
@@ -53,13 +52,6 @@ returned page body and nested block needed for the task.
   middle/application-specific content to the frozen job snapshot. Functional
   titles may be used only where the bank authorizes them; preserve formal titles
   in the bank.
-- Build an evidence-linked Match/Gap Report for the frozen job: mark each
-  requirement Supported, Partial, or Unsupported based on current evidence
-  coverage, never as a score of underlying ability. Ask focused material-gap
-  questions only where an answer could change a factual claim. Select the
-  strongest supported middle sections and bullets while preserving stable
-  sections; when an optional gap is skipped, use supported adjacent evidence
-  instead of inventing coverage.
 
 Organizational migration and reformatting of existing approved text may proceed
 under the user's authorization without an approval loop when facts are unchanged.
@@ -69,6 +61,37 @@ approval.
 For GitHub or other current evidence, read [evidence-refresh.md](references/evidence-refresh.md).
 Record query windows, visibility, raw responses, attribution, and caveats in the
 Evidence Inbox; verified observations still require exact bank approval.
+
+## Question pass
+
+Before drafting, build an evidence-linked Match/Gap Report for the frozen job.
+Mark requirements Supported, Partial, or Unsupported as evidence coverage, not
+underlying ability. Treat absence from the bank as **not documented**; ask whether
+relevant experience exists instead of assuming it does not.
+
+Ask every question whose answer could materially improve evidence, example
+selection, positioning, or the user's intended emphasis. Look for overlooked
+projects, personal contribution versus team scope, technical depth, outcomes and
+measurement context, recent work, and transferable experience. This pass applies
+even when every requirement already has a supported example.
+
+Keep a short question list in Application notes, derived from the Match/Gap Report,
+sources, user goals, and later critic findings. Prioritize the most consequential
+topic first, one focused topic at a time unless the user requests a batch. Ground
+it in the posting or known work and say what the answer could improve. Phrase it
+neutrally, distinguishing confirmed work from a Candidate hint; invite verification
+of experience, ownership, and outcomes rather than presupposing them.
+
+For each topic, record the answer/source or its pending/declined status and a
+supported fallback. Reuse prior dispositions instead of rephrasing the same
+question; reopen only for a distinct unresolved fact or materially changed context.
+Add opportunities found during drafting, layout repair, or critique to the same
+list. Keep new reusable facts Candidate under the evidence boundary above.
+Continue independent work using confirmed material while waiting. Complete the
+pass only when every material topic identified from the Match/Gap Report, sources,
+user goals, and late findings is on the list and was asked or resolved from sources,
+with a supported fallback or omission recorded for unresolved answers. An
+unanswered question never supplies a claim.
 
 ## Writing pass
 
@@ -84,6 +107,16 @@ repo writing pass before rendering:
 - Recheck each substantive sentence against the approved evidence and record the
   writing pass plus fact check in the revision review.
 
+## Adversarial review
+
+Before presenting a new or wording-revised resume as Checked, read and run
+[adversarial-review.md](references/adversarial-review.md) after the writing pass.
+Use lower-capability subagents to challenge the evidence, job fit, and writing;
+the main agent owns the response, factual decisions, and revisions. Exchange
+specific objections and revisions until the reference's completion criteria are
+met, or report the unresolved issues with a provisional draft. A single critique
+followed by an unchecked rewrite does not complete this step.
+
 ## Render, review, and save
 
 Export the current bank, Profile, and Job Snapshot into `.resume-studio/` with
@@ -97,10 +130,14 @@ when compiling or troubleshooting. Run `scripts/render.py` into the next unused
 numbered revision directory and retain every passed, failed, and superseded
 revision. Run the required macOS, one-page, extractable-text, and overflow checks;
 read extracted text and inspect the actual rendered PDF preview. Repair layout by
-creating a new revision.
+creating a new revision. Recheck changed wording through the writing and critic
+passes; the final review must identify the exact rendered revision and hashes.
 
-A passing quality gate is a reviewable draft. Upload the exact TeX/PDF, source
-manifest, bank/job snapshots, quality report, and visual review to that numbered
+A passing quality gate and visual review, plus either completed adversarial review
+or a recorded explicit user waiver of independent review, make a Checked draft.
+Preserve incomplete attempts as Draft with their unresolved issues.
+Upload the exact TeX/PDF, source manifest, bank/job snapshots, quality report,
+visual review, and adversarial review record to that numbered
 Notion revision. Verify each upload exists before reporting it saved. When the
 connector permits downloading the uploaded bytes, compare their hashes with the
 manifest; if it exposes metadata or existence only, report that limit and retain

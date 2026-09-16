@@ -50,8 +50,12 @@ for explicit approval. Re-fetch the page, save only approved text, and verify th
 full result plus its approval record.
 
 For an application revision, upload source, PDF, snapshots, manifest, quality
-report, and visual review as exact artifacts. Verify that every attachment exists
-before declaring the save complete. If uploaded bytes can be downloaded, compare
+report, visual review, and the adversarial review record as exact artifacts. Apply
+SKILL.md's question and review completion criteria before setting `Resume state`
+to `Checked`; keep unresolved attempts as `Draft` with findings in the record.
+Historical revisions retain their original review status and available artifacts.
+Verify that every attachment exists before declaring the save complete. If
+uploaded bytes can be downloaded, compare
 their hashes with the local files; if only metadata or existence is available,
 record that limitation and retain the local originals until a byte-level round
 trip is verified. Keep all numbered revisions, including failures. A PDF can be
