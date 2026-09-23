@@ -1,4 +1,4 @@
-import { ExternalLink, Github } from 'lucide-react'
+import { ExternalLink, Github, MousePointer2 } from 'lucide-react'
 import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -29,7 +29,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          {project.demoUrl && (
+            <Button variant="outline" size="sm" asChild>
+              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                <MousePointer2 data-icon="inline-start" />
+                Try live demo
+              </a>
+            </Button>
+          )}
           {project.liveUrl && (
             <Button variant="ghost" size="sm" asChild>
               <a
@@ -37,8 +45,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <ExternalLink />
-                Live site
+                <ExternalLink data-icon="inline-start" />
+                {project.demoUrl ? 'Product site' : 'Live site'}
               </a>
             </Button>
           )}
@@ -49,12 +57,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Github />
-                Source
+                <Github data-icon="inline-start" />
+                GitHub repo
               </a>
             </Button>
           )}
         </div>
+
+        {project.demoNote && (
+          <p className="text-xs text-muted-foreground">{project.demoNote}</p>
+        )}
 
         {project.media?.type === 'x-embed' && (
           <XEmbed url={project.media.url} />

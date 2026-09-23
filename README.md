@@ -35,3 +35,12 @@ The repository also contains a private resume workflow driven by a coding agent.
 Its reusable skill and renderer are versioned here; career evidence and application
 records live in Notion. Read [How Resume Studio works](docs/resume-studio.md) for
 the workflow, approval steps, setup requirements, and review guide.
+
+## PCOBooster portfolio demo
+
+The PCOBooster card on `/projects` links to a server route that redirects to the
+read-only app demo. Production uses the sensitive Vercel environment variable
+`PCOBOOSTER_DEMO_ACCESS_KEY`, copied from PCOBooster's Infisical Production `/`
+configuration. When it is absent, the route opens PCOBooster's public interactive
+replica. Update the personal-site variable and redeploy after rotating the demo
+key in PCOBooster.
