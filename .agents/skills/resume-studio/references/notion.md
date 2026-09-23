@@ -1,8 +1,8 @@
 # Notion contract
 
 Read this reference when connecting Resume Studio to Notion, migrating existing
-records, or saving a revision. `.resume-studio/notion.md` contains private links
-and IDs; this committed reference contains no personal identifiers.
+records, or saving a revision. Find the existing hub in Notion; this committed
+reference contains no personal identifiers or workspace-specific IDs.
 
 ## Structure
 
@@ -29,8 +29,8 @@ Use filtered views for Approved/Candidate/Needs review and Active/All/Needs
 attention. Query each view with pagination and fetch full page bodies; do not
 treat a view's first page or search snippets as exhaustive. Keep job snapshots,
 notes, revisions, and approval records under the owning Application page.
-Preserve page IDs when continuing an application; a new attempt gets a new record
-and dated local slug.
+Preserve page IDs when continuing an application; a new attempt gets a new record.
+The Application and its child pages provide the context for agents on other machines.
 
 ## Read contract
 
@@ -44,21 +44,25 @@ exact dated evidence snapshot used to write it.
 
 ## Save contract
 
-Before a write, capture page IDs, URLs, timestamps, and SHA-256 hashes in a local
-source manifest. For a bank change, show the exact factual Markdown diff and wait
+Before a write, capture page IDs, URLs, timestamps, and SHA-256 hashes in a source
+manifest in the temporary workspace. Attach that manifest to the revision. For a
+bank change, show the exact factual Markdown diff and wait
 for explicit approval. Re-fetch the page, save only approved text, and verify the
 full result plus its approval record.
 
-For an application revision, upload source, PDF, snapshots, manifest, quality
-report, visual review, and the adversarial review record as exact artifacts. Apply
+For an application revision, attach the exact source, PDF, snapshots, manifest, and
+quality report. Put notes, questions, match/gap analysis, visual review, and the
+adversarial review record in the Notion page content so they are readable without
+downloading a bundle. Apply
 SKILL.md's question and review completion criteria before setting `Resume state`
 to `Checked`; keep unresolved attempts as `Draft` with findings in the record.
 Historical revisions retain their original review status and available artifacts.
-Verify that every attachment exists before declaring the save complete. If
-uploaded bytes can be downloaded, compare
-their hashes with the local files; if only metadata or existence is available,
-record that limitation and retain the local originals until a byte-level round
-trip is verified. Keep all numbered revisions, including failures. A PDF can be
+Fetch the saved revision and download its attachments, using the page's signed file
+URLs for binary files when needed. Compare downloaded bytes against the manifest
+before declaring the save complete and removing temporary files. If an attachment
+or comparison is unavailable, record the gap in the Notion revision, keep it
+Draft/incomplete, and retry while the temporary files remain. Keep all numbered
+revisions in Notion, including failures. A PDF can be
 uploaded while `Resume state` remains `Checked`; set it to `Approved` only with
 explicit PDF approval and the exact approved artifact recorded. Do not infer
 `Application stage` from a resume build or upload.

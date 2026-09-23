@@ -32,13 +32,17 @@ are unchanged. Original applications and backups remain intact.
 - Generate preview-1.png from the PDF, plus up to two additional page previews
   to diagnose an overlong draft. A passing revision always has just one page.
 
-The output must be a new .resume-studio/applications/<slug>/revisions/<number>
-directory. Existing or symlinked destinations are refused. It contains immutable
+Create a private workspace with Python's `tempfile.mkdtemp(prefix="resume-studio-")`
+and resolve its path before invoking the renderer. The output must be a new
+`<workspace>/applications/<slug>/revisions/<number>` directory. Repository,
+existing, and symlinked destinations are refused. It contains immutable
 input snapshots, one canonical outer copy of the PDF/text/bounds/preview products,
 compile.log, quality.json, and a private compile/ directory for TeX diagnostics.
 Byte-identical compile products are pruned after the outer copy is verified;
-unique compiler logs and failed diagnostics remain available. Failed attempts
-retain source and findings; fix the working draft and use another revision number.
+unique compiler logs and failed diagnostics remain available during the run.
+Record failed attempts and findings in Notion; fix the working draft and use
+another revision number. Remove the workspace after all required revision files
+are saved to Notion and downloaded bytes match their recorded hashes.
 The report includes input/PDF hashes and tool versions. Approval and visual review
 remain separate actions, never inferred by the script.
 
@@ -66,6 +70,5 @@ It copies the skill into an isolated temporary workspace, creates a fictional
 application there, exercises real rendering and failure cases, and checks
 revision preservation, security, and canonical artifact cleanup. Temporary
 artifacts are removed on success. Pass --keep-artifacts to retain the copied
-workspace under .resume-studio/tests/ for visual inspection; it is kept outside
-real application revisions. The verifier neither reads personal candidates nor
-edits the career bank.
+workspace in the system temporary directory for visual inspection. The verifier
+neither reads personal candidates nor edits the career bank.
