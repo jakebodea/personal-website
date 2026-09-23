@@ -19,11 +19,11 @@ export const projects: ProjectData[] = [
   {
     title: "PCOBooster",
     description:
-      "PCOBooster is an open-source scheduling workspace I built for worship teams using Planning Center Services. It brings open positions, availability, blockouts, and recent serving history together when choosing people for a plan, then sends assignments back through the Planning Center API. The product includes a connected app, a public interactive preview, and a read-only demo of the real app.",
+      "PCOBooster is an open source app I built for worship teams that plan services in Planning Center. For a selected plan, it shows open positions, availability, blockouts, conflicts, and each person's recent serving history. Schedulers can assign someone in PCOBooster and save the change to Planning Center. The product site has an interactive sample, and the live app has a read only demo.",
     liveUrl: "https://pcobooster.com",
     demoUrl: "/projects/pcobooster/demo",
     demoNote:
-      "The live demo is read-only and replaces people's details with fictional ones. PCOBooster is independent of Planning Center.",
+      "The demo shows fictional names instead of personal details. It shows live plan details and cannot change assignments. PCOBooster is independent of Planning Center.",
     repoUrl: "https://github.com/bodegalabs/pcobooster",
     media: {
       type: "image",
