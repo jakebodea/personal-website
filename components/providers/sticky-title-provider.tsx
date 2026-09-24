@@ -1,33 +1,35 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useState, useMemo } from "react"
-import type { ReactNode } from "react"
+import { createContext, useContext, useState, useMemo } from "react";
+import type { ReactNode } from "react";
 
 interface StickyTitleContextType {
-  hasStickyTitle: boolean
-  setHasStickyTitle: (value: boolean) => void
+  hasStickyTitle: boolean;
+  setHasStickyTitle: (value: boolean) => void;
 }
+
+const noopSetHasStickyTitle = (_value: boolean): void => undefined;
 
 const StickyTitleContext = createContext<StickyTitleContextType>({
   hasStickyTitle: false,
-  setHasStickyTitle: () => {},
-})
+  setHasStickyTitle: noopSetHasStickyTitle,
+});
 
-export function useStickyTitle() {
-  return useContext(StickyTitleContext)
-}
+const useStickyTitle = () => useContext(StickyTitleContext);
 
-export function StickyTitleProvider({ children }: { children: ReactNode }) {
-  const [hasStickyTitle, setHasStickyTitle] = useState(false)
+const StickyTitleProvider = ({ children }: { children: ReactNode }) => {
+  const [hasStickyTitle, setHasStickyTitle] = useState(false);
 
   const value = useMemo(
     () => ({ hasStickyTitle, setHasStickyTitle }),
     [hasStickyTitle]
-  )
+  );
 
   return (
     <StickyTitleContext.Provider value={value}>
       {children}
     </StickyTitleContext.Provider>
-  )
-}
+  );
+};
+
+export { StickyTitleProvider, useStickyTitle };

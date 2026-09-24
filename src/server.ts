@@ -1,7 +1,7 @@
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
 
 export default createServerEntry({
-  fetch(request) {
+  async fetch(request) {
     const url = new URL(request.url);
 
     if (url.hostname === "www.jakebodea.com") {
@@ -9,6 +9,6 @@ export default createServerEntry({
       return Response.redirect(url, 307);
     }
 
-    return handler.fetch(request);
+    return await handler.fetch(request);
   },
 });

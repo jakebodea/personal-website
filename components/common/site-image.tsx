@@ -1,5 +1,11 @@
-import type { ComponentProps } from 'react'
+import type { ComponentProps } from "react";
 
-export default function SiteImage(props: ComponentProps<'img'>) {
-  return <img loading="lazy" {...props} />
-}
+type SiteImageProps = ComponentProps<"img"> & {
+  alt: string;
+};
+
+const SiteImage = ({ alt, ...props }: SiteImageProps) => (
+  <img alt={alt} loading="lazy" {...props} />
+);
+
+export default SiteImage;

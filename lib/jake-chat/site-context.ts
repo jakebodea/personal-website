@@ -1,28 +1,36 @@
-import { projects } from "@/content/projects-data"
-import { timelineItems } from "@/content/timeline-data"
+import { projects } from "@/content/projects-data";
+import { timelineItems } from "@/content/timeline-data";
 
-function formatBullet(bullet: string | { text: string; paper?: string }) {
-  return typeof bullet === "string" ? bullet : bullet.text
-}
+const formatBullet = (bullet: string | { text: string; paper?: string }) => {
+  if (bullet instanceof Object) {
+    return bullet.text;
+  }
 
-export function getJakeSiteContext() {
+  return bullet;
+};
+
+export const getJakeSiteContext = () => {
   const projectContext = projects
     .map((project) => {
       const links = [
-        project.liveUrl ? `live: ${project.liveUrl}` : null,
-        project.repoUrl ? `repo: ${project.repoUrl}` : null,
-      ].filter(Boolean)
+        project.liveUrl !== undefined && project.liveUrl.length > 0
+          ? `live: ${project.liveUrl}`
+          : null,
+        project.repoUrl !== undefined && project.repoUrl.length > 0
+          ? `repo: ${project.repoUrl}`
+          : null,
+      ].filter((link): link is string => link !== null);
 
       return [
         `project: ${project.title}`,
         `description: ${project.description}`,
         `tech: ${project.techStack.join(", ")}`,
-        links.length ? `links: ${links.join("; ")}` : null,
+        links.length > 0 ? `links: ${links.join("; ")}` : null,
       ]
-        .filter(Boolean)
-        .join("\n")
+        .filter((line): line is string => line !== null)
+        .join("\n");
     })
-    .join("\n\n")
+    .join("\n\n");
 
   const timelineContext = timelineItems
     .map((item) =>
@@ -31,7 +39,7 @@ export function getJakeSiteContext() {
         ...item.bullets.map((bullet) => `- ${formatBullet(bullet)}`),
       ].join("\n")
     )
-    .join("\n\n")
+    .join("\n\n");
 
   return `
 home page:
@@ -57,5 +65,5 @@ ${projectContext}
 
 timeline:
 ${timelineContext}
-`.trim()
-}
+`.trim();
+};

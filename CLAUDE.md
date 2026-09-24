@@ -10,4 +10,6 @@ Use Bun for installs and scripts. Public site code lives in `src/`, `components/
 
 The private Resume Studio workflow is described in `.agents/skills/resume-studio/SKILL.md` and `docs/resume-studio.md`. Its working files and resume artifacts stay outside the public bundle. Run `bun run check:deploy-output` after changes that affect bundling.
 
+Lint and format with Ultracite (Oxlint + Oxfmt). Follow `AGENTS.md` for those standards; `bun run lint` checks and `bun run fix` auto-fixes, including type-aware rules.
+
 Code conventions: TypeScript; kebab-case source files except TanStack route files; `type` imports for types; 2-space indentation; self-closing JSX components. `lib/notion.ts` is the single Notion API integration. Public blog posts are Markdown in `content/writings/`; quotes come from Notion and use a one-hour Worker cache.

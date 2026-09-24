@@ -1,24 +1,35 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { usePathname } from '@/lib/site-navigation';
+import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
-export function GPTSlopToast() {
+import { usePathname } from "@/lib/site-navigation";
+
+// oxlint-disable-next-line sonarjs/function-name -- React components must use PascalCase; sonarjs camelCase rule conflicts.
+export const GptSlopToast = () => {
   const isFirstRender = useRef(true);
   const pathname = usePathname();
 
   useEffect(() => {
+    let timerId: number | undefined;
+
     if (isFirstRender.current && pathname !== "/chat") {
-      setTimeout(() => {
+      isFirstRender.current = false;
+      timerId = window.setTimeout(() => {
         toast("you have my word  🤝", {
-          description: "no GPT-slop on this website. every word is mine –– even emdashes",
+          description:
+            "no GPT-slop on this website. every word is mine –– even emdashes",
           duration: 8000,
         });
       }, 500);
-      isFirstRender.current = false;
     }
+
+    return () => {
+      if (timerId !== undefined) {
+        window.clearTimeout(timerId);
+      }
+    };
   }, [pathname]);
 
   return null;
-} 
+};

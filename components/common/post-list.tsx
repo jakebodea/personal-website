@@ -1,76 +1,83 @@
-'use client'
+"use client";
 
-import Link from '@/components/common/site-link'
-import type { Writing } from '@/lib/writings'
+import Link from "@/components/common/site-link";
+import type { Writing } from "@/lib/writings";
 
 interface PostListProps {
   writings: Writing[];
   searchQuery: string;
 }
 
-export function PostList({ writings, searchQuery }: PostListProps) {
-  return (
-    <ul className="space-y-8">
-      {writings.length > 0 ? (
-        writings.map((writing) => {
-          if (writing.type === 'paper') {
-            return (
-              <li key={writing.title}>
-                <a
-                  href={writing.pdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block hover:bg-muted/20 rounded-lg p-4 transition-colors"
-                >
-                  <div className="flex items-baseline justify-between mb-2">
-                    <h2 className="text-2xl font-serif text-primary group-hover:text-primary/80 transition-colors">
-                      {writing.title}
-                    </h2>
-                    <p className="text-sm text-muted-foreground font-sans shrink-0 ml-4">
-                      {new Date(writing.date + 'T00:00:00').toLocaleDateString(undefined, {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </p>
-                  </div>
-                  <p className="text-sm text-muted-foreground font-sans">
-                    {writing.description}
-                  </p>
-                </a>
-              </li>
-            )
-          }
-
+export const PostList = ({ writings, searchQuery }: PostListProps) => (
+  <ul className="space-y-8">
+    {writings.length > 0 ? (
+      writings.map((writing) => {
+        if (writing.type === "paper") {
           return (
-            <li key={writing.slug}>
-              <Link href={`/writings/${writing.slug}`} className="group block hover:bg-muted/20 rounded-lg p-4 transition-colors">
-                <div className="flex items-baseline justify-between mb-2">
-                  <h2 className="text-2xl font-serif text-primary group-hover:text-primary/80 transition-colors">
+            <li key={writing.title}>
+              <a
+                href={writing.pdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded-lg p-4 transition-colors hover:bg-muted/20"
+              >
+                <div className="mb-2 flex items-baseline justify-between">
+                  <h2 className="font-serif text-2xl text-primary transition-colors group-hover:text-primary/80">
                     {writing.title}
                   </h2>
-                  <p className="text-sm text-muted-foreground font-sans shrink-0 ml-4">
-                    {new Date(writing.date + 'T00:00:00').toLocaleDateString(undefined, {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
+                  <p className="ml-4 shrink-0 font-sans text-sm text-muted-foreground">
+                    {new Date(`${writing.date}T00:00:00`).toLocaleDateString(
+                      undefined,
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
                   </p>
                 </div>
-                <p className="text-sm text-muted-foreground font-sans">
+                <p className="font-sans text-sm text-muted-foreground">
                   {writing.description}
                 </p>
-              </Link>
+              </a>
             </li>
-          )
-        })
-      ) : (
-        <li className="text-center py-8">
-          <p className="text-muted-foreground font-sans">
-            No writings found matching &ldquo;{searchQuery}&rdquo;
-          </p>
-        </li>
-      )}
-    </ul>
-  )
-}
+          );
+        }
+
+        return (
+          <li key={writing.slug}>
+            <Link
+              href={`/writings/${writing.slug}`}
+              className="group block rounded-lg p-4 transition-colors hover:bg-muted/20"
+            >
+              <div className="mb-2 flex items-baseline justify-between">
+                <h2 className="font-serif text-2xl text-primary transition-colors group-hover:text-primary/80">
+                  {writing.title}
+                </h2>
+                <p className="ml-4 shrink-0 font-sans text-sm text-muted-foreground">
+                  {new Date(`${writing.date}T00:00:00`).toLocaleDateString(
+                    undefined,
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}
+                </p>
+              </div>
+              <p className="font-sans text-sm text-muted-foreground">
+                {writing.description}
+              </p>
+            </Link>
+          </li>
+        );
+      })
+    ) : (
+      <li className="py-8 text-center">
+        <p className="font-sans text-muted-foreground">
+          No writings found matching &ldquo;{searchQuery}&rdquo;
+        </p>
+      </li>
+    )}
+  </ul>
+);

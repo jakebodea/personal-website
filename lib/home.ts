@@ -1,5 +1,3 @@
-import homeContent from '@/content/home.md?raw'
+import homeContent from "@/content/home.md?raw";
 
-export function getHomeContent(): string {
-  return homeContent.trim()
-}
+export const getHomeContent = (): string => homeContent.trim();

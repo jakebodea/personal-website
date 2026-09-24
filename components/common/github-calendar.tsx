@@ -1,16 +1,23 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useTheme } from "next-themes"
-import { GitHubCalendar } from "react-github-calendar"
+import { useTheme } from "next-themes";
+import { useSyncExternalStore } from "react";
+import { GitHubCalendar } from "react-github-calendar";
 
-export function GithubContributions() {
-  const [mounted, setMounted] = useState(false)
-  const { resolvedTheme } = useTheme()
+const emptySubscribe = (_onStoreChange: () => void) => () => {
+  /* Static client snapshot; no subscription needed. */
+};
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+const useIsClient = () =>
+  useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+
+export const GithubContributions = () => {
+  const mounted = useIsClient();
+  const { resolvedTheme } = useTheme();
 
   return (
     <div className="space-y-4">
@@ -18,14 +25,19 @@ export function GithubContributions() {
         Many of my company projects are under NDA and can&apos;t be shown here,
         but my GitHub contribution calendar gives an idea of my output.
       </p>
-      <a href="https://github.com/jakebodea" target="_blank" rel="noopener noreferrer" className="block overflow-x-auto">
-        {mounted && (
+      <a
+        href="https://github.com/jakebodea"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block overflow-x-auto"
+      >
+        {mounted ? (
           <GitHubCalendar
             username="jakebodea"
             colorScheme={resolvedTheme === "light" ? "light" : "dark"}
           />
-        )}
+        ) : null}
       </a>
     </div>
-  )
-}
+  );
+};

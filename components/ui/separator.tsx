@@ -1,20 +1,22 @@
-"use client"
+"use client";
 
-import { forwardRef } from "react"
-import type { ElementRef, ComponentPropsWithoutRef } from "react"
-import * as SeparatorPrimitive from "@radix-ui/react-separator"
+/* oxlint-disable prefer-arrow-callback -- forwardRef uses named functions for react(function-component-definition) */
 
-import { cn } from "@/lib/utils"
+import { Root as SeparatorRoot } from "@radix-ui/react-separator";
+import { forwardRef } from "react";
+import type { ElementRef, ComponentPropsWithoutRef } from "react";
+
+import { cn } from "@/lib/utils";
 
 const Separator = forwardRef<
-  ElementRef<typeof SeparatorPrimitive.Root>,
-  ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
->(
-  (
-    { className, orientation = "horizontal", decorative = true, ...props },
-    ref
-  ) => (
-    <SeparatorPrimitive.Root
+  ElementRef<typeof SeparatorRoot>,
+  ComponentPropsWithoutRef<typeof SeparatorRoot>
+>(function Separator(
+  { className, orientation = "horizontal", decorative = true, ...props },
+  ref
+) {
+  return (
+    <SeparatorRoot
       ref={ref}
       decorative={decorative}
       orientation={orientation}
@@ -25,8 +27,8 @@ const Separator = forwardRef<
       )}
       {...props}
     />
-  )
-)
-Separator.displayName = SeparatorPrimitive.Root.displayName
+  );
+});
+Separator.displayName = SeparatorRoot.displayName;
 
-export { Separator }
+export { Separator };
