@@ -1,7 +1,7 @@
 export const timelineItems = [
   {
     startDate: "November 2024",
-    endDate: "Present",
+    endDate: "September 2026",
     image: "/images/taxrise.jpeg",
     title: "Machine Learning Engineer",
     location: "TaxRise",
@@ -95,4 +95,4 @@ export const timelineItems = [
       "Achieved a 3.94 GPA"
     ]
   },
-]; 
+];
