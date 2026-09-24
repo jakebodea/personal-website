@@ -4,6 +4,10 @@
   "compatibility_date": "2026-09-23",
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
+  "routes": [
+    { "pattern": "jakebodea.com", "custom_domain": true },
+    { "pattern": "www.jakebodea.com", "custom_domain": true }
+  ],
   "ai": { "binding": "AI" },
   "secrets": { "required": ["NOTION_TOKEN", "QUOTES_DATABASE_ID"] },
   "observability": { "enabled": true }
