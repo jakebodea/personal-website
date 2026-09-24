@@ -43,7 +43,7 @@ export const projects: ProjectData[] = [
   {
     title: "TaxRise.com",
     description:
-      "Marketing website for TaxRise that I built and maintain, including a custom CMS for managing the site. Content lives as MDX in Neon with draft/publish workflows, typed models for service pages, blog posts, IRS notices, and more, plus custom MDX components like Callouts. Assets are managed through a file browser built on Cloudflare R2.",
+      "I built TaxRise's marketing website and its custom CMS for managing the site. The site used MDX content in Neon with draft/publish workflows, typed models for service pages, blog posts, IRS notices, and more, plus custom MDX components like Callouts. Its asset browser used Cloudflare R2.",
     liveUrl: "https://taxrise.com",
     media: {
       type: "gallery",
