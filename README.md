@@ -36,7 +36,7 @@ The integration handles Notion's rich text formatting:
 
 ## Deployment
 
-The Worker configuration is in `wrangler.jsonc`. `bun run deploy` builds and deploys the Worker to its `workers.dev` address. Configure `NOTION_TOKEN` and `QUOTES_DATABASE_ID` with `wrangler secret put` before verifying `/quotes`. `PCOBOOSTER_DEMO_ACCESS_KEY` is optional; when absent, the demo redirect opens the public PCOBooster replica. The AI binding is declared in `wrangler.jsonc` and does not use a Vercel AI Gateway key.
+The `personal-website` Worker configuration is in `wrangler.jsonc`. `bun run deploy` builds and deploys the Worker to `personal-website.jakebodea.workers.dev`. Cloudflare Workers Builds runs `bun run build && bun run check:deploy-output` and then `npx wrangler deploy` for the configured production branch; its build variable `BUN_VERSION` is `1.3.9`. Configure `NOTION_TOKEN` and `QUOTES_DATABASE_ID` with `wrangler secret put` before verifying `/quotes`. `PCOBOOSTER_DEMO_ACCESS_KEY` is optional; when absent, the demo redirect opens the public PCOBooster replica. The AI binding is declared in `wrangler.jsonc` and does not use a Vercel AI Gateway key.
 
 `jakebodea.com` must be an active zone in the target Cloudflare account before attaching the domain to the Worker. Verify the `workers.dev` deployment, review imported DNS records (including mail records), then change the registrar's nameservers. Once Cloudflare activates the zone, attach `jakebodea.com` and `www.jakebodea.com` as Worker Custom Domains. The Worker redirects `www` to the apex. Keep the existing origin active through DNS propagation and verify both hostnames before retiring it. Add both Custom Domains to `wrangler.jsonc` after activation so subsequent deploys retain them.
 
