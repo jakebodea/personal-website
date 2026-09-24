@@ -1,7 +1,7 @@
 "use client"
 
 import { ChevronDown } from "lucide-react"
-import { type CSSProperties, useState } from "react"
+import { forwardRef, type CSSProperties, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -77,12 +77,13 @@ export function FollowUpPills({
   )
 }
 
-function PillButton({
+const PillButton = forwardRef<HTMLButtonElement, React.ComponentProps<typeof Button>>(function PillButton({
   className,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}, ref) {
   return (
     <Button
+      ref={ref}
       className={cn(
         "h-8 rounded-full border-border/80 bg-transparent px-3 text-xs text-muted-foreground hover:bg-card-02 hover:text-foreground",
         className
@@ -93,7 +94,7 @@ function PillButton({
       {...props}
     />
   )
-}
+})
 
 function SelectFollowUp({
   disabled,

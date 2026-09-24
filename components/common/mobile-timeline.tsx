@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import Image from "@/components/common/site-image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 type Bullet = string | { text: string; paper?: string };

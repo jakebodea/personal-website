@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useRef, useLayoutEffect, useEffect, useCallback } from "react"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { useState, useRef, useEffect, useCallback } from "react"
+import Link from "@/components/common/site-link"
+import { usePathname, useSiteRouter } from "@/lib/site-navigation"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { MenuIcon } from "@/components/ui/menu-icon"
@@ -15,7 +15,7 @@ import { navItems } from "@/lib/nav-config"
 
 export function TopNav() {
   const pathname = usePathname()
-  const router = useRouter()
+  const router = useSiteRouter()
   const { hasStickyTitle } = useStickyTitle()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const navContainerRef = useRef<HTMLDivElement>(null)
@@ -29,7 +29,7 @@ export function TopNav() {
   const activeIndex = navItems.findIndex(item => isActive(item.href))
 
   // Measure active tab position (scroll-independent via offsetLeft/offsetWidth)
-  useLayoutEffect(() => {
+  useEffect(() => {
     const container = navContainerRef.current
     if (!container || activeIndex === -1) return
     const links = container.querySelectorAll<HTMLAnchorElement>("a")

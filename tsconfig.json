@@ -16,11 +16,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "types": ["vite/client", "./worker-configuration.d.ts"],
     "paths": {
       "@/*": [
         "./*"
@@ -29,14 +25,14 @@
     "target": "ES2017"
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    "**/*.d.ts"
   ],
   "exclude": [
     "node_modules",
+    ".next",
+    ".output",
     "scripts"
   ]
 }

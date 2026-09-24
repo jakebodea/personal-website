@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/common/site-link'
 import type { Writing } from '@/lib/writings'
 
 interface PostListProps {

@@ -1,5 +1,5 @@
 import { ExternalLink, Github, MousePointer2 } from 'lucide-react'
-import Image from 'next/image'
+import Image from '@/components/common/site-image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
