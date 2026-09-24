@@ -3,7 +3,7 @@
 import { type UIMessage, useChat } from "@ai-sdk/react"
 import { DefaultChatTransport } from "ai"
 import { Check, Copy, Info, MessageCirclePlus, X } from "lucide-react"
-import Image from "next/image"
+import Image from "@/components/common/site-image"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { toast } from "sonner"
 
@@ -288,7 +288,6 @@ export function JakeChat({
               className="size-7 shrink-0 rounded-full border border-border/70 object-cover object-[50%_24%]"
               height={28}
               src="/images/jake-chat-avatar.jpeg"
-              unoptimized
               width={28}
             />
             <span className="truncate">ask jake</span>
@@ -311,13 +310,13 @@ export function JakeChat({
                   <div className="flex items-center gap-2 whitespace-nowrap">
                     <span>powered by</span>
                     <a
-                      aria-label="Visit Vercel AI Gateway"
+                      aria-label="Visit Cloudflare Workers AI"
                       className="rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                      href="https://vercel.com/ai-gateway"
+                      href="https://developers.cloudflare.com/workers-ai/"
                       onClick={(event) => {
                         event.preventDefault()
                         window.open(
-                          "https://vercel.com/ai-gateway",
+                          "https://developers.cloudflare.com/workers-ai/",
                           "_blank",
                           "noopener,noreferrer"
                         )
@@ -326,7 +325,7 @@ export function JakeChat({
                       target="_blank"
                     >
                       <span className="font-medium text-foreground">
-                        Vercel AI Gateway
+                        Cloudflare Workers AI
                       </span>
                     </a>
                   </div>

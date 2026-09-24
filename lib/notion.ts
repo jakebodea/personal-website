@@ -1,4 +1,5 @@
 import type { QuoteData } from './quotes'
+import { env } from 'cloudflare:workers'
 
 // TypeScript interfaces for Notion API
 interface NotionRichText {
@@ -143,7 +144,7 @@ function richTextToMarkdown(richTextArray?: NotionRichText[]): string {
 
 async function queryNotionDatabase(databaseId: string): Promise<NotionPage[]> {
   const headers = {
-    'Authorization': `Bearer ${process.env.NOTION_TOKEN}`,
+    'Authorization': `Bearer ${env.NOTION_TOKEN}`,
     'Content-Type': 'application/json',
     'Notion-Version': NOTION_VERSION,
   }
@@ -162,7 +163,6 @@ async function queryNotionDatabase(databaseId: string): Promise<NotionPage[]> {
       method: 'POST',
       headers,
       body: JSON.stringify(body),
-      next: { revalidate: 3600 },
     } as RequestInit)
 
     if (!response.ok) {
@@ -187,7 +187,7 @@ async function queryNotionDatabase(databaseId: string): Promise<NotionPage[]> {
 
 async function fetchBlockChildren(blockId: string): Promise<NotionBlock[]> {
   const headers = {
-    'Authorization': `Bearer ${process.env.NOTION_TOKEN}`,
+    'Authorization': `Bearer ${env.NOTION_TOKEN}`,
     'Content-Type': 'application/json',
     'Notion-Version': NOTION_VERSION,
   }
@@ -206,7 +206,6 @@ async function fetchBlockChildren(blockId: string): Promise<NotionBlock[]> {
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers,
-      next: { revalidate: 3600 },
     } as RequestInit)
 
     if (!response.ok) {
@@ -384,13 +383,13 @@ function slugify(input: string): string {
 }
 
 export async function getQuotesFromNotion(): Promise<QuoteData[]> {
-  if (!process.env.QUOTES_DATABASE_ID || !process.env.NOTION_TOKEN) {
+  if (!env.QUOTES_DATABASE_ID || !env.NOTION_TOKEN) {
     console.error('Missing required environment variables: QUOTES_DATABASE_ID and NOTION_TOKEN')
     throw new Error('Missing required environment variables: QUOTES_DATABASE_ID and NOTION_TOKEN')
   }
 
   try {
-    const pages = await queryNotionDatabase(process.env.QUOTES_DATABASE_ID)
+    const pages = await queryNotionDatabase(env.QUOTES_DATABASE_ID)
 
     const quotes: QuoteData[] = pages.map((page: NotionPage) => {
       // Extract quote text from the "quote" property
@@ -472,13 +471,13 @@ function extractStringProperty(page: NotionPage, propertyName: string): string {
 }
 
 export async function getBlogPostsFromNotion(): Promise<NotionBlogPost[]> {
-  if (!process.env.BLOGS_DATABASE_ID || !process.env.NOTION_TOKEN) {
+  if (!env.BLOGS_DATABASE_ID || !env.NOTION_TOKEN) {
     console.error('Missing required environment variables: BLOGS_DATABASE_ID and NOTION_TOKEN')
     throw new Error('Missing required environment variables: BLOGS_DATABASE_ID and NOTION_TOKEN')
   }
 
   try {
-    const pages = await queryNotionDatabase(process.env.BLOGS_DATABASE_ID)
+    const pages = await queryNotionDatabase(env.BLOGS_DATABASE_ID)
 
     const publishedPages = pages.filter((page) => {
       const statusProperty = page.properties.Status

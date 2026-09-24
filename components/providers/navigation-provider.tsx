@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useRef, useMemo } from "react"
 import type { ReactNode } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname } from "@/lib/site-navigation"
 import { navOrder } from "@/lib/nav-config"
 
 type Direction = "left" | "right" | "none"

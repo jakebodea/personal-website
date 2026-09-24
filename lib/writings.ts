@@ -1,5 +1,3 @@
-import fs from 'fs'
-import path from 'path'
 import matter from 'gray-matter'
 import { papers } from '@/content/papers-data'
 
@@ -24,18 +22,18 @@ export interface PaperWriting {
 
 export type Writing = BlogWriting | PaperWriting
 
-const WRITINGS_DIR = path.join(process.cwd(), 'content', 'writings')
+const blogFiles = import.meta.glob<string>('/content/writings/*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+})
 
 function getBlogSlugs(): string[] {
-  return fs
-    .readdirSync(WRITINGS_DIR)
-    .filter((file) => file.endsWith('.md'))
-    .map((file) => file.replace(/\.md$/, ''))
+  return Object.keys(blogFiles).map((file) => file.split('/').pop()!.replace(/\.md$/, ''))
 }
 
-function parseBlogFile(filePath: string): Omit<BlogWriting, 'slug' | 'type'> {
+function parseBlogFile(raw: string): Omit<BlogWriting, 'slug' | 'type'> {
   try {
-    const raw = fs.readFileSync(filePath, 'utf8')
     const { data, content } = matter(raw)
 
     const title = data.title || 'Untitled Post'
@@ -44,7 +42,7 @@ function parseBlogFile(filePath: string): Omit<BlogWriting, 'slug' | 'type'> {
 
     return { title, date, description, content: content.trim() }
   } catch (error) {
-    console.error(`Error parsing blog file ${filePath}:`, error)
+    console.error('Error parsing blog file:', error)
     return {
       title: 'Error Loading Post',
       date: new Date().toISOString().split('T')[0],
@@ -54,14 +52,15 @@ function parseBlogFile(filePath: string): Omit<BlogWriting, 'slug' | 'type'> {
   }
 }
 
-export function getBlogWriting(slug: string): BlogWriting {
-  const fullPath = path.join(WRITINGS_DIR, `${slug}.md`)
-  const { title, date, description, content } = parseBlogFile(fullPath)
+export function getBlogWriting(slug: string): BlogWriting | null {
+  const raw = blogFiles[`/content/writings/${slug}.md`]
+  if (!raw) return null
+  const { title, date, description, content } = parseBlogFile(raw)
   return { type: 'blog', slug, title, date, description, content }
 }
 
 export function getAllWritings(): Writing[] {
-  const blogs: BlogWriting[] = getBlogSlugs().map((slug) => getBlogWriting(slug))
+  const blogs: BlogWriting[] = getBlogSlugs().map((slug) => getBlogWriting(slug)!)
   const paperWritings: PaperWriting[] = papers.map((p) => ({ type: 'paper' as const, ...p }))
 
   return [...blogs, ...paperWritings].sort(

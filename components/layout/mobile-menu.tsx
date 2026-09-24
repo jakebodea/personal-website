@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from "@/components/common/site-link"
+import { usePathname } from "@/lib/site-navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 

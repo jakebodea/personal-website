@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion"
 import { MessageCircle, X } from "lucide-react"
-import { usePathname } from "next/navigation"
+import { usePathname } from "@/lib/site-navigation"
 import { useState } from "react"
 
 import { JakeChat } from "@/components/jake-chat/jake-chat"

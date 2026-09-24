@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/lib/site-navigation';
 import { toast } from "sonner";
 
 export function GPTSlopToast() {

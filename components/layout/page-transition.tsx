@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import type { ReactNode } from "react"
 import { motion } from "framer-motion"
-import { usePathname } from "next/navigation"
+import { usePathname } from "@/lib/site-navigation"
 import { useNavigation } from "@/components/providers/navigation-provider"
 
 interface PageTransitionProps {

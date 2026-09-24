@@ -1,7 +1,13 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"],
-  "plugins": ["check-file"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:react/recommended", "plugin:react-hooks/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "ecmaFeatures": { "jsx": true }, "ecmaVersion": "latest", "sourceType": "module" },
+  "settings": { "react": { "version": "detect" } },
+  "plugins": ["check-file", "react", "react-hooks"],
+  "ignorePatterns": ["src/routeTree.gen.ts", "worker-configuration.d.ts"],
   "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
     "max-lines": ["warn", { "max": 300, "skipBlankLines": true, "skipComments": true }],
     "check-file/filename-naming-convention": [
       "error",
@@ -31,10 +37,15 @@
   },
   "overrides": [
     {
-      "files": ["next-env.d.ts"],
+      "files": ["src/routes/__root.tsx", "src/routes/writings/$slug.tsx"],
+      "rules": { "check-file/filename-naming-convention": "off" }
+    },
+    {
+      "files": ["src/routeTree.gen.ts", "worker-configuration.d.ts"],
       "rules": {
         "@typescript-eslint/triple-slash-reference": "off",
-        "check-file/filename-naming-convention": "off"
+        "check-file/filename-naming-convention": "off",
+        "@typescript-eslint/no-explicit-any": "off"
       }
     },
     {

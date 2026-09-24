@@ -12,7 +12,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        // Next.js optimized fonts
+        // Site fonts
         sans: ['var(--font-montserrat)', ...fontFamily.sans],
         serif: ['var(--font-instrument-serif)', ...fontFamily.serif],
       },
