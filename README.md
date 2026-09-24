@@ -30,6 +30,7 @@ bun run check:deploy-output
 Quotes are fetched from Notion via its REST API and cached for one hour in Cloudflare's cache. Writings are built from the public Markdown files in `content/writings/`.
 
 The integration handles Notion's rich text formatting:
+
 - Converts literal `\n` and `\t` to actual newlines/tabs
 - Preserves formatting while extracting plain text
 - Creates markdown-style links for authors
@@ -44,15 +45,8 @@ The private Resume Studio workspace stays out of the Worker bundle. CI checks th
 
 ## Resume Studio
 
-The repository also contains a private resume workflow driven by a coding agent.
-Its reusable skill and renderer are versioned here; career evidence and application
-records live in Notion. Read [How Resume Studio works](docs/resume-studio.md) for
-the workflow, approval steps, setup requirements, and review guide.
+The repository also contains a private resume workflow driven by a coding agent. Its reusable skill and renderer are versioned here; career evidence and application records live in Notion. Read [How Resume Studio works](docs/resume-studio.md) for the workflow, approval steps, setup requirements, and review guide.
 
 ## PCOBooster portfolio demo
 
-The PCOBooster card on `/projects` links to a server route that redirects to the
-read-only app demo. The optional `PCOBOOSTER_DEMO_ACCESS_KEY` Worker secret comes
-from PCOBooster's Infisical Production `/` configuration. When absent, the route
-opens PCOBooster's public interactive replica. Update the Worker secret after
-rotating the demo key in PCOBooster.
+The PCOBooster card on `/projects` links to a server route that redirects to the read-only app demo. The optional `PCOBOOSTER_DEMO_ACCESS_KEY` Worker secret comes from PCOBooster's Infisical Production `/` configuration. When absent, the route opens PCOBooster's public interactive replica. Update the Worker secret after rotating the demo key in PCOBooster.

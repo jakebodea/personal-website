@@ -1,69 +1,84 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from 'react'
-import { EmbeddedTweet } from 'react-tweet'
-import { getTweet } from 'react-tweet/api'
-import type { Tweet } from 'react-tweet/api'
+import { useEffect, useState } from "react";
+import { EmbeddedTweet } from "react-tweet";
+import { getTweet } from "react-tweet/api";
+import type { Tweet } from "react-tweet/api";
 
 interface XEmbedProps {
-  url: string
+  url: string;
 }
 
-type TweetWithEntities = {
+interface TweetWithEntities {
   entities?: {
-    hashtags?: unknown[]
-    urls?: unknown[]
-    symbols?: unknown[]
-    user_mentions?: unknown[]
-    media?: unknown[]
-  }
-  quoted_tweet?: TweetWithEntities
+    hashtags?: unknown[];
+    urls?: unknown[];
+    symbols?: unknown[];
+    user_mentions?: unknown[];
+    media?: unknown[];
+  };
+  quoted_tweet?: TweetWithEntities;
 }
 
-function extractTweetId(url: string): string | null {
-  const match = url.match(/status\/(\d+)/)
-  return match?.[1] ?? null
-}
+const TWEET_ID_PATTERN = /status\/(?<tweetId>\d+)/u;
 
-function normalizeTweetEntities<T extends TweetWithEntities>(tweet: T): T {
+const extractTweetId = (url: string): string | null => {
+  const match = TWEET_ID_PATTERN.exec(url);
+  return match?.groups?.tweetId ?? null;
+};
+
+const normalizeTweetEntities = <T extends TweetWithEntities>(tweet: T): T => {
   tweet.entities ??= {
     hashtags: [],
     urls: [],
     symbols: [],
     user_mentions: [],
+  };
+  tweet.entities.hashtags ??= [];
+  tweet.entities.urls ??= [];
+  tweet.entities.symbols ??= [];
+  tweet.entities.user_mentions ??= [];
+
+  if (tweet.quoted_tweet !== undefined) {
+    normalizeTweetEntities(tweet.quoted_tweet);
   }
-  tweet.entities.hashtags ??= []
-  tweet.entities.urls ??= []
-  tweet.entities.symbols ??= []
-  tweet.entities.user_mentions ??= []
 
-  if (tweet.quoted_tweet) {
-    normalizeTweetEntities(tweet.quoted_tweet)
-  }
+  return tweet;
+};
 
-  return tweet
-}
-
-export function XEmbed({ url }: XEmbedProps) {
-  const tweetId = extractTweetId(url)
-  const [tweet, setTweet] = useState<Tweet | null>(null)
+export const XEmbed = ({ url }: XEmbedProps) => {
+  const tweetId = extractTweetId(url);
+  const [tweet, setTweet] = useState<Tweet | null>(null);
 
   useEffect(() => {
-    if (!tweetId) return
+    let cancelled = false;
 
-    getTweet(tweetId)
-      .then((rawTweet) => {
-        if (!rawTweet) return
-        setTweet(normalizeTweetEntities(rawTweet))
-      })
-      .catch(() => {})
-  }, [tweetId])
+    if (tweetId !== null && tweetId !== "") {
+      void (async () => {
+        try {
+          const rawTweet = await getTweet(tweetId);
+          if (rawTweet === undefined || cancelled) {
+            return;
+          }
+          setTweet(normalizeTweetEntities(rawTweet));
+        } catch {
+          // Tweet fetch failed; keep the embed hidden.
+        }
+      })();
+    }
 
-  if (!tweetId || !tweet) return null
+    return () => {
+      cancelled = true;
+    };
+  }, [tweetId]);
+
+  if (tweetId === null || tweetId === "" || tweet === null) {
+    return null;
+  }
 
   return (
     <div className="mt-4 flex justify-center [&>div]:!m-0">
       <EmbeddedTweet tweet={tweet} />
     </div>
-  )
-}
+  );
+};

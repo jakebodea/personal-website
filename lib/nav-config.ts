@@ -5,6 +5,6 @@ export const navItems = [
   { title: "writing", href: "/writings" },
   { title: "quotes", href: "/quotes" },
   { title: "contact", href: "/contact" },
-]
+];
 
-export const navOrder = navItems.map((item) => item.href)
+export const navOrder = navItems.map((item) => item.href);

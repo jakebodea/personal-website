@@ -1,21 +1,28 @@
-import { generateText, Output, type UIMessage } from "ai"
-import { createFileRoute } from '@tanstack/react-router'
-import { env } from 'cloudflare:workers'
-import { createWorkersAI } from 'workers-ai-provider'
-import { z } from "zod"
+import { createFileRoute } from "@tanstack/react-router";
+import { generateText, Output } from "ai";
+import type { UIMessage } from "ai";
+import { env } from "cloudflare:workers";
+import { createWorkersAI } from "workers-ai-provider";
+import { z } from "zod";
 
-import { fallbackFollowUps } from "@/lib/jake-chat/follow-ups"
-import { JAKE_CHAT_MODEL } from "@/lib/jake-chat/model"
-import { getBoundedChatMessages } from "@/lib/jake-chat/request"
+import { fallbackFollowUps } from "@/lib/jake-chat/follow-ups";
+import { JAKE_CHAT_MODEL } from "@/lib/jake-chat/model";
 import {
   getChatClientId,
   isChatRateLimitError,
   isChatRequestAllowed,
-} from "@/lib/jake-chat/rate-limit"
+} from "@/lib/jake-chat/rate-limit";
+import type { ChatApiError } from "@/lib/jake-chat/rate-limit";
+import { getBoundedChatMessages } from "@/lib/jake-chat/request";
 
-export const Route = createFileRoute('/api/chat/follow-ups')({
-  server: { handlers: { POST: ({ request }) => postFollowUps(request) } },
-})
+const handlePostFollowUps = async ({ request }: { request: Request }) =>
+  await postFollowUps(request);
+
+export const Route = createFileRoute("/api/chat/follow-ups")({
+  server: {
+    handlers: { POST: handlePostFollowUps },
+  },
+});
 
 const followUpSystemPrompt = `
 generate the next follow-up controls for a personal-site chat.
@@ -42,10 +49,10 @@ rules:
 - good examples: "how do you teach?", "what did that change?", "show another example", "pick a project".
 - bad examples: "example", "tools", "technique", "explain chain rule".
 - all text should be lowercase except proper nouns, acronyms, and code identifiers.
-`.trim()
+`.trim();
 
-const shortText = z.string().min(3).max(36)
-const promptText = z.string().min(12).max(180)
+const shortText = z.string().min(3).max(36);
+const promptText = z.string().min(12).max(180);
 
 const followUpSchema = z.object({
   followUps: z
@@ -62,56 +69,61 @@ const followUpSchema = z.object({
           type: z.literal("select"),
           title: shortText,
           promptTemplate: promptText,
-          options: z.array(
-            z.object({
-              label: shortText,
-              value: z.string().min(1).max(80),
-            })
-          ).min(2).max(5),
+          options: z
+            .array(
+              z.object({
+                label: shortText,
+                value: z.string().min(1).max(80),
+              })
+            )
+            .min(2)
+            .max(5),
           customLabel: shortText.nullable(),
         }),
       ])
     )
     .min(3)
     .max(5),
-})
+});
 
-function getMessageText(message: UIMessage) {
-  return message.parts
+const getMessageText = (message: UIMessage) =>
+  message.parts
     .map((part) => (part.type === "text" ? part.text : ""))
     .join("")
-    .trim()
-}
+    .trim();
 
-async function postFollowUps(req: Request) {
-  const clientId = getChatClientId(req)
+const postFollowUps = async (req: Request) => {
+  const clientId = getChatClientId(req);
   if (!isChatRequestAllowed(clientId)) {
-    return Response.json({ followUps: fallbackFollowUps }, { status: 429 })
+    return Response.json({ followUps: fallbackFollowUps }, { status: 429 });
   }
 
-  const messages: UIMessage[] = await getBoundedChatMessages(req)
+  const messages: UIMessage[] = await getBoundedChatMessages(req);
   const recentMessages = messages.slice(-6).map((message) => ({
     role: message.role,
     text: getMessageText(message),
-  }))
+  }));
 
   try {
-    const workersai = createWorkersAI({ binding: env.AI })
+    const workersai = createWorkersAI({ binding: env.AI });
     const result = await generateText({
-      model: workersai(JAKE_CHAT_MODEL, { reasoning_effort: 'low' }),
+      model: workersai(JAKE_CHAT_MODEL, { reasoning_effort: "low" }),
       maxOutputTokens: 1200,
       system: followUpSystemPrompt,
       prompt: `conversation so far:\n${JSON.stringify(recentMessages, null, 2)}\n\ngenerate the next follow-up controls.`,
       output: Output.object({ schema: followUpSchema }),
-    })
+    });
 
-    return Response.json(result.output)
+    return Response.json(result.output);
   } catch (error) {
-    if (isChatRateLimitError(error)) {
-      return Response.json({ followUps: fallbackFollowUps }, { status: 202 })
+    const chatError: ChatApiError =
+      error instanceof Error ? error : new Error("follow-up generation failed");
+
+    if (isChatRateLimitError(chatError)) {
+      return Response.json({ followUps: fallbackFollowUps }, { status: 202 });
     }
 
-    console.error('Follow-up generation failed:', error)
-    return Response.json({ followUps: fallbackFollowUps }, { status: 202 })
+    console.error("Follow-up generation failed:", error);
+    return Response.json({ followUps: fallbackFollowUps }, { status: 202 });
   }
-}
+};

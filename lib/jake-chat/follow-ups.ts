@@ -1,4 +1,4 @@
-import type { FollowUp } from "@/lib/jake-chat/types"
+import type { FollowUp } from "@/lib/jake-chat/types";
 
 export const initialFollowUps: FollowUp[] = [
   {
@@ -33,14 +33,15 @@ export const initialFollowUps: FollowUp[] = [
     ],
     customLabel: "somewhere else",
   },
-]
+];
 
 export const fallbackFollowUps: FollowUp[] = [
   {
     id: "representative",
     type: "button",
     title: "hire signal",
-    prompt: "what is the best signal on this site that jake would be good to hire?",
+    prompt:
+      "what is the best signal on this site that jake would be good to hire?",
   },
   {
     id: "contact",
@@ -61,19 +62,19 @@ export const fallbackFollowUps: FollowUp[] = [
     ],
     customLabel: null,
   },
-]
+];
 
-export function fillPromptTemplate(template: string, value: string) {
-  const trimmedValue = value.trim()
-  const trimmedTemplate = template.trim()
+export const fillPromptTemplate = (template: string, value: string) => {
+  const trimmedValue = value.trim();
+  const trimmedTemplate = template.trim();
 
-  if (!trimmedTemplate) {
-    return trimmedValue
+  if (trimmedTemplate.length === 0) {
+    return trimmedValue;
   }
 
   if (!trimmedTemplate.includes("{{value}}")) {
-    return `${trimmedTemplate} ${trimmedValue}`.trim()
+    return `${trimmedTemplate} ${trimmedValue}`.trim();
   }
 
-  return trimmedTemplate.replaceAll("{{value}}", trimmedValue)
-}
+  return trimmedTemplate.replaceAll("{{value}}", trimmedValue);
+};

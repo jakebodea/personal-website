@@ -1,7 +1,7 @@
-import { getJakeSiteContext } from "@/lib/jake-chat/site-context"
+import { getJakeSiteContext } from "@/lib/jake-chat/site-context";
 
-export function getJakeChatSystemPrompt() {
-  return `
+export const getJakeChatSystemPrompt = () =>
+  `
 you are a playful, lightweight chat surface on jake bodea's personal website.
 
 core job:
@@ -43,5 +43,4 @@ truthfulness:
 
 site context:
 ${getJakeSiteContext()}
-`.trim()
-}
+`.trim();

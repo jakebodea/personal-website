@@ -2,17 +2,17 @@ type ProjectMedia =
   | { type: "x-embed"; url: string }
   | { type: "image"; url: string; alt?: string }
   | { type: "youtube"; url: string }
-  | { type: "gallery"; images: { url: string; alt: string }[] }
+  | { type: "gallery"; images: { url: string; alt: string }[] };
 
 export interface ProjectData {
-  title: string
-  description: string
-  media?: ProjectMedia
-  liveUrl?: string
-  demoUrl?: string
-  demoNote?: string
-  repoUrl?: string
-  techStack: string[]
+  title: string;
+  description: string;
+  media?: ProjectMedia;
+  liveUrl?: string;
+  demoUrl?: string;
+  demoNote?: string;
+  repoUrl?: string;
+  techStack: string[];
 }
 
 export const projects: ProjectData[] = [

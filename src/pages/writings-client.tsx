@@ -1,67 +1,71 @@
-'use client'
+"use client";
 
-import type { Writing, WritingType } from '@/lib/writings'
-import { useState, useEffect } from 'react'
-import { PostList } from '@/components/common/post-list'
-import { SearchInput } from '@/components/common/search-input'
-import { PageWrapper } from '@/components/layout/page-wrapper'
+import { useState } from "react";
+
+import { PostList } from "@/components/common/post-list";
+import { SearchInput } from "@/components/common/search-input";
+import { PageWrapper } from "@/components/layout/page-wrapper";
+import type { Writing, WritingType } from "@/lib/writings";
 
 interface WritingsPageProps {
-  initialWritings: Writing[]
+  initialWritings: Writing[];
 }
 
-const FILTER_OPTIONS: { label: string; value: 'all' | WritingType }[] = [
-  { label: 'all', value: 'all' },
-  { label: 'blogs', value: 'blog' },
-  { label: 'papers', value: 'paper' },
-]
+const FILTER_OPTIONS: { label: string; value: "all" | WritingType }[] = [
+  { label: "all", value: "all" },
+  { label: "blogs", value: "blog" },
+  { label: "papers", value: "paper" },
+];
 
-export default function WritingsPageClient({ initialWritings }: WritingsPageProps) {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [typeFilter, setTypeFilter] = useState<'all' | WritingType>('all')
-  const [filteredWritings, setFilteredWritings] = useState(initialWritings)
+const WritingsPageClient = ({ initialWritings }: WritingsPageProps) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState<"all" | WritingType>("all");
 
-  useEffect(() => {
-    let result = initialWritings
-
-    if (typeFilter !== 'all') {
-      result = result.filter((w) => w.type === typeFilter)
+  const trimmedQuery = searchQuery.trim();
+  const filteredWritings = initialWritings.filter((writing) => {
+    if (typeFilter !== "all" && writing.type !== typeFilter) {
+      return false;
     }
-
-    if (searchQuery.trim()) {
-      const term = searchQuery.toLowerCase()
-      result = result.filter((w) => {
-        const titleMatch = w.title.toLowerCase().includes(term)
-        const bodyMatch =
-          w.type === 'blog'
-            ? w.content.toLowerCase().includes(term)
-            : w.description.toLowerCase().includes(term)
-        return titleMatch || bodyMatch
-      })
+    if (trimmedQuery === "") {
+      return true;
     }
-
-    setFilteredWritings(result)
-  }, [searchQuery, typeFilter, initialWritings])
+    const term = trimmedQuery.toLowerCase();
+    const titleMatch = writing.title.toLowerCase().includes(term);
+    const bodyMatch =
+      writing.type === "blog"
+        ? writing.content.toLowerCase().includes(term)
+        : writing.description.toLowerCase().includes(term);
+    return titleMatch || bodyMatch;
+  });
 
   return (
     <PageWrapper title="writing">
-      <div className="flex gap-2 mb-4 mt-2">
+      <div className="mb-4 mt-2 flex gap-2">
         {FILTER_OPTIONS.map(({ label, value }) => (
           <button
             key={value}
-            onClick={() => setTypeFilter(value)}
-            className={`px-3 py-1 rounded-full text-sm font-sans transition-colors ${
+            type="button"
+            onClick={() => {
+              setTypeFilter(value);
+            }}
+            className={`rounded-full px-3 py-1 font-sans text-sm transition-colors ${
               typeFilter === value
-                ? 'bg-muted text-foreground'
-                : 'text-muted-foreground hover:text-foreground'
+                ? "bg-muted text-foreground"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
             {label}
           </button>
         ))}
       </div>
-      <SearchInput value={searchQuery} onChange={setSearchQuery} placeholder="search writings..." />
+      <SearchInput
+        value={searchQuery}
+        onChange={setSearchQuery}
+        placeholder="search writings..."
+      />
       <PostList writings={filteredWritings} searchQuery={searchQuery} />
     </PageWrapper>
-  )
-}
+  );
+};
+
+export default WritingsPageClient;

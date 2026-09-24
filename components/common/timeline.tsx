@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 import Image from "@/components/common/site-image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+
 import { MobileTimeline } from "./mobile-timeline";
 
 type Bullet = string | { text: string; paper?: string };
@@ -20,122 +20,145 @@ interface TimelineProps {
   items: TimelineItem[];
 }
 
-const Timeline: React.FC<TimelineProps> = ({ items }) => {
-  return (
-    <>
-      {/* Mobile timeline - hidden on md and up */}
-      <div className="md:hidden overflow-hidden">
-        <MobileTimeline items={items} />
-      </div>
+const JUSTIFY_START = "justify-start";
+const JUSTIFY_END = "justify-end";
 
-      {/* Desktop timeline - hidden below md */}
-      <div className="hidden md:block relative max-w-6xl mx-auto">
-        {/* Main Timeline Line - centered */}
-        <div className="absolute left-1/2 -translate-x-0.5 top-8 bottom-0 w-0.5 bg-border" />
-      
-        {items.map((item, index) => {
-          const isLeft = index % 2 === 0;
-        
-          return (
-            <div key={index} className={`relative pb-12 group flex items-center ${isLeft ? 'justify-start' : 'justify-end'}`}>
-              {/* Timeline Dot */}
-              <div className="absolute left-1/2 top-8 -translate-x-1/2 z-20">
-                {item.endDate === "Present" ? (
-                  <div className="relative">
-                    <div className="absolute inset-0 w-5 h-5 rounded-full bg-accent/30 animate-ping" />
-                    <div className="w-5 h-5 rounded-full bg-white border-3 border-primary shadow-lg relative">
-                      <div className="w-full h-full rounded-full bg-primary" />
-                    </div>
+const isObjectBullet = (
+  bullet: Bullet
+): bullet is { text: string; paper?: string } =>
+  Object.getPrototypeOf(bullet) !== String.prototype;
+
+const timelineItemKey = (item: TimelineItem) =>
+  `${item.startDate}-${item.title}-${item.location}`;
+
+const bulletKey = (bullet: Bullet, index: number) =>
+  isObjectBullet(bullet) ? `${bullet.text}-${index}` : `${bullet}-${index}`;
+
+export const Timeline = ({ items }: TimelineProps) => (
+  <>
+    <div className="overflow-hidden md:hidden">
+      <MobileTimeline items={items} />
+    </div>
+
+    <div className="relative mx-auto hidden max-w-6xl md:block">
+      <div className="absolute bottom-0 left-1/2 top-8 w-0.5 -translate-x-0.5 bg-border" />
+
+      {items.map((item, index) => {
+        const isLeft = index % 2 === 0;
+
+        return (
+          <div
+            key={timelineItemKey(item)}
+            className={`group relative flex items-center pb-12 ${isLeft ? JUSTIFY_START : JUSTIFY_END}`}
+          >
+            <div className="absolute left-1/2 top-8 z-20 -translate-x-1/2">
+              {item.endDate === "Present" ? (
+                <div className="relative">
+                  <div className="absolute inset-0 h-5 w-5 animate-ping rounded-full bg-accent/30" />
+                  <div className="border-3 relative h-5 w-5 rounded-full border-primary bg-white shadow-lg">
+                    <div className="h-full w-full rounded-full bg-primary" />
                   </div>
-                ) : (
-                  <div className="w-5 h-5 rounded-full shadow-lg relative">
-                    <div className="absolute inset-0 rounded-full bg-primary" />
-                    <div className="absolute inset-1 rounded-full bg-card" />
-                  </div>
-                )}
-              </div>
-
-              {/* Content Card */}
-              <div className={`w-full max-w-lg ${isLeft ? 'mr-4 pr-4' : 'ml-4 pl-4'}`}>
-                <Card className="backdrop-blur-sm border-2 border-border shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-muted-foreground/30 bg-contrast-light/50">
-                  <CardHeader className="pb-3">
-                    {/* Date */}
-                    <div className={`flex items-center gap-2 mb-4 ${isLeft ? 'justify-start' : 'justify-end'}`}>
-                      <span className="text-sm text-muted-foreground font-medium">
-                        {item.startDate} - 
-                      </span>
-                      {item.endDate === "Present" ? (
-                        <span className="bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                        Present
-                        </span>
-                      ) : (
-                        <span className="text-sm text-muted-foreground font-medium">
-                          {item.endDate}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Header with Logo and Title */}
-                    <div className={`flex items-center gap-4 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}>
-                      <div className="flex-shrink-0">
-                        <div className="w-16 h-16 rounded-xl bg-white border-2 border-border shadow-md">
-                          <Image
-                            src={item.image}
-                            alt={item.title}
-                            width={64}
-                            height={64}
-                            className="w-full h-full object-contain rounded-lg p-2"
-                          />
-                        </div>
-                      </div>
-                    
-                      <div className={`flex-1 min-w-0 ${isLeft ? 'text-left' : 'text-right'}`}>
-                        <h3 className="text-3xl font-serif italic text-foreground leading-none">
-                          {item.title}
-                        </h3>
-                        <div className={`flex items-center text-muted-foreground ${isLeft ? 'justify-start' : 'justify-end'}`}>
-                          <span className="font-serif text-xl leading-none">{item.location}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="pt-0">
-                    {/* Bullets - Hidden by default, shown on hover */}
-                    <div className="overflow-hidden">
-                      <div className="max-h-0 group-hover:max-h-[1000px] transition-all duration-500 ease-in-out">
-                        <div className="pt-3 border-t border-border/30">
-                          <ul className="list-disc pl-5 text-muted-foreground leading-relaxed text-sm">
-                            {item.bullets.map((bullet, bulletIndex) => (
-                              <li key={bulletIndex}>
-                                {typeof bullet === "string" ? bullet : bullet.text}
-                                {typeof bullet !== "string" && bullet.paper && (
-                                  <ul className="list-disc pl-5 mt-0.5">
-                                    <li>
-                                      <a href={bullet.paper} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
-                                        research paper
-                                      </a>
-                                    </li>
-                                  </ul>
-                                )}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+                </div>
+              ) : (
+                <div className="relative h-5 w-5 rounded-full shadow-lg">
+                  <div className="absolute inset-0 rounded-full bg-primary" />
+                  <div className="absolute inset-1 rounded-full bg-card" />
+                </div>
+              )}
             </div>
-          );
-        })}
-      
-        {/* End Marker */}
-        <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-2 h-2 rounded-full bg-primary shadow-sm" />
-      </div>
-    </>
-  );
-};
 
-export { Timeline };
+            <div
+              className={`w-full max-w-lg ${isLeft ? "mr-4 pr-4" : "ml-4 pl-4"}`}
+            >
+              <Card className="bg-contrast-light/50 border-2 border-border shadow-lg backdrop-blur-sm transition-shadow duration-300 hover:shadow-xl group-hover:border-muted-foreground/30">
+                <CardHeader className="pb-3">
+                  <div
+                    className={`mb-4 flex items-center gap-2 ${isLeft ? JUSTIFY_START : JUSTIFY_END}`}
+                  >
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {item.startDate} -
+                    </span>
+                    {item.endDate === "Present" ? (
+                      <span className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
+                        Present
+                      </span>
+                    ) : (
+                      <span className="text-sm font-medium text-muted-foreground">
+                        {item.endDate}
+                      </span>
+                    )}
+                  </div>
+
+                  <div
+                    className={`flex items-center gap-4 ${isLeft ? "flex-row" : "flex-row-reverse"}`}
+                  >
+                    <div className="flex-shrink-0">
+                      <div className="h-16 w-16 rounded-xl border-2 border-border bg-white shadow-md">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          width={64}
+                          height={64}
+                          className="h-full w-full rounded-lg object-contain p-2"
+                        />
+                      </div>
+                    </div>
+
+                    <div
+                      className={`min-w-0 flex-1 ${isLeft ? "text-left" : "text-right"}`}
+                    >
+                      <h3 className="font-serif text-3xl italic leading-none text-foreground">
+                        {item.title}
+                      </h3>
+                      <div
+                        className={`flex items-center text-muted-foreground ${isLeft ? JUSTIFY_START : JUSTIFY_END}`}
+                      >
+                        <span className="font-serif text-xl leading-none">
+                          {item.location}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="pt-0">
+                  <div className="overflow-hidden">
+                    <div className="max-h-0 transition-[max-height] duration-500 ease-in-out group-hover:max-h-[1000px]">
+                      <div className="border-t border-border/30 pt-3">
+                        <ul className="list-disc pl-5 text-sm leading-relaxed text-muted-foreground">
+                          {item.bullets.map((bullet, bulletIndex) => (
+                            <li key={bulletKey(bullet, bulletIndex)}>
+                              {isObjectBullet(bullet) ? bullet.text : bullet}
+                              {isObjectBullet(bullet) &&
+                              bullet.paper !== undefined &&
+                              bullet.paper !== "" ? (
+                                <ul className="mt-0.5 list-disc pl-5">
+                                  <li>
+                                    <a
+                                      href={bullet.paper}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="underline transition-colors hover:text-foreground"
+                                    >
+                                      research paper
+                                    </a>
+                                  </li>
+                                </ul>
+                              ) : null}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        );
+      })}
+
+      <div className="absolute -bottom-2 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-primary shadow-sm" />
+    </div>
+  </>
+);
