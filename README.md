@@ -36,9 +36,9 @@ The integration handles Notion's rich text formatting:
 
 ## Deployment
 
-The `personal-website` Worker configuration is in `wrangler.jsonc`. `bun run deploy` builds and deploys the Worker to `personal-website.jakebodea.workers.dev`. Cloudflare Workers Builds deploys `main` using `bun run build && bun run check:deploy-output` followed by `npx wrangler deploy`; its build variable `BUN_VERSION` is `1.3.9`. Configure `NOTION_TOKEN` and `QUOTES_DATABASE_ID` with `wrangler secret put` before verifying `/quotes`. `PCOBOOSTER_DEMO_ACCESS_KEY` is optional; when absent, the demo redirect opens the public PCOBooster replica. The AI binding is declared in `wrangler.jsonc` and does not use a Vercel AI Gateway key.
+The `personal-website` Worker configuration is in `wrangler.jsonc`. `bun run deploy` builds and deploys the Worker to `personal-website.jakebodea.workers.dev`. Cloudflare Workers Builds deploys `main` using `bun run build && bun run check:deploy-output` followed by `npx wrangler deploy`; its build variable `BUN_VERSION` is `1.3.9`. Configure `NOTION_TOKEN` and `QUOTES_DATABASE_ID` with `wrangler secret put` before verifying `/quotes`. `PCOBOOSTER_DEMO_ACCESS_KEY` is optional; when absent, the demo redirect opens the public PCOBooster replica. Chat uses the Workers AI binding in `wrangler.jsonc`.
 
-`jakebodea.com` and `www.jakebodea.com` are attached to the Worker as Custom Domains and declared in `wrangler.jsonc`. The Worker redirects `www` to the apex. Porkbun uses Cloudflare's assigned nameservers. The imported Vercel DNS records are removed. The Vercel project's Git connection is disconnected; its last deployment remains available temporarily for DNS cache expiry and rollback. Verify both hostnames and the chat and demo flows after each deployment.
+`jakebodea.com` and `www.jakebodea.com` are attached to the Worker as Custom Domains and declared in `wrangler.jsonc`. The Worker redirects `www` to the apex. Porkbun uses Cloudflare's assigned nameservers. Verify both hostnames and the chat and demo flows after each deployment.
 
 The private Resume Studio workspace stays out of the Worker bundle. CI checks the built output for private paths and markers. Do not import `.resume-studio/`, `resume/`, or the agent skill from public routes.
 
