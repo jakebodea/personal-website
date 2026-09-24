@@ -9,10 +9,10 @@
     "preview": "vite preview",
     "deploy": "bun run build && wrangler deploy",
     "cf-typegen": "wrangler types",
-    "lint": "ultracite check --type-aware",
+    "lint": "bun run cf-typegen && ultracite check --type-aware",
     "tsc": "bun run cf-typegen && tsc --noEmit",
     "check:deploy-output": "bun scripts/check-deploy-output.ts",
-    "check": "ultracite check --type-aware",
+    "check": "bun run cf-typegen && ultracite check --type-aware",
     "fix": "ultracite fix --type-aware"
   },
   "dependencies": {
