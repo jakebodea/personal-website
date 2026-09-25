@@ -38,8 +38,9 @@ def load_claims(path):
 
 
 def resume_items(source):
-    """Yield (line number, item TeX, citation text) for every \\resumeItem."""
-    start = 0
+    """Yield (line number, item TeX, citation text) for every \\resumeItem in the body."""
+    # Skip the preamble, where the template defines \resumeItem and uses it in macros.
+    start = max(source.find("\\begin{document}"), 0)
     while (index := source.find("\\resumeItem{", start)) != -1:
         depth, cursor = 0, index + len("\\resumeItem")
         while cursor < len(source):
