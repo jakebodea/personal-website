@@ -19,8 +19,11 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[4]
 MAX_SOURCE = 150_000
 XHTML = "{http://www.w3.org/1999/xhtml}"
-# Layout targets for a full, balanced page (inches of white space below the last line).
-BOTTOM_GAP_MIN, BOTTOM_GAP_MAX = 0.15, 0.6
+# A full, balanced page: unused text height (the template's RESUME-FILL marker)
+# must be between zero, where TeX starts squeezing spacing, and this maximum.
+SLACK_MAX_INCHES = 0.35
+FILL_MARKER = re.compile(r"RESUME-FILL total=([\d.]+)pt goal=([\d.]+)pt")
+TEX_POINTS_PER_INCH = 72.27
 MAX_LINES_PER_BULLET = 2
 WIDOW_MAX_WORDS = 2
 LINE_TOLERANCE_PT = 4
@@ -121,8 +124,17 @@ def text_lines(page):
     return lines
 
 
-def layout_metrics(path, extracted):
-    """Measure page fill and bullet shape from Poppler word bounds."""
+def page_slack(tex_log):
+    """Unused text height in inches; negative means TeX compressed spacing to fit."""
+    match = FILL_MARKER.search(tex_log)
+    if not match:
+        raise ValueError("RESUME-FILL marker missing; start the preamble from assets/classic.tex")
+    total, goal = float(match[1]), float(match[2])
+    return round((goal - total) / TEX_POINTS_PER_INCH, 2)
+
+
+def layout_metrics(path, extracted, slack=None):
+    """Measure page fill and bullet shape from Poppler word bounds and TeX's fill marker."""
     page = next(ET.parse(path).getroot().iter(f"{XHTML}page"))
     height = float(page.attrib["height"])
     lines = text_lines(page)
@@ -142,14 +154,17 @@ def layout_metrics(path, extracted):
     widows = [" ".join(w[3] for w in bullet[-1]) for bullet in bullets
               if len(bullet) > 1 and len(bullet[-1]) <= WIDOW_MAX_WORDS]
     bottom_gap = round((height - max(line["y"] for line in lines)) / 72, 2)
-    metrics = {"bottomGapInches": bottom_gap, "bullets": len(bullets),
+    metrics = {"bottomGapInches": bottom_gap, "slackInches": slack, "bullets": len(bullets),
                "linesPerBullet": [len(bullet) for bullet in bullets],
                "longBullets": long_bullets, "widows": widows,
                "hyphenDateRanges": HYPHEN_DATE_RANGE.findall(extracted)}
     findings, warnings = [], []
-    if not BOTTOM_GAP_MIN <= bottom_gap <= BOTTOM_GAP_MAX:
-        findings.append(f"Bottom white space is {bottom_gap} in; target "
-                        f"{BOTTOM_GAP_MIN}-{BOTTOM_GAP_MAX} in")
+    if slack is not None and slack < 0:
+        findings.append(f"Content is {-slack} in taller than the page; TeX squeezed the "
+                        "spacing to fit. Cut content until slack is at least 0")
+    elif slack is not None and slack > SLACK_MAX_INCHES:
+        findings.append(f"Page is underfilled: {slack} in of unused height; "
+                        f"target 0-{SLACK_MAX_INCHES} in")
     if long_bullets:
         findings.append(f"{len(long_bullets)} bullet(s) exceed {MAX_LINES_PER_BULLET} lines: "
                         + "; ".join(long_bullets))
@@ -247,7 +262,7 @@ def render(args):
             report["wordsChecked"] = check_bounds(work / "bounds.html", pages)
             if pages == 1:
                 report["layout"], layout_findings, report["warnings"] = layout_metrics(
-                    work / "bounds.html", extracted)
+                    work / "bounds.html", extracted, page_slack(tex_log))
                 findings.extend(layout_findings)
         except (ValueError, ET.ParseError, KeyError, StopIteration) as error:
             findings.append(str(error))

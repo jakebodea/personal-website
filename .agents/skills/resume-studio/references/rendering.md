@@ -31,9 +31,11 @@ are unchanged. Original applications and backups remain intact.
   clipping that bounding boxes and TeX logs cannot establish.
 - Generate preview-1.png from the PDF, plus up to two additional page previews
   to diagnose an overlong draft. A passing revision always has just one page.
-- Layout gates, measured from the word bounds and reported under `layout` in
-  quality.json: bottom white space must be 0.15–0.6 in; no bullet may exceed two
-  lines; date ranges must use an en dash, not a hyphen. A bullet whose last line
+- Layout gates, reported under `layout` in quality.json. Page fill comes from
+  the template's `RESUME-FILL` marker (TeX's natural content height against the
+  page goal): unused height must be 0–0.35 in. Below zero, TeX is squeezing the
+  spacing to keep one page, which word bounds cannot detect. From the word
+  bounds: no bullet may exceed two lines, and date ranges must use an en dash. A bullet whose last line
   has two words or fewer is reported under `warnings` for the visual review to
   fix or accept. The thresholds are constants at the top of render.py.
 

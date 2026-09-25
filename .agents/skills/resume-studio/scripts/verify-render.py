@@ -171,7 +171,13 @@ def main(keep_artifacts=False):
         maple_start = source.index(r"\resumeSubheading{Fictional Maple Analytics}")
         maple_end = source.index(r"\resumeItemListEnd", maple_start) + len(r"\resumeItemListEnd")
         expect("underfilled page rejected", source[:maple_start] + source[maple_end:],
-               "010", "Bottom white space")
+               "010", "underfilled")
+        # Overshoot the fixture's measured slack slightly: TeX then squeezes list
+        # spacing to keep one page, which only the fill marker can detect.
+        slack_pt = json.loads((first / "quality.json").read_text())["layout"]["slackInches"] * 72.27
+        squeezed = source.replace(r"\section{Education}",
+                                  rf"\vspace{{{slack_pt + 4:.1f}pt}}" + "\n" + r"\section{Education}")
+        expect("page squeezed by TeX rejected", squeezed, "013", "taller than the page")
         expect("hyphenated date range rejected", source.replace("2022 -- 2025", "2022 - 2025"),
                "011", "en dash")
         long_bullet = ("Built a shared operations workspace that brought intake, document review, "

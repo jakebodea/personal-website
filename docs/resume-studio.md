@@ -134,8 +134,8 @@ for drafting and critics.
 
 `render.py` is a local compiler and layout checker. It runs two pdfLaTeX passes,
 checks for one page, extracts text, checks missing glyphs and overflow, checks word
-boundaries, enforces bottom white space, two-line bullets, and en-dash date
-ranges, warns about short last lines, and produces PNG previews plus a JSON report
+boundaries, enforces page fill (no squeezed spacing, at most 0.35 in unused),
+two-line bullets, and en-dash date ranges, warns about short last lines, and produces PNG previews plus a JSON report
 with input/PDF hashes.
 It refuses an existing output directory, marks outer artifacts read-only, and
 removes compile products only when an identical outer copy exists.
@@ -184,7 +184,7 @@ python3 .agents/skills/resume-studio/scripts/verify-render.py
 python3 .agents/skills/resume-studio/scripts/render.py --help
 ```
 
-The verifier exercises 20 checks and removes its temporary artifacts by default.
+The verifier exercises 21 checks and removes its temporary artifacts by default.
 Use `--keep-artifacts` when you want to inspect its fictional PDF; it retains the
 workspace in the system temporary directory, outside real applications. The existing
 website CI runs separately on Linux and does not run the macOS renderer suite.

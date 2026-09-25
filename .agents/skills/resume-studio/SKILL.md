@@ -97,8 +97,8 @@ reruns `check-claims.py` and the affected critic checks.
 Read [rendering.md](references/rendering.md). Render into the next unused
 revision number; never overwrite. `render.py` fails on more than one page,
 overflow, missing glyphs, a bullet longer than two lines, hyphenated date ranges,
-or bottom white space outside the Profile's band, and warns about short last
-lines. Read the extracted text and look at the preview yourself. A layout fix is
+content TeX had to squeeze to fit, or more than 0.35 in of unused page height,
+and warns about short last lines. Keep the template's `RESUME-FILL` line. Read the extracted text and look at the preview yourself. A layout fix is
 a new revision; if it changes wording, return to stage 3.
 
 ### 6 Save
