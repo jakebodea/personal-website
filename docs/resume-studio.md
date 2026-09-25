@@ -12,7 +12,7 @@ This guide explains the design for reviewers. The authoritative agent workflow i
 ```mermaid
 flowchart LR
     User["You: job posting, answers, approvals"] --> Agent["Coding agent following the repo skill"]
-    Agent <--> Notion["Notion: evidence, profile, applications"]
+    Agent <--> Notion["Notion: claims, evidence, profile, applications"]
     Agent <--> Critics["Three cheaper critics: evidence, job fit, writing"]
     Agent --> Local["Private temporary inputs and draft TeX"]
     Local --> Renderer["Python renderer and PDF checks"]
@@ -27,8 +27,9 @@ flowchart LR
 | --- | --- | --- |
 | `.agents/skills/resume-studio/` | Workflow instructions, classic template, renderer, verification, and references | Git review |
 | Adversarial subagents | Independent objections and rechecks of the main agent's revisions | Main agent coordinates lower-capability models |
-| Notion **Career Evidence** | Reusable career facts with sources, scope, qualifications, and approval history | Agent with your factual approval |
-| Notion **Profile** | Stable contact details, education, skills, and presentation preferences | Agent with your factual approval |
+| Notion **Claims** | One row per resume-ready statement: approved wording, short variant, required qualifiers, banned phrases, freshness | Agent with your exact-text approval |
+| Notion **Career Evidence** | Facts behind claims, with sources, scope, qualifications, and history; `Context` records inform positioning only | Agent with your factual approval |
+| Notion **Profile** | Contact details, education, composition and format rules, the Baseline resume, and the skills inventory | Agent with your factual approval |
 | Notion **Applications** | One record per application attempt, job snapshot, notes, revisions, and next action | Agent during application work |
 | Notion **Archive** | Original sources, approvals, and superseded workflow material | Preserved history |
 | System temporary directory | Inputs, working drafts, PDFs, previews, and compiler diagnostics while a revision is built and saved | Removed after Notion artifacts pass byte-level verification |
@@ -47,9 +48,10 @@ of the workflow.
    in Notion, verifies its records, and asks for the hub URL if its identity is
    unclear. A fresh checkout or cloud agent needs no local registry. Rendering
    still requires a Mac with the toolchain described below.
-2. **Read and freeze the sources.** The agent reads the complete Approved evidence
-   set and Profile, captures the job posting in the owning Notion Application,
-   and records page identities, timestamps, and hashes. A resumed application is
+2. **Read and freeze the sources.** The agent exports every Approved claim, reads
+   the Profile and the evidence behind the claims it may use, captures the job
+   posting in the owning Notion Application, and records page identities,
+   timestamps, and hashes. A resumed application is
    identified by its Notion page ID. Each Notion revision retains the exact sources
    it used, even if the bank changes later.
 3. **Interview for useful gaps and opportunities.** A Match/Gap Report distinguishes
@@ -59,9 +61,10 @@ of the workflow.
    It prioritizes questions with a
    concrete payoff, asks one focused topic at a time, and reuses prior answers.
    New reusable facts remain candidates until you approve the exact evidence change.
-4. **Write and check the wording.** The agent tailors the application-specific
-   content, preserves the stable sections, and checks each claim against its
-   sources. It starts from the existing classic LaTeX template.
+4. **Compose from claims.** The agent starts from the Profile's Baseline resume,
+   applies the Application's Variant rules, and fills slots with Approved claims.
+   Every bullet cites its claim IDs in a TeX comment, and `check-claims.py` must
+   pass before review.
 5. **Challenge the draft.** Three independent critics review evidence, job fit, and
    writing. The main agent uses a lower-capability model for these roles, preferring
    Luna in Codex when it is below the main model's tier. It addresses each finding
@@ -80,7 +83,8 @@ of the workflow.
    PDF and request edits or explicitly approve that exact revision.
 8. **Save the record.** The agent writes reviews and decisions into the Notion
    revision and attaches its exact PDF, source, snapshots, manifest, and quality
-   report. It downloads the saved files, verifies their hashes, then removes the
+   report. It confirms each attachment is present (and compares hashes when the
+   connector can download binaries), sets `Claims used`, then removes the
    temporary workspace. An incomplete upload remains visibly Draft/incomplete
    in Notion. When you approve a PDF, the agent records the approval and exact
    artifact identity separately.
@@ -110,9 +114,9 @@ covers the posting. You can skip a question; the agent records the gap and uses 
 supported alternative or omits the unsupported claim.
 
 Critics begin independently, then exchange specific findings and responses with
-the main agent. The default limit is an initial critique plus two rechecks, using
-the same critics and targeted updates, with at most nine critic turns including
-retries. A completed review requires
+the main agent. The default limit is an initial critique plus one recheck, with a
+second recheck only while a material finding stays open and at most six critic
+turns including retries. A completed review requires
 every critic to review the same final content and confirm resolution of material
 objections. Optional editorial disagreements can remain documented. Majority vote
 does not establish a fact, and critic agreement does not approve a PDF for you.
@@ -123,9 +127,16 @@ will say the independent review was waived rather than completed.
 
 ## What the code checks, and what the agent does
 
+`check-claims.py` requires every bullet to cite Approved claims and fails on
+numbers absent from the cited claims, missing qualifiers, or banned phrases.
+`compact-bank.py` turns saved Notion page fetches into one compact Markdown bank
+for drafting and critics.
+
 `render.py` is a local compiler and layout checker. It runs two pdfLaTeX passes,
 checks for one page, extracts text, checks missing glyphs and overflow, checks word
-boundaries, and produces PNG previews plus a JSON report with input/PDF hashes.
+boundaries, enforces bottom white space, two-line bullets, and en-dash date
+ranges, warns about short last lines, and produces PNG previews plus a JSON report
+with input/PDF hashes.
 It refuses an existing output directory, marks outer artifacts read-only, and
 removes compile products only when an identical outer copy exists.
 
@@ -155,7 +166,10 @@ Read the files in this order:
 3. [Adversarial review](../.agents/skills/resume-studio/references/adversarial-review.md):
    critic assignments, responses, rechecks, and completion criteria.
 4. [render.py](../.agents/skills/resume-studio/scripts/render.py): executable
-   layout checks and revision preservation.
+   layout checks and revision preservation;
+   [check-claims.py](../.agents/skills/resume-studio/scripts/check-claims.py) and
+   [compact-bank.py](../.agents/skills/resume-studio/scripts/compact-bank.py):
+   claim enforcement and bank compaction.
 5. [verify-render.py](../.agents/skills/resume-studio/scripts/verify-render.py):
    regression checks using fictional data in a temporary workspace.
 6. [Evidence refresh](../.agents/skills/resume-studio/references/evidence-refresh.md):
@@ -170,7 +184,7 @@ python3 .agents/skills/resume-studio/scripts/verify-render.py
 python3 .agents/skills/resume-studio/scripts/render.py --help
 ```
 
-The verifier exercises 15 checks and removes its temporary artifacts by default.
+The verifier exercises 20 checks and removes its temporary artifacts by default.
 Use `--keep-artifacts` when you want to inspect its fictional PDF; it retains the
 workspace in the system temporary directory, outside real applications. The existing
 website CI runs separately on Linux and does not run the macOS renderer suite.
@@ -193,6 +207,7 @@ already tracked files or erase history; existing tracked public resume files are
 unchanged. The website has no Resume Studio data integration in this change.
 
 Uploaded attachment presence and uploaded-byte verification are distinct checks.
-If the saved bytes cannot be downloaded, the agent records the gap in Notion and
-keeps the current temporary files while retrying. It does not mark the revision
-durable or use temporary files as the shared application record.
+Presence with the expected filenames is the save gate. When the Notion connector
+can download binary files, the agent also compares hashes; otherwise it records
+that byte verification was unavailable. Temporary files are never kept as the
+shared application record.

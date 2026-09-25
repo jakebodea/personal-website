@@ -31,6 +31,11 @@ are unchanged. Original applications and backups remain intact.
   clipping that bounding boxes and TeX logs cannot establish.
 - Generate preview-1.png from the PDF, plus up to two additional page previews
   to diagnose an overlong draft. A passing revision always has just one page.
+- Layout gates, measured from the word bounds and reported under `layout` in
+  quality.json: bottom white space must be 0.15–0.6 in; no bullet may exceed two
+  lines; date ranges must use an en dash, not a hyphen. A bullet whose last line
+  has two words or fewer is reported under `warnings` for the visual review to
+  fix or accept. The thresholds are constants at the top of render.py.
 
 Create a private workspace with Python's `tempfile.mkdtemp(prefix="resume-studio-")`
 and resolve its path before invoking the renderer. The output must be a new

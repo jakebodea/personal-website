@@ -1,68 +1,73 @@
 # Notion contract
 
-Read this reference when connecting Resume Studio to Notion, migrating existing
-records, or saving a revision. Find the existing hub in Notion; this committed
-reference contains no personal identifiers or workspace-specific IDs.
+Read this reference when connecting Resume Studio to Notion, loading a bank, or
+saving a revision. Find the existing hub by title; this public file contains no
+personal identifiers or workspace-specific IDs.
 
 ## Structure
 
-The hub has two databases and two ordinary pages:
+The "Resume Studio" hub holds three databases and two pages.
 
-- **Career Evidence**: one reusable accomplishment, bounded project story, or
-  independently tracked metric per record. Properties: `Name`, `Kind`
-  (`Experience`, `Project`, `Metric`, `Capability`, `Reference`), `Organization`,
-  `Approval` (`Candidate`, `Approved`, `Superseded`), `Observed on`, `Needs review`,
-  `Tags`, and `Primary source`. The page body holds full wording, sources,
-  ownership, dates/windows, units, uncertainty, and exact approval history.
-- **Applications**: one company/role/application attempt per record. Properties:
-  `Name`, `Company`, `Role`, `Job URL`, `Started`, `Application stage`
-  (`Preparing`, `Applied`, `Interviewing`, `Offer`, `Closed`, `Unknown`), `Resume
-  state` (`Draft`, `Checked`, `Approved`), `Latest revision` (URL type),
-  `Approved PDF` (FILES type), `Evidence used` relation, `Next action` text, and
-  `Next action date`.
-- **Profile**: ordinary page for stable approved contact, education, skills, and
-  presentation preferences.
-- **Archive**: ordinary page for the original full bank, approvals, migration
-  records, retired workflow, and rendering-kit history.
+**Claims**: one row per resume-ready statement. This is the only source of
+resume wording.
 
-Use filtered views for Approved/Candidate/Needs review and Active/All/Needs
-attention. Query each view with pagination and fetch full page bodies; do not
-treat a view's first page or search snippets as exhaustive. Keep job snapshots,
-notes, revisions, and approval records under the owning Application page.
-Preserve page IDs when continuing an application; a new attempt gets a new record.
-The Application and its child pages provide the context for agents on other machines.
+| Property | Type | Meaning |
+| --- | --- | --- |
+| `Claim` | title | Approved full wording |
+| `ID` | unique ID, prefix `CL` | Cited in TeX as `CL-12`; SQL exports it as `userDefined:ID` = 12 |
+| `Short` | text | Compressed variant; never adds facts or numbers |
+| `Qualifier` | text | Must-keep phrases, semicolon-separated |
+| `Never say` | text | Banned phrases, semicolon-separated |
+| `Role` | select | TaxRise, Beckman Coulter, Ventris Medical, Stanford, Personal, Education, Eligibility |
+| `Evidence` | relation | Supporting Career Evidence records |
+| `Freshness` | select | Fixed, Dated (keep the date or past tense), Live (confirm within 90 days) |
+| `Confirmed on` / `Confirmed by` | date / text | When and how Jake approved the exact text |
+| `Status` | select | Candidate, Approved, Retired |
+
+**Career Evidence**: the facts behind claims, with sources and caveats.
+`Kind` is Role, Project, Metric, or Context. Context records (strengths essays,
+"Who Jake is", GitHub refreshes, historical drafts, superseded clarifications)
+inform positioning and are never cited. `Approval` is Candidate, Approved, or
+Superseded. Other properties: `Organization`, `Observed on`, `Needs review`,
+`Tags`, `Primary source`, and the `Claims` back-relation. The page body states
+current truth; superseded wording goes in a `History` toggle at the bottom.
+
+**Applications**: one row per application attempt. Properties: `Name`,
+`Company`, `Role`, `Job URL`, `Started`, `Variant` (ML/AI, Product/Full-stack,
+Agent engineering, Defense), `Application stage`, `Resume state` (Draft,
+Checked, Approved), `Latest revision`, `Approved PDF`, `Claims used`,
+`Evidence used`, `Baseline hash`, `Next action`, and `Next action date`. The Job
+Snapshot, notes, and numbered revision pages are children of the row.
+
+**Profile** page: contact details, education, employment status, eligibility,
+title rules, composition and format rules, the Baseline resume, and the skills
+inventory, with a History toggle.
+
+**Archive** page: the original bank, approvals, migration records, and retired
+workflow material.
 
 ## Read contract
 
-Read all Approved records and the complete Profile page bodies and nested blocks,
-then select relevant evidence for the frozen job. Preserve caveats and
-attribution. Read the complete immutable Job Snapshot, then the Application's
-current summary and numbered revision history.
-Treat summary properties as current metadata and older prose as historical. The
-Evidence used relation describes current inputs; each revision also stores the
-exact dated evidence snapshot used to write it.
+- Query databases with SQL or view mode and follow pagination until
+  `has_more` is false. A search snippet or a view's first page is not the bank.
+- Load every Approved claim, the full Profile, and the Approved evidence pages
+  that the chosen claims link to. Read Context records for positioning only.
+- Read the immutable Job Snapshot and the Application's revision history when
+  continuing an application, identified by its page ID.
 
-## Save contract
+## Write contract
 
-Before a write, capture page IDs, URLs, timestamps, and SHA-256 hashes in a source
-manifest in the temporary workspace. Attach that manifest to the revision. For a
-bank change, show the exact factual Markdown diff and wait
-for explicit approval. Re-fetch the page, save only approved text, and verify the
-full result plus its approval record.
-
-For an application revision, attach the exact source, PDF, snapshots, manifest, and
-quality report. Put notes, questions, match/gap analysis, visual review, and the
-adversarial review record in the Notion page content so they are readable without
-downloading a bundle. Apply
-SKILL.md's question and review completion criteria before setting `Resume state`
-to `Checked`; keep unresolved attempts as `Draft` with findings in the record.
-Historical revisions retain their original review status and available artifacts.
-Fetch the saved revision and download its attachments, using the page's signed file
-URLs for binary files when needed. Compare downloaded bytes against the manifest
-before declaring the save complete and removing temporary files. If an attachment
-or comparison is unavailable, record the gap in the Notion revision, keep it
-Draft/incomplete, and retry while the temporary files remain. Keep all numbered
-revisions in Notion, including failures. A PDF can be
-uploaded while `Resume state` remains `Checked`; set it to `Approved` only with
-explicit PDF approval and the exact approved artifact recorded. Do not infer
-`Application stage` from a resume build or upload.
+- **Facts** (a new or changed claim or evidence statement): create it as
+  Candidate, show Jake the exact text, and set it Approved only after an explicit
+  yes. Record the quote in `Confirmed by` (claims) or an Approval history section
+  (evidence).
+- **Reorganization** (moving text, retyping, adding History toggles, fixing
+  cross-references) needs no approval if no fact changes.
+- **Retiring**: set a claim to Retired, or evidence to Superseded, with a line
+  pointing to what replaced it. Never delete records.
+- **Revisions**: follow Save in SKILL.md. Attachment presence with the expected
+  filenames is the gate. Byte-hash verification runs when the connector can
+  download binaries; otherwise the revision records that it was unavailable.
+  Do not keep temporary files as a fallback record.
+- Notion turns bare domains such as `example.com` into links, so a later
+  search-and-replace edit must match the stored link text. Fetch before editing.

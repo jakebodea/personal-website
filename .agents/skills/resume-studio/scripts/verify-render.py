@@ -43,6 +43,12 @@ BODY = r"""
     \resumeItem{Collaborated with support staff to trace recurring scheduling errors, translate observed behavior into reproducible examples, and verify fixes against the original reports before releasing changes.}
     \resumeItem{Maintained relational data migrations and API documentation, describing assumptions and rollback steps so teammates could review changes without reconstructing their implementation history.}
   \resumeItemListEnd
+  \resumeSubheading{Fictional Maple Analytics}{2018 -- 2020}{Data Analyst Intern}{Example City}
+  \resumeItemListStart
+    \resumeItem{Built weekly reporting queries for a fictional operations team, replacing a spreadsheet export with a scheduled job that recorded its inputs and run time for later review.}
+    \resumeItem{Cleaned and documented a shared customer table, adding column descriptions and validation queries that flagged duplicate or incomplete records before monthly reporting.}
+    \resumeItem{Presented findings to a small review group with clear caveats about sample size, then updated the analysis after questions about seasonal effects in the underlying data.}
+  \resumeItemListEnd
 \resumeSubHeadingListEnd
 
 \section{Projects}
@@ -56,6 +62,10 @@ BODY = r"""
   \resumeItemListStart
     \resumeItem{Designed an offline note-taking experiment with searchable entries and clear synchronization states, using sample data to explore how editing conflicts should be presented.}
     \resumeItem{Reviewed the interface with keyboard-only navigation and large text settings, then corrected focus order and labels based on observed usability problems.}
+  \resumeItemListEnd
+  \resumeProjectHeading{Fictional Recipe Scaler}{TypeScript}{2023}
+  \resumeItemListStart
+    \resumeItem{Built a small recipe tool that converts units and scales ingredient amounts, with tests for rounding rules and a plain explanation of each conversion it applies.}
   \resumeItemListEnd
 \resumeSubHeadingListEnd
 
@@ -88,7 +98,10 @@ def main(keep_artifacts=False):
         script = skill / "scripts/render.py"
         applications = workspace / "applications"
         applications.mkdir(parents=True, exist_ok=True, mode=0o700)
-        app = Path(tempfile.mkdtemp(prefix="fictional-render-test-", dir=applications))
+        # A fixed slug: mkdtemp suffixes can contain underscores, which the
+        # renderer's revision-path rule rejects.
+        app = applications / "fictional-render-test"
+        app.mkdir(mode=0o700)
         (app / "job-snapshot.md").write_text(
             "# FICTIONAL TEST JOB\n\nFictional Example Co seeks a software engineer "
             "with API, testing, accessibility, and relational data experience.\n")
@@ -155,6 +168,19 @@ def main(keep_artifacts=False):
                "005", "extractable text")
         expect("overfull text rejected", append_tex(r"\noindent\hbox{" + "FICTIONAL" * 70 + "}"),
                "006", "overfull text box")
+        maple_start = source.index(r"\resumeSubheading{Fictional Maple Analytics}")
+        maple_end = source.index(r"\resumeItemListEnd", maple_start) + len(r"\resumeItemListEnd")
+        expect("underfilled page rejected", source[:maple_start] + source[maple_end:],
+               "010", "Bottom white space")
+        expect("hyphenated date range rejected", source.replace("2022 -- 2025", "2022 - 2025"),
+               "011", "en dash")
+        long_bullet = ("Built a shared operations workspace that brought intake, document review, "
+                       "and case assignment into one interface")
+        expect("three-line bullet rejected",
+               source.replace(long_bullet, long_bullet + ", with extra fictional detail about "
+                              "queues, audit notes, reviewer handoffs, escalation paths, and "
+                              "weekly summaries for a fictional service team"),
+               "012", "exceed 2 lines")
         sentinel = app / "private-sentinel.tex"
         sentinel.write_text("FICTIONAL_PRIVATE_SENTINEL")
         expect("TeX private file input rejected", append_tex(r"\input{" + str(sentinel) + "}"),
@@ -186,6 +212,39 @@ def main(keep_artifacts=False):
         except ValueError as error:
             assert "page boundary" in str(error)
         results.append({"test": "off-page word bounds rejected", "passed": True})
+        widow = app / "widow-bounds.html"
+        words = [("•", 28, 137, 32), ("Fictional", 37, 139, 80), ("bullet", 82, 139, 110),
+                 ("text", 37, 151, 60), ("continues", 62, 151, 100), ("here", 102, 151, 120),
+                 ("today.", 37, 163, 70)]
+        widow.write_text('<html xmlns="http://www.w3.org/1999/xhtml"><page width="612" height="792">'
+                         + "".join(f'<word xMin="{x1}" yMin="{y - 9}" xMax="{x2}" yMax="{y}">{text}</word>'
+                                   for text, x1, y, x2 in words) + "</page></html>")
+        metrics, _, warnings = renderer.layout_metrics(widow, "")
+        assert metrics["linesPerBullet"] == [3] and metrics["widows"] == ["today."], metrics
+        assert any("short last line" in warning for warning in warnings), warnings
+        results.append({"test": "bullet lines and widows measured from bounds", "passed": True})
+        claims = app / "fictional-claims.json"
+        claims.write_text(json.dumps({"results": [
+            {"userDefined:ID": 1, "Claim": "Cut fictional login latency from ~8 seconds to ~2 seconds",
+             "Never say": "single-handedly", "Status": "Approved"},
+            {"userDefined:ID": 2, "Claim": "Manager-reported savings of ~10 hours/week per fictional agent",
+             "Qualifier": "manager-reported", "Status": "Approved"},
+            {"userDefined:ID": 3, "Claim": "Pending fictional claim about 40 reviewers", "Status": "Candidate"}]}))
+        cited = app / "fictional-cited.tex"
+        checker = [sys.executable, str(skill / "scripts/check-claims.py"), str(cited), str(claims)]
+        cited.write_text("\\resumeItem{Cut login latency from ~8s to ~2s.} % claim: CL-1\n"
+                         "\\resumeItem{Manager-reported savings of 10 hours/week per agent.} % claim: CL-2\n"
+                         "\\resumeItem{Graduate coursework in AI.} % claim: profile\n")
+        assert subprocess.run(checker, capture_output=True, timeout=30).returncode == 0
+        cited.write_text("\\resumeItem{Saved 10 hours/week per agent.} % claim: CL-2\n"
+                         "\\resumeItem{Single-handedly cut reviewers from 40.} % claim: CL-1, CL-3\n"
+                         "\\resumeItem{Kept 99\\% uptime.}\n")
+        process = subprocess.run(checker, capture_output=True, text=True, timeout=30)
+        issues = [issue for item in json.loads(process.stdout)["results"] for issue in item["issues"]]
+        assert process.returncode == 1 and all(any(expected in issue for issue in issues) for expected in (
+            "qualifier 'manager-reported'", "CL-3 is Candidate", "banned wording",
+            "numbers not found in cited claims: 40", "missing '% claim:'")), issues
+        results.append({"test": "claim checker enforces citations, numbers, and qualifiers", "passed": True})
         # Exercise the actual inherited OS sandbox separately from TeX's openin_any.
         sandbox = renderer.tex_command("/bin/cat", first / "compile")[:3]
         read = subprocess.run(sandbox + ["/bin/cat", str(sentinel)], capture_output=True, timeout=10)

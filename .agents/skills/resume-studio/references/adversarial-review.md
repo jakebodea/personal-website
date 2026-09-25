@@ -11,7 +11,7 @@ Use three critics with these assignments:
 
 | Critic | Challenge |
 | --- | --- |
-| Evidence | Unsupported claims, stronger-than-source wording, ambiguous attribution, stale measurements, and lost qualifications |
+| Evidence | Wording stronger than the cited claim, ambiguous attribution, stale Dated or Live claims, and bullets whose citation does not match their content (numbers, qualifiers, and banned phrases are already enforced by `check-claims.py`) |
 | Job fit | Weak coverage, stronger examples elsewhere in the bank, transferable experience, and questions that could uncover better evidence |
 | Writing | Vague or inflated bullets, repetition, weak ordering, keyword stuffing, and clarity or density problems for a reader |
 
@@ -27,7 +27,8 @@ a lower model tier. Keep orchestration and final decisions with the main agent.
 Start each critic with a fresh context and only its assignment and review packet,
 so the first critiques are independent of the main agent's rationale and each
 other. Give them read-only access to the exact draft, frozen job, Match/Gap Report,
-approved evidence/Profile snapshots with full caveats, and source index. They may
+`claims.json`, the compact `bank.md`, the Profile snapshot, and the latest
+`check-claims.py` and `quality.json` reports. They may
 read further approved source material to check omissions. Label application-only
 answers, Candidates, pending questions, and user preferences distinctly. Include
 the PDF/text/preview when available; reviewers must state which artifacts they
@@ -66,9 +67,10 @@ checks before marking Checked, without calling the critic review completed.
    source-backed rejections, and check changes for new problems; unchanged checks
    can carry forward only against unchanged packet components. Retain dissent
    when evidence does not resolve it; majority vote does not settle a fact.
-4. **Close or surface the disagreement.** The default review budget is three
-   critic passes per delivery: initial critiques and up to two rechecks, at most
-   nine critic turns including retries. Honor a smaller user-specified budget and
+4. **Close or surface the disagreement.** The default review budget is initial
+   critiques plus one recheck. Run a second recheck only while a material finding
+   remains open, and use at most six critic turns including retries. Treat
+   optional wording polish as a recorded tradeoff, not a reason for another pass. Honor a smaller user-specified budget and
    report any review scope it leaves incomplete. Close only when all three
    critics have reviewed the same final content and each material finding is
    resolved, with the originating critic confirming the resolution. Optional
