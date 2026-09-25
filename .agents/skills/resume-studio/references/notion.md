@@ -8,12 +8,12 @@ personal identifiers or workspace-specific IDs.
 
 The "Resume Studio" hub holds three databases and two pages.
 
-**Claims**: one row per resume-ready statement. This is the only source of
-resume wording.
+**Claims**: one row per resume-ready fact. Every bullet rests on these; the
+wording on the page may differ.
 
 | Property | Type | Meaning |
 | --- | --- | --- |
-| `Claim` | title | Approved full wording |
+| `Claim` | title | The fact, in Jake's approved words |
 | `ID` | unique ID, prefix `CL` | Cited in TeX as `CL-12`; SQL exports it as `userDefined:ID` = 12 |
 | `Short` | text | Compressed variant; never adds facts or numbers |
 | `Qualifier` | text | Must-keep phrases, semicolon-separated |

@@ -5,10 +5,14 @@ description: Tailor truthful one-page LaTeX resumes from approved Claims and Car
 
 # Resume Studio
 
-Notion holds the facts; this skill is the workflow. Every resume bullet cites an
-Approved row in the Claims database, every number and qualifier is checked by
-script, and every page passes the same layout gates. Tailoring is selection and
-ordering from the Profile's Baseline, not rewriting.
+Notion holds Jake's professional facts; this skill turns them into the best
+one-page resume for a job. Read every Approved fact, map it to the posting, and
+write bullets in the posting's own vocabulary wherever the fact honestly supports
+it, in Jake's format (the Profile's Baseline and rules) and general resume best
+practice. Many screeners match the posting's keywords against the resume text, so
+wording is free; meaning is not. Every bullet still cites the claims it rests on,
+a script checks numbers, qualifiers, and banned phrases, and every page passes the
+same layout gates.
 
 Find the existing "Resume Studio" hub in the connected Notion workspace (ask for
 its URL if identity is unclear). Read [notion.md](references/notion.md) for the
@@ -18,15 +22,20 @@ and site; work happens in a private system temporary directory.
 
 ## Truth rules
 
-- **Claims are the only source of resume wording.** Cite rows with Status =
-  Approved. Use the Claim text or its Short variant, adjusting only grammar and
-  tense. Keep every Qualifier phrase and never use a Never-say phrase.
+- **Claims are the facts; the wording is yours.** Cite rows with Status =
+  Approved, and use their Career Evidence for detail and context. Rephrase freely,
+  including in the posting's terms, as long as the bullet says what the cited
+  claims support and nothing more: no extra scope, scale, tools, or ownership
+  ("contributed" is not "built"; a proof of concept is not a production system).
+  Numbers come only from cited claims. Keep every Qualifier phrase and never use a
+  Never-say phrase.
 - **Record bodies state current truth.** Superseded wording lives in a History
   toggle at the bottom of the page. Approval state lives in properties, never prose.
-- **New facts need exact-text approval.** An interview answer, silence, PDF
-  approval, or critic suggestion is not approval. Draft a Candidate claim (and
-  Candidate evidence if needed), show Jake the exact text, and set Approved only
-  after an explicit yes, recording the quote in `Confirmed by`.
+- **New facts need Jake's yes.** Silence, PDF approval, or a critic suggestion is
+  not approval. Write the new claim's text, show it to Jake, and save it as
+  Approved only after an explicit yes, recording the quote in `Confirmed by`. When
+  a new fact extends an existing claim, revise that claim instead of adding a
+  near-duplicate.
 - **Freshness.** `Dated` claims keep their date or past tense. `Live` claims need
   `Confirmed on` within 90 days; otherwise ask Jake or phrase them with the date.
 - Keep formal titles, ownership, dates, units, and attribution exact. The Profile
@@ -51,30 +60,51 @@ Each stage has one gate. Do not start the next stage until its gate passes.
 ### 1 Load
 
 - Profile: fetch the full page, including the Baseline and History.
-- Claims: query the Claims data source with SQL (`userDefined:ID`, `Claim`,
+- Claims: export every row of the Claims data source (`userDefined:ID`, `Claim`,
   `Short`, `Qualifier`, `Never say`, `Role`, `Freshness`, `Confirmed on`,
-  `Status`) and save the raw JSON as `claims.json`.
+  `Status`) and save it as `claims.json`. Use SQL, or the database's view mode
+  when the SQL quota is exhausted; follow every cursor.
 - Evidence: fetch the Approved Career Evidence pages linked from the claims you
   may use (plus Context records such as "Who Jake is" for positioning), save each
-  fetch result in `fetches/`, and run `scripts/compact-bank.py fetches bank.md`.
+  fetch result verbatim in `fetches/` (never add notes to a saved source), and run
+  `scripts/compact-bank.py fetches bank.md`.
 - Record page IDs, URLs, capture times, and SHA-256 hashes in `manifest.json`.
 
 ### 2 Match and questions
 
 Mark each job requirement Supported, Partial, or Unsupported by claim coverage,
-not by ability. Absence from the bank means "not documented": ask whether the
-experience exists. Ask one focused topic at a time, most consequential first,
-grounded in the posting, and say what the answer could improve. Record each
+not by ability. Also list the posting's hard terms (tools, techniques, domain
+words, in its exact spelling, with acronyms) and, for each, the claims that
+honestly support it; these become the keyword targets for Compose. Absence from the bank means "not documented": ask whether the
+experience exists. Keep each question to one focused topic, most consequential
+first, grounded in the posting, and say what the answer could improve. Record each
 answer, decline, or fallback in the Application notes, and reuse earlier answers
 instead of re-asking. Continue with confirmed material while waiting. An
 unanswered question never supplies a claim.
+
+Ask through the runtime's structured question tool (`AskUserQuestion` in Claude
+Code), not as chat prose, in batches of up to four ordered by consequence. Give
+each question concrete options drawn from the posting and the bank, plus "No" and
+"Skip for now"; Jake adds detail through the free-text answer. Put every
+definition or piece of context a question needs inside the question text: chat
+written before the tool call may not be visible while the prompt is open. When a
+term needs a longer explanation, explain it in chat and wait for the answer there
+instead of using the tool. A tool answer is
+still not approval: turn a useful answer into Candidate text and confirm it
+separately. When the tool is unavailable, such as in an unattended subagent,
+record the questions in the Application and return them to the caller.
 
 ### 3 Compose
 
 Start from the Profile's Baseline (or, until one exists, from
 [assets/classic.tex](assets/classic.tex) following the Profile's composition
 rules). Set the Application's `Variant` and apply its rules: which second project,
-which bullet leads each role, which skills categories. End every `\resumeItem`
+which bullet leads each role, which skills categories. Pick the claims that best
+answer the posting, not just the Baseline's, and write each bullet to use the
+posting's terms where its claims support them. Put supported terms that no bullet
+carries into Technical Skills from the Profile inventory, spelled as the posting
+spells them. Then fill in a coverage table (term, where it appears: bullet,
+Skills, or missing with the reason) for the review record. End every `\resumeItem`
 line with its citation, for example `% claim: CL-9` or `% claim: CL-4, CL-6`.
 Use `% claim: profile` only for Education and Skills content taken from the
 Profile. Write every URL with the template's `\link{url}{text}` macro (blue,
@@ -87,10 +117,14 @@ cited claims, a missing qualifier, or banned wording.
 
 ### 4 Review
 
-Writing pass: plain verbs, concrete actions, no filler or keyword stuffing, no
-claim made stronger while made shorter. Then run
+Writing pass: resume best practice. Strong action verb first, then what was
+built, then scope or result; plain words, no filler, and keywords worked into
+real sentences rather than stuffed. No claim made stronger while made shorter,
+and no work repeated across bullets. Then run
 [adversarial-review.md](references/adversarial-review.md). Any wording change
-reruns `check-claims.py` and the affected critic checks.
+reruns `check-claims.py` and the affected critic checks. Fixes made after the
+final recheck need the confirmation step in that reference; otherwise the resume
+stays a Draft.
 
 ### 5 Render
 
