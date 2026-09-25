@@ -18,6 +18,18 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[4]
 MAX_SOURCE = 150_000
+XHTML = "{http://www.w3.org/1999/xhtml}"
+# A full, balanced page: unused text height (the template's RESUME-FILL marker)
+# must be between zero, where TeX starts squeezing spacing, and this maximum.
+SLACK_MAX_INCHES = 0.35
+FILL_MARKER = re.compile(r"RESUME-FILL total=([\d.]+)pt goal=([\d.]+)pt")
+TEX_POINTS_PER_INCH = 72.27
+MAX_LINES_PER_BULLET = 2
+WIDOW_MAX_WORDS = 2
+LINE_TOLERANCE_PT = 4
+MONTH = r"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?"
+HYPHEN_DATE_RANGE = re.compile(
+    rf"\b(?:{MONTH}\s+)?(?:19|20)\d{{2}}\s*-\s*(?:{MONTH}\s+)?(?:(?:19|20)\d{{2}}|Present)\b")
 
 
 def digest(data):
@@ -97,6 +109,75 @@ def check_bounds(path, expected_pages):
     return count
 
 
+def text_lines(page):
+    """Group words into visual lines; a bullet glyph sits a few points above its text."""
+    words = sorted(((float(w.attrib["yMax"]), float(w.attrib["xMin"]), float(w.attrib["xMax"]),
+                     (w.text or "").strip()) for w in page.iter(f"{XHTML}word")))
+    lines = []
+    for word in words:
+        if lines and word[0] - lines[-1]["y"] <= LINE_TOLERANCE_PT:
+            lines[-1]["words"].append(word)
+        else:
+            lines.append({"y": word[0], "words": [word]})
+    for line in lines:
+        line["words"].sort(key=lambda word: word[1])
+    return lines
+
+
+def page_slack(tex_log):
+    """Unused text height in inches; negative means TeX compressed spacing to fit."""
+    match = FILL_MARKER.search(tex_log)
+    if not match:
+        raise ValueError("RESUME-FILL marker missing; start the preamble from assets/classic.tex")
+    total, goal = float(match[1]), float(match[2])
+    # Unrounded: a rounded -0.004 would read as 0 and hide a squeezed page.
+    return (goal - total) / TEX_POINTS_PER_INCH
+
+
+def layout_metrics(path, extracted, slack=None):
+    """Measure page fill and bullet shape from Poppler word bounds and TeX's fill marker."""
+    page = next(ET.parse(path).getroot().iter(f"{XHTML}page"))
+    height = float(page.attrib["height"])
+    lines = text_lines(page)
+    bullets, current, text_x = [], None, None
+    for line in lines:
+        first = line["words"][0]
+        if first[3] == "•" and len(line["words"]) > 1:
+            text_x = line["words"][1][1]
+            current = [line["words"][1:]]
+            bullets.append(current)
+        elif current is not None and abs(first[1] - text_x) <= 1.5:
+            current.append(line["words"])
+        else:
+            current = None
+    long_bullets = [" ".join(w[3] for w in bullet[0])[:60] for bullet in bullets
+                    if len(bullet) > MAX_LINES_PER_BULLET]
+    widows = [" ".join(w[3] for w in bullet[-1]) for bullet in bullets
+              if len(bullet) > 1 and len(bullet[-1]) <= WIDOW_MAX_WORDS]
+    bottom_gap = round((height - max(line["y"] for line in lines)) / 72, 2)
+    metrics = {"bottomGapInches": bottom_gap,
+               "slackInches": None if slack is None else round(slack, 3), "bullets": len(bullets),
+               "linesPerBullet": [len(bullet) for bullet in bullets],
+               "longBullets": long_bullets, "widows": widows,
+               "hyphenDateRanges": HYPHEN_DATE_RANGE.findall(extracted)}
+    findings, warnings = [], []
+    if slack is not None and slack < 0:
+        findings.append(f"Content is {-slack:.3f} in taller than the page; TeX squeezed the "
+                        "spacing to fit. Cut content until slack is at least 0")
+    elif slack is not None and slack > SLACK_MAX_INCHES:
+        findings.append(f"Page is underfilled: {slack:.2f} in of unused height; "
+                        f"target 0-{SLACK_MAX_INCHES} in")
+    if long_bullets:
+        findings.append(f"{len(long_bullets)} bullet(s) exceed {MAX_LINES_PER_BULLET} lines: "
+                        + "; ".join(long_bullets))
+    if metrics["hyphenDateRanges"]:
+        findings.append("Date ranges use a hyphen; use an en dash (--): "
+                        + "; ".join(metrics["hyphenDateRanges"]))
+    if widows:
+        warnings.append(f"{len(widows)} bullet(s) end with a short last line: " + "; ".join(widows))
+    return metrics, findings, warnings
+
+
 def new_destination(path):
     path = Path(os.path.abspath(path))
     if path != path.resolve():
@@ -141,7 +222,8 @@ def render(args):
     log = out / "compile.log"
     log.touch()
     report = {"status": "failed", "createdAt": datetime.now(timezone.utc).isoformat(),
-              "pages": None, "findings": [], "visualReview": "required",
+              "pages": None, "findings": [], "warnings": [], "layout": None,
+              "visualReview": "required",
               "hashes": {name: digest(data) for name, data in inputs.items()}, "tools": {}}
     findings = report["findings"]
     # Do not inherit agent credentials, TEXINPUTS, or user TeX configuration.
@@ -180,7 +262,11 @@ def render(args):
         run([binaries["pdftotext"], "-bbox", "resume.pdf", "bounds.html"], work, env, log)
         try:
             report["wordsChecked"] = check_bounds(work / "bounds.html", pages)
-        except (ValueError, ET.ParseError, KeyError) as error:
+            if pages == 1:
+                report["layout"], layout_findings, report["warnings"] = layout_metrics(
+                    work / "bounds.html", extracted, page_slack(tex_log))
+                findings.extend(layout_findings)
+        except (ValueError, ET.ParseError, KeyError, StopIteration) as error:
             findings.append(str(error))
         run([binaries["pdftoppm"], "-f", "1", "-l", str(min(max(pages, 1), 3)),
              "-scale-to", "1800", "-png", "resume.pdf", "preview"], work, env, log)
