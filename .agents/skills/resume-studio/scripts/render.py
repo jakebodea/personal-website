@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compile one private, never-overwritten resume revision; no third-party Python packages."""
+"""Compile one temporary, never-overwritten resume revision; no third-party Python packages."""
 
 import argparse
 import hashlib
@@ -12,11 +12,11 @@ import resource
 import shutil
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[4]
-PRIVATE = ROOT / ".resume-studio"
 MAX_SOURCE = 150_000
 
 
@@ -101,10 +101,23 @@ def new_destination(path):
     path = Path(os.path.abspath(path))
     if path != path.resolve():
         raise ValueError("Symlinked output paths are not allowed")
-    relative = path.relative_to(PRIVATE / "applications")
-    if (len(relative.parts) != 3 or relative.parts[1] != "revisions"
-            or not re.fullmatch(r"[0-9]{3,}", relative.parts[2])):
-        raise ValueError("Output must be .resume-studio/applications/<slug>/revisions/<number>")
+    temp_root = Path(tempfile.gettempdir()).resolve()
+    if temp_root == ROOT or ROOT in temp_root.parents:
+        raise ValueError("Temporary root must be outside the repository")
+    try:
+        relative = path.relative_to(temp_root)
+    except ValueError as error:
+        raise ValueError("Output must be inside the system temporary directory") from error
+    if (len(relative.parts) != 5 or not relative.parts[0].startswith("resume-studio-")
+            or relative.parts[1] != "applications"
+            or not re.fullmatch(r"[a-z0-9][a-z0-9-]*", relative.parts[2])
+            or relative.parts[3] != "revisions"
+            or not re.fullmatch(r"[0-9]{3,}", relative.parts[4])):
+        raise ValueError("Output must be <temp>/resume-studio-*/applications/<slug>/revisions/<number>")
+    workspace = temp_root / relative.parts[0]
+    if (not workspace.is_dir() or workspace.stat().st_uid != os.getuid()
+            or workspace.stat().st_mode & 0o077):
+        raise ValueError("Create a private temporary workspace with tempfile.mkdtemp first")
     path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
     path.mkdir(mode=0o700)  # Exclusive creation protects every earlier revision.
     return path
@@ -202,7 +215,7 @@ def render(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", help="Complete working LaTeX source")
-    parser.add_argument("output", help="New private application revisions/001 directory (never overwritten)")
+    parser.add_argument("output", help="New revision directory in a private resume-studio-* system temporary workspace")
     parser.add_argument("--job", required=True, help="Job snapshot to preserve")
     parser.add_argument("--evidence", required=True, help="Approved Markdown bank to snapshot")
     args = parser.parse_args()

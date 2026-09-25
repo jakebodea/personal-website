@@ -87,7 +87,8 @@ carried forward by an identical text hash and the new rendered artifact hashes.
 
 ## Review record
 
-Save `adversarial-review.md` beside the final revision's `review.md`, including:
+Save the adversarial review in the final Notion revision alongside its main review,
+including:
 
 - Model selection basis, actual critic models and roles, passes, reviewed
   draft/revision identities and hashes, and which text/PDF/preview artifacts each
@@ -97,6 +98,6 @@ Save `adversarial-review.md` beside the final revision's `review.md`, including:
 - Final TeX/PDF hashes, unresolved findings, optional tradeoffs, and whether the
   review completed, was incomplete, or was explicitly waived by the user.
 
-Attach this record to the same Notion revision. Keep factual bank approval and
-user PDF approval separate from critic agreement. Historical revisions retain the
-review records they actually had; do not invent retrospective critic passes.
+Keep factual bank approval and user PDF approval separate from critic agreement.
+Historical revisions retain the review records they actually had; do not invent
+retrospective critic passes.

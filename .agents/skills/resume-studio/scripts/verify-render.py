@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Real renderer regressions with fictional data only.
 
-The verifier runs a copied skill in an isolated private workspace. Temporary
-artifacts are removed unless --keep-artifacts is explicitly requested.
+The verifier runs a copied skill in an isolated temporary workspace. Artifacts
+are removed unless --keep-artifacts is explicitly requested.
 """
 
 import hashlib
@@ -15,7 +15,6 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from datetime import datetime, timezone
 
 SOURCE_SCRIPT = Path(__file__).resolve()
 SOURCE_SKILL = SOURCE_SCRIPT.parent.parent
@@ -87,7 +86,7 @@ def main(keep_artifacts=False):
         skill = workspace / ".agents/skills/resume-studio"
         shutil.copytree(SOURCE_SKILL, skill)
         script = skill / "scripts/render.py"
-        applications = workspace / ".resume-studio/applications"
+        applications = workspace / "applications"
         applications.mkdir(parents=True, exist_ok=True, mode=0o700)
         app = Path(tempfile.mkdtemp(prefix="fictional-render-test-", dir=applications))
         (app / "job-snapshot.md").write_text(
@@ -167,6 +166,10 @@ def main(keep_artifacts=False):
         process, _, _ = invoke(source, "009", workspace / "public/fictional-render-must-not-exist")
         assert process.returncode != 0 and not (workspace / "public/fictional-render-must-not-exist").exists()
         results.append({"test": "public output path refused", "passed": True})
+        repo_output = SOURCE_ROOT / ".resume-studio/applications/fictional-render-test/revisions/009"
+        process, _, _ = invoke(source, "009", repo_output)
+        assert process.returncode != 0 and not repo_output.exists()
+        results.append({"test": "repository output path refused", "passed": True})
         process, destination, _ = invoke(source + "%" * 150_001, "009")
         assert process.returncode != 0 and not destination.exists() and "150 KB" in process.stderr
         results.append({"test": "source size limit enforced", "passed": True})
@@ -189,15 +192,9 @@ def main(keep_artifacts=False):
         assert read.returncode != 0 and b"FICTIONAL_PRIVATE_SENTINEL" not in read.stdout
         results.append({"test": "OS sandbox denies private reads outside compile directory", "passed": True})
         (app / "verification.json").write_text(json.dumps(results, indent=2) + "\n")
-        kept = None
+        kept = workspace if keep_artifacts else None
         if keep_artifacts:
-            target = SOURCE_ROOT / ".resume-studio/tests" / (
-                "verify-render-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
-            target.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-            shutil.move(str(workspace), str(target))
-            kept = target
             workspace = None
-            app = target / ".resume-studio/applications" / app.name
         after_entries = set(real_applications.iterdir()) if real_applications.is_dir() else set()
         assert after_entries == before_entries, "verification touched real application directories"
         print(json.dumps({"application": str(app), "checks": len(results), "passed": True,
@@ -211,5 +208,5 @@ def main(keep_artifacts=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--keep-artifacts", action="store_true",
-                        help="retain the isolated copied workspace under .resume-studio/tests")
+                        help="retain the isolated copied workspace in the system temporary directory")
     main(parser.parse_args().keep_artifacts)

@@ -14,7 +14,7 @@ flowchart LR
     User["You: job posting, answers, approvals"] --> Agent["Coding agent following the repo skill"]
     Agent <--> Notion["Notion: evidence, profile, applications"]
     Agent <--> Critics["Three cheaper critics: evidence, job fit, writing"]
-    Agent --> Local["Private local snapshots and draft TeX"]
+    Agent --> Local["Private temporary inputs and draft TeX"]
     Local --> Renderer["Python renderer and PDF checks"]
     Renderer --> Revision["Numbered revision: PDF, source, report, preview"]
     Revision --> Agent
@@ -31,8 +31,10 @@ flowchart LR
 | Notion **Profile** | Stable contact details, education, skills, and presentation preferences | Agent with your factual approval |
 | Notion **Applications** | One record per application attempt, job snapshot, notes, revisions, and next action | Agent during application work |
 | Notion **Archive** | Original sources, approvals, and superseded workflow material | Preserved history |
-| `.resume-studio/notion.md` | Private hub links, database/view IDs, and application identity mapping | Local configuration |
-| `.resume-studio/applications/` | Frozen inputs, working drafts, PDFs, previews, and quality reports | Local working and recovery copies |
+| System temporary directory | Inputs, working drafts, PDFs, previews, and compiler diagnostics while a revision is built and saved | Removed after Notion artifacts pass byte-level verification |
+
+The old ignored `.resume-studio/` directory remains recovery material until its
+contents are checked against Notion; new work uses temporary storage.
 
 The `.claude/skills/resume-studio` symlink points to the same repo skill.
 `CONTEXT.md` is a compatibility pointer to it. Neither contains a separate copy
@@ -40,14 +42,16 @@ of the workflow.
 
 ## One application, from request to review
 
-1. **Start in this repository.** Ask: “Use Resume Studio to tailor my resume for
-   this job: [URL or description].” On a fresh checkout the private registry is
-   absent, so provide your existing Notion hub and authorized access. The agent
-   resolves the existing records before creating local working files.
+1. **Start with Notion access.** Ask: “Use Resume Studio to tailor my resume for
+   this job: [URL or description].” The agent finds the existing Resume Studio hub
+   in Notion, verifies its records, and asks for the hub URL if its identity is
+   unclear. A fresh checkout or cloud agent needs no local registry. Rendering
+   still requires a Mac with the toolchain described below.
 2. **Read and freeze the sources.** The agent reads the complete Approved evidence
-   set and Profile, captures the job posting, and records page identities,
-   timestamps, and hashes. A resumed application is identified by its Notion page
-   ID. Each revision retains the exact sources it used, even if Notion changes later.
+   set and Profile, captures the job posting in the owning Notion Application,
+   and records page identities, timestamps, and hashes. A resumed application is
+   identified by its Notion page ID. Each Notion revision retains the exact sources
+   it used, even if the bank changes later.
 3. **Interview for useful gaps and opportunities.** A Match/Gap Report distinguishes
    supported, partial, and unsupported requirements in the available evidence.
    The agent asks questions that could improve claims, example selection,
@@ -65,18 +69,20 @@ of the workflow.
    back to the critics for a recheck. See the
    [review protocol](../.agents/skills/resume-studio/references/adversarial-review.md)
    for the model fallback and stopping rules.
-6. **Render a new revision.** The agent supplies the draft, job snapshot, and evidence
-   export to `render.py`. The renderer creates the next unused numbered directory.
-   A failed attempt is preserved; a fix receives another revision number.
+6. **Render a new revision.** The agent supplies temporary copies of the draft, job
+   snapshot, and evidence export to `render.py`. The renderer creates the next
+   unused numbered directory in a private system temporary workspace. A failed
+   attempt is recorded in Notion; a fix receives another revision number.
 7. **Review the actual output.** The agent reads the extracted text and visually
    inspects the rendered preview. Wording changes made during layout repair return
    to the writing and critic passes. A completed review identifies the exact final
    version; an earlier pass does not approve a later rewrite. You then review the
    PDF and request edits or explicitly approve that exact revision.
-8. **Save the record.** The agent attaches the PDF, source, snapshots, source
-   manifest, quality report, visual review, and adversarial review record under
-   the Notion application. It verifies attachment presence and records any
-   verification limits. When you approve a PDF, it records the approval and exact
+8. **Save the record.** The agent writes reviews and decisions into the Notion
+   revision and attaches its exact PDF, source, snapshots, manifest, and quality
+   report. It downloads the saved files, verifies their hashes, then removes the
+   temporary workspace. An incomplete upload remains visibly Draft/incomplete
+   in Notion. When you approve a PDF, the agent records the approval and exact
    artifact identity separately.
 
 ## Three separate decisions
@@ -129,9 +135,9 @@ checks cannot determine whether a career claim is true. The skill is an instruct
 contract, not a program that technically enforces every approval step.
 
 Notion reads and writes happen through the agent during a task. There is no
-background sync process, local application server, separate local database, or
-Notion API client added for Resume Studio in this PR. Local evidence exports are
-dated snapshots; future tasks must read current Notion records.
+background sync process, local application server, or separate local database.
+Temporary evidence exports are dated inputs; future tasks read current Notion
+records and the frozen snapshots attached to earlier revisions.
 
 The renderer requires macOS, Python 3.9+, TeX, Poppler, and `sandbox-exec`. It uses
 the Python standard library. Its compiler restrictions disable shell escape,
@@ -164,9 +170,9 @@ python3 .agents/skills/resume-studio/scripts/verify-render.py
 python3 .agents/skills/resume-studio/scripts/render.py --help
 ```
 
-The verifier exercises 14 checks and removes its temporary artifacts by default.
+The verifier exercises 15 checks and removes its temporary artifacts by default.
 Use `--keep-artifacts` when you want to inspect its fictional PDF; it retains the
-workspace under `.resume-studio/tests/`, outside real applications. The existing
+workspace in the system temporary directory, outside real applications. The existing
 website CI runs separately on Linux and does not run the macOS renderer suite.
 
 ## What merging or reverting does
@@ -175,13 +181,11 @@ Merging versions the reusable workflow, renderer, template, documentation, and
 exclusions. It does not install the local toolchain, provision Notion databases,
 grant Notion access, migrate private records, or approve or submit a resume.
 
-The accompanying private cleanup was performed separately: Notion records were
+The earlier private cleanup was performed separately: Notion records were
 reorganized, old application implementations and historical files were archived,
-and rebuildable caches were removed. Those files were outside this repository or
-already untracked/ignored, so their removal does not appear as Git deletions.
-Private migration manifests and recovery copies document those operations.
-Reverting this PR reverses the tracked code/configuration changes; restoring
-Notion or local archives is a separate recovery action.
+and rebuildable caches were removed. Existing private archives remain untouched
+by this workflow change. Reverting the tracked code does not restore or remove
+Notion records or private archives.
 
 This repository is public. Career evidence, private Notion IDs, application
 artifacts, and migration logs stay outside the PR. The ignore rules do not remove
@@ -189,5 +193,6 @@ already tracked files or erase history; existing tracked public resume files are
 unchanged. The website has no Resume Studio data integration in this change.
 
 Uploaded attachment presence and uploaded-byte verification are distinct checks.
-If the connector/browser cannot download the saved bytes, the agent must record
-that limit and preserve local originals until a byte-level comparison is possible.
+If the saved bytes cannot be downloaded, the agent records the gap in Notion and
+keeps the current temporary files while retrying. It does not mark the revision
+durable or use temporary files as the shared application record.
