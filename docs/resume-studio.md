@@ -27,7 +27,7 @@ flowchart LR
 | --- | --- | --- |
 | `.agents/skills/resume-studio/` | Workflow instructions, classic template, renderer, verification, and references | Git review |
 | Adversarial subagents | Independent objections and rechecks of the main agent's revisions | Main agent coordinates lower-capability models |
-| Notion **Claims** | One row per resume-ready statement: approved wording, short variant, required qualifiers, banned phrases, freshness | Agent with your exact-text approval |
+| Notion **Claims** | One row per resume-ready fact: approved statement, short variant, required qualifiers, banned phrases, freshness | Agent with your approval of the statement |
 | Notion **Career Evidence** | Facts behind claims, with sources, scope, qualifications, and history; `Context` records inform positioning only | Agent with your factual approval |
 | Notion **Profile** | Contact details, education, composition and format rules, the Baseline resume, and the skills inventory | Agent with your factual approval |
 | Notion **Applications** | One record per application attempt, job snapshot, notes, revisions, and next action | Agent during application work |
@@ -59,12 +59,17 @@ of the workflow.
    The agent asks questions that could improve claims, example selection,
    positioning, or your intended emphasis, including work missing from the bank.
    It prioritizes questions with a
-   concrete payoff, asks one focused topic at a time, and reuses prior answers.
+   concrete payoff, keeps each question to one focused topic, and reuses prior
+   answers. Questions arrive through the agent's structured question prompt (up
+   to four at a time, with options plus a free-text answer) rather than as chat.
    New reusable facts remain candidates until you approve the exact evidence change.
 4. **Compose from claims.** The agent starts from the Profile's Baseline resume,
-   applies the Application's Variant rules, and fills slots with Approved claims.
-   Every bullet cites its claim IDs in a TeX comment, and `check-claims.py` must
-   pass before review.
+   applies the Application's Variant rules, and picks the Approved claims that best
+   answer the posting. Bullets may rephrase claims in the posting's vocabulary,
+   because screeners match keywords, but may not change what a claim says. Every
+   bullet cites its claim IDs in a TeX comment, and `check-claims.py` must pass
+   before review: it enforces the claims' numbers, qualifiers, and banned phrases,
+   and the Evidence critic checks meaning.
 5. **Challenge the draft.** Three independent critics review evidence, job fit, and
    writing. The main agent uses a lower-capability model for these roles, preferring
    Luna in Codex when it is below the main model's tier. It addresses each finding
