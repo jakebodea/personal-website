@@ -1,14 +1,17 @@
 "use client";
 
-import React from "react";
-import { Timeline } from "./timeline";
-import { timelineItems } from "@/content/timeline-data";
-import { PageWrapper } from "@/components/layout/page-wrapper";
+import type { ReactNode } from "react";
 
-export function TimelineWrapper(): React.ReactNode {
-  return (
-    <PageWrapper title="timeline" subtitle="A chronological journey through my career experiences.">
-      <Timeline items={timelineItems} />
-    </PageWrapper>
-  );
-}
+import { PageWrapper } from "@/components/layout/page-wrapper";
+import { timelineItems } from "@/content/timeline-data";
+
+import { Timeline } from "./timeline";
+
+export const TimelineWrapper = (): ReactNode => (
+  <PageWrapper
+    title="timeline"
+    subtitle="A chronological journey through my career experiences."
+  >
+    <Timeline items={timelineItems} />
+  </PageWrapper>
+);

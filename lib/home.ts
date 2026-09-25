@@ -1,7 +1,3 @@
-import fs from 'fs'
-import path from 'path'
+import homeContent from "@/content/home.md?raw";
 
-export function getHomeContent(): string {
-  const filePath = path.join(process.cwd(), 'content', 'home.md')
-  return fs.readFileSync(filePath, 'utf8').trim()
-}
+export const getHomeContent = (): string => homeContent.trim();

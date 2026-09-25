@@ -1,55 +1,15 @@
-# CLAUDE.md
+# Project guidance
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Use Bun for installs and scripts. Public site code lives in `src/`, `components/`, `lib/`, `content/`, and `public/`. TanStack Start builds a Cloudflare Worker from `vite.config.ts` and `wrangler.jsonc`.
 
-## Commands
+## Before deployment
 
-```bash
-bun run dev       # Start development server
-bun run build     # Production build
-bun run lint      # Run ESLint with --fix
-```
+1. Run `bun run tsc`, `bun run lint`, `bun run build`, and `bun run check:deploy-output`. This passes when types, lint, build, and the private-content check succeed.
+2. Verify `/`, `/projects`, `/timeline`, `/writings`, `/writings/prod`, `/quotes`, `/chat`, and `/projects/pcobooster/demo` on the Worker preview. This passes when pages render, Notion data loads, chat responds, and the redirect has the expected destination.
+3. Follow the DNS and secret steps in `README.md`. This passes when the custom domain serves the verified Worker.
 
-Always use Bun, not Node.js/npm/pnpm. Bun automatically loads `.env` files.
+The private Resume Studio workflow is described in `.agents/skills/resume-studio/SKILL.md` and `docs/resume-studio.md`. Its working files and resume artifacts stay outside the public bundle. Run `bun run check:deploy-output` after changes that affect bundling.
 
-## Architecture
+Lint and format with Ultracite (Oxlint + Oxfmt). Follow `AGENTS.md` for those standards; `bun run lint` checks and `bun run fix` auto-fixes, including type-aware rules.
 
-**Stack**: Next.js 16 (App Router) + TypeScript + Tailwind CSS + Shadcn UI + Framer Motion
-
-**Deployed on Vercel** with ISR (Incremental Static Regeneration). Notion content auto-refreshes hourly via `revalidate: 3600` in fetch calls.
-
-### Content Sources
-- **Quotes**: Fetched from Notion API, cached 1 hour, client-side searchable
-- **Blogs**: Markdown files in `/content/blogs/`, parsed with gray-matter
-- **Timeline**: Static TypeScript data in `/content/timeline-data.ts`
-
-### Key Files
-- `lib/notion.ts` - All Notion API integration (exempted from max-lines rule)
-- `lib/quotes.ts` - Quote fetching entry point
-- `lib/blogs.ts` - Markdown blog loading with search
-- `app/layout.tsx` - Root layout with Vercel Analytics
-
-### Server vs Client Components
-- Pages are server components by default
-- `"use client"` used for interactive components (TopNav, search features)
-
-## Code Standards
-
-### Naming (enforced via ESLint)
-- Files: `kebab-case` (e.g., `top-nav.tsx`)
-- Folders: `kebab-case` (except `[slug]` and `(groups)` for Next.js routing)
-- Max 300 lines per file (exceptions: `lib/notion.ts`)
-
-### TypeScript
-- Use `type` imports: `import type { Foo } from './bar'`
-- Unused vars must be prefixed with `_`
-
-### React/JSX
-- Self-closing components: `<Component />` not `<Component></Component>`
-- No unnecessary boolean values: `disabled` not `disabled={true}`
-- No unnecessary curly braces: `prop="value"` not `prop={"value"}`
-
-### Styling
-- Use variant props on Shadcn UI components, not `className`
-- `className` allowed only on HTML primitives, Link, Image, and motion.* components
-- Component files in `/components/` are exempt from this rule
+Code conventions: TypeScript; kebab-case source files except TanStack route files; `type` imports for types; 2-space indentation; self-closing JSX components. `lib/notion.ts` is the single Notion API integration. Public blog posts are Markdown in `content/writings/`; quotes come from Notion and use a one-hour Worker cache.

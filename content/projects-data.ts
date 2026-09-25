@@ -2,22 +2,48 @@ type ProjectMedia =
   | { type: "x-embed"; url: string }
   | { type: "image"; url: string; alt?: string }
   | { type: "youtube"; url: string }
-  | { type: "gallery"; images: { url: string; alt: string }[] }
+  | { type: "gallery"; images: { url: string; alt: string }[] };
 
 export interface ProjectData {
-  title: string
-  description: string
-  media?: ProjectMedia
-  liveUrl?: string
-  repoUrl?: string
-  techStack: string[]
+  title: string;
+  description: string;
+  media?: ProjectMedia;
+  liveUrl?: string;
+  demoUrl?: string;
+  demoNote?: string;
+  repoUrl?: string;
+  techStack: string[];
 }
 
 export const projects: ProjectData[] = [
   {
+    title: "PCOBooster",
+    description:
+      "PCOBooster is an open source app I built for worship teams that plan services in Planning Center. For a selected plan, it shows open positions, availability, blockouts, conflicts, and each person's recent serving history. Schedulers can assign someone in PCOBooster and save the change to Planning Center. The product site has an interactive sample, and the live app has a read only demo.",
+    liveUrl: "https://pcobooster.com",
+    demoUrl: "/projects/pcobooster/demo",
+    demoNote:
+      "The demo shows fictional names instead of personal details. It shows live plan details and cannot change assignments. PCOBooster is independent of Planning Center.",
+    repoUrl: "https://github.com/bodegalabs/pcobooster",
+    media: {
+      type: "image",
+      url: "/images/pcobooster-assign.png",
+      alt: "PCOBooster Assign view showing open team positions and candidates with fictional names",
+    },
+    techStack: [
+      "TypeScript",
+      "Next.js",
+      "Hono",
+      "Effect",
+      "oRPC",
+      "PostgreSQL",
+      "Planning Center API",
+    ],
+  },
+  {
     title: "TaxRise.com",
     description:
-      "Marketing website for TaxRise that I built and maintain, including a custom CMS for managing the site. Content lives as MDX in Neon with draft/publish workflows, typed models for service pages, blog posts, IRS notices, and more, plus custom MDX components like Callouts. Assets are managed through a file browser built on Cloudflare R2.",
+      "I built TaxRise's marketing website and its custom CMS for managing the site. The site used MDX content in Neon with draft/publish workflows, typed models for service pages, blog posts, IRS notices, and more, plus custom MDX components like Callouts. Its asset browser used Cloudflare R2.",
     liveUrl: "https://taxrise.com",
     media: {
       type: "gallery",
@@ -53,13 +79,5 @@ export const projects: ProjectData[] = [
       "An AI-assisted Chrome extension that can read page context and take approved actions like clicking and form-filling. Still in active development, so I'm linking the repo instead of a public demo for now.",
     repoUrl: "https://github.com/jakebodea/buddy",
     techStack: ["TypeScript", "React", "Vite", "Chrome MV3"],
-  },
-  {
-    title: "Worship Admin",
-    description:
-      "Planning Center is widely used church software for service planning and team scheduling. Worship Admin is a more pleasant UI for building schedules, reviewing availability, and assigning people to positions, while using Planning Center's API as the backend. It includes authenticated account connections and OAuth, but it's still in active development and not ready to demo publicly yet.",
-    liveUrl: "https://worshipadmin.com",
-    repoUrl: "https://github.com/jakebodea/worship-admin",
-    techStack: ["TypeScript", "Next.js", "Planning Center API", "Postgres"],
   },
 ];

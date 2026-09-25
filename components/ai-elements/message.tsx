@@ -1,74 +1,80 @@
-"use client"
+"use client";
 
-import { cjk } from "@streamdown/cjk"
-import { code } from "@streamdown/code"
-import { math } from "@streamdown/math"
-import { mermaid } from "@streamdown/mermaid"
-import type { UIMessage } from "ai"
-import type { ComponentProps, HTMLAttributes } from "react"
-import { memo } from "react"
-import { Streamdown, type PluginConfig } from "streamdown"
+/* oxlint-disable prefer-arrow-callback -- memo uses named functions for react(function-component-definition) */
 
-import { cn } from "@/lib/utils"
+import { cjk } from "@streamdown/cjk";
+import { code } from "@streamdown/code";
+import { math } from "@streamdown/math";
+import { mermaid } from "@streamdown/mermaid";
+import type { UIMessage } from "ai";
+import type { ComponentProps, HTMLAttributes } from "react";
+import { memo } from "react";
+import { Streamdown } from "streamdown";
+
+import { cn } from "@/lib/utils";
 
 export type MessageProps = HTMLAttributes<HTMLDivElement> & {
-  from: UIMessage["role"]
-}
+  from: UIMessage["role"];
+};
 
-export function Message({ className, from, ...props }: MessageProps) {
-  return (
-    <div
-      className={cn(
-        "group flex w-full flex-col gap-2",
-        from === "user" ? "items-end" : "items-start",
-        className
-      )}
-      {...props}
-    />
-  )
-}
+export const Message = ({ className, from, ...props }: MessageProps) => (
+  <div
+    className={cn(
+      "group flex w-full flex-col gap-2",
+      from === "user" ? "items-end" : "items-start",
+      className
+    )}
+    {...props}
+  />
+);
 
 export type MessageContentProps = HTMLAttributes<HTMLDivElement> & {
-  from?: UIMessage["role"]
-}
+  from?: UIMessage["role"];
+};
 
-export function MessageContent({
+export const MessageContent = ({
   className,
   from = "assistant",
   ...props
-}: MessageContentProps) {
-  return (
-    <div
-      className={cn(
-        "min-w-0 max-w-full text-sm leading-relaxed",
-        from === "user"
-          ? "w-fit max-w-[82%] rounded-md bg-card-03 px-3.5 py-2.5 text-foreground"
-          : "w-full text-foreground",
-        className
-      )}
-      {...props}
-    />
-  )
-}
+}: MessageContentProps) => (
+  <div
+    className={cn(
+      "min-w-0 max-w-full text-sm leading-relaxed",
+      from === "user"
+        ? "w-fit max-w-[82%] rounded-md bg-card-03 px-3.5 py-2.5 text-foreground"
+        : "w-full text-foreground",
+      className
+    )}
+    {...props}
+  />
+);
 
-export type MessageResponseProps = ComponentProps<typeof Streamdown>
+export type MessageResponseProps = ComponentProps<typeof Streamdown>;
 
-const streamdownPlugins = { cjk, code, math, mermaid } as unknown as PluginConfig
+const streamdownPlugins = {
+  cjk,
+  code,
+  math,
+  mermaid,
+};
 
 export const MessageResponse = memo(
-  ({ className, ...props }: MessageResponseProps) => (
-    <Streamdown
-      className={cn(
-        "markdown-content size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
-        className
-      )}
-      plugins={streamdownPlugins}
-      {...props}
-    />
-  ),
+  function MessageResponse({ className, ...props }: MessageResponseProps) {
+    return (
+      <Streamdown
+        className={cn(
+          "markdown-content size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
+          className
+        )}
+        // @ts-expect-error -- @streamdown/* plugins type against a different unified major than streamdown
+        plugins={streamdownPlugins}
+        {...props}
+      />
+    );
+  },
   (prevProps, nextProps) =>
     prevProps.children === nextProps.children &&
     prevProps.isAnimating === nextProps.isAnimating
-)
+);
 
-MessageResponse.displayName = "MessageResponse"
+MessageResponse.displayName = "MessageResponse";

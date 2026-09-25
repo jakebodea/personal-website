@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import Image from "@/components/common/site-image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 type Bullet = string | { text: string; paper?: string };
@@ -19,112 +18,122 @@ interface MobileTimelineProps {
   items: TimelineItem[];
 }
 
-const MobileTimeline: React.FC<MobileTimelineProps> = ({ items }) => {
-  return (
-    <div className="relative w-full">
-      {/* Left-aligned Timeline Line */}
-      <div className="absolute left-3 top-8 bottom-0 w-0.5 bg-border" />
+const isObjectBullet = (
+  bullet: Bullet
+): bullet is { text: string; paper?: string } =>
+  Object.getPrototypeOf(bullet) !== String.prototype;
 
-      {items.map((item, index) => {
-        return (
-          <div key={index} className="relative pb-6 last:pb-0">
-            {/* Timeline Dot */}
-            <div className="absolute left-3 top-8 -translate-x-1/2 z-20">
-              {item.endDate === "Present" ? (
-                <div className="relative">
-                  <div className="absolute inset-0 w-3 h-3 rounded-full bg-accent/30 animate-ping" />
-                  <div className="w-3 h-3 rounded-full bg-white border-2 border-accent shadow-lg relative">
-                    <div className="w-full h-full rounded-full bg-accent" />
-                  </div>
-                </div>
-              ) : (
-                <div className="w-3 h-3 rounded-full shadow-lg relative">
-                  <div className="absolute inset-0 rounded-full bg-accent" />
-                  <div className="absolute inset-1 rounded-full bg-card" />
-                </div>
-              )}
+const timelineItemKey = (item: TimelineItem) =>
+  `${item.startDate}-${item.title}-${item.location}`;
+
+const bulletKey = (bullet: Bullet, index: number) =>
+  isObjectBullet(bullet) ? `${bullet.text}-${index}` : `${bullet}-${index}`;
+
+export const MobileTimeline = ({ items }: MobileTimelineProps) => (
+  <div className="relative w-full">
+    <div className="absolute bottom-0 left-3 top-8 w-0.5 bg-border" />
+
+    {items.map((item) => (
+      <div key={timelineItemKey(item)} className="relative pb-6 last:pb-0">
+        <div className="absolute left-3 top-8 z-20 -translate-x-1/2">
+          {item.endDate === "Present" ? (
+            <div className="relative">
+              <div className="absolute inset-0 h-3 w-3 animate-ping rounded-full bg-accent/30" />
+              <div className="relative h-3 w-3 rounded-full border-2 border-accent bg-white shadow-lg">
+                <div className="h-full w-full rounded-full bg-accent" />
+              </div>
             </div>
+          ) : (
+            <div className="relative h-3 w-3 rounded-full shadow-lg">
+              <div className="absolute inset-0 rounded-full bg-accent" />
+              <div className="absolute inset-1 rounded-full bg-card" />
+            </div>
+          )}
+        </div>
 
-            {/* Content Card */}
-            <div className="ml-7 w-full max-w-full overflow-hidden">
-              <Card>
-                <CardHeader>
-                  <div className="pb-3 px-1 pt-1">
-                    {/* Date */}
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-sm text-muted-foreground font-medium">
-                        {item.startDate} -
+        <div className="ml-7 w-full max-w-full overflow-hidden">
+          <Card>
+            <CardHeader>
+              <div className="px-1 pb-3 pt-1">
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {item.startDate} -
+                  </span>
+                  {item.endDate === "Present" ? (
+                    <span className="rounded-full bg-accent px-3 py-1 text-sm font-semibold text-white shadow-sm">
+                      Present
+                    </span>
+                  ) : (
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {item.endDate}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0">
+                    <div className="h-12 w-12 rounded-lg border border-border bg-white shadow-sm">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        width={48}
+                        height={48}
+                        className="h-full w-full rounded-md object-contain p-1"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <h3 className="mb-1 break-words font-serif text-xl italic leading-tight text-foreground">
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center text-muted-foreground">
+                      <span className="break-words font-serif text-sm leading-tight">
+                        {item.location}
                       </span>
-                      {item.endDate === "Present" ? (
-                        <span className="bg-accent text-white text-sm font-semibold px-3 py-1 rounded-full shadow-sm">
-                          Present
-                        </span>
-                      ) : (
-                        <span className="text-sm text-muted-foreground font-medium">
-                          {item.endDate}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Header with Logo and Title */}
-                    <div className="flex items-center gap-3">
-                      <div className="flex-shrink-0">
-                        <div className="w-12 h-12 rounded-lg bg-white border border-border shadow-sm">
-                          <Image
-                            src={item.image}
-                            alt={item.title}
-                            width={48}
-                            height={48}
-                            className="w-full h-full object-contain rounded-md p-1"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-xl font-serif italic text-foreground leading-tight mb-1 break-words">
-                          {item.title}
-                        </h3>
-                        <div className="flex items-center text-muted-foreground">
-                          <span className="font-serif text-sm leading-tight break-words">{item.location}</span>
-                        </div>
-                      </div>
                     </div>
                   </div>
-                </CardHeader>
+                </div>
+              </div>
+            </CardHeader>
 
-                <CardContent>
-                  <div className="pt-0 px-1 pb-1">
-                    {/* Bullets - Always visible on mobile for better UX */}
-                    <div className="border-t border-border/30 pt-3">
-                      <ul className="list-disc pl-4 text-muted-foreground leading-relaxed space-y-1">
-                        {item.bullets.map((bullet, bulletIndex) => (
-                          <li key={bulletIndex} className="text-sm leading-relaxed break-words">
-                            {typeof bullet === "string" ? bullet : bullet.text}
-                            {typeof bullet !== "string" && bullet.paper && (
-                              <ul className="list-disc pl-5 mt-0.5">
-                                <li>
-                                  <a href={bullet.paper} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
-                                    research paper
-                                  </a>
-                                </li>
-                              </ul>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        );
-      })}
+            <CardContent>
+              <div className="px-1 pb-1 pt-0">
+                <div className="border-t border-border/30 pt-3">
+                  <ul className="list-disc space-y-1 pl-4 leading-relaxed text-muted-foreground">
+                    {item.bullets.map((bullet, bulletIndex) => (
+                      <li
+                        key={bulletKey(bullet, bulletIndex)}
+                        className="break-words text-sm leading-relaxed"
+                      >
+                        {isObjectBullet(bullet) ? bullet.text : bullet}
+                        {isObjectBullet(bullet) &&
+                        bullet.paper !== undefined &&
+                        bullet.paper !== "" ? (
+                          <ul className="mt-0.5 list-disc pl-5">
+                            <li>
+                              <a
+                                href={bullet.paper}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline transition-colors hover:text-foreground"
+                              >
+                                research paper
+                              </a>
+                            </li>
+                          </ul>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    ))}
 
-      {/* End Marker */}
-      <div className="absolute left-3 -translate-x-1/2 -bottom-2 w-2 h-2 rounded-full bg-accent shadow-sm" />
-    </div>
-  );
-};
-
-export { MobileTimeline };
+    <div className="absolute -bottom-2 left-3 h-2 w-2 -translate-x-1/2 rounded-full bg-accent shadow-sm" />
+  </div>
+);

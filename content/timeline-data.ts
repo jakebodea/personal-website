@@ -1,7 +1,7 @@
 export const timelineItems = [
   {
     startDate: "November 2024",
-    endDate: "Present",
+    endDate: "September 2026",
     image: "/images/taxrise.jpeg",
     title: "Machine Learning Engineer",
     location: "TaxRise",
@@ -10,8 +10,8 @@ export const timelineItems = [
       "Developed a backend system that processes over 5,000 daily calls, generating transcripts, summaries, and insights, with full integration with Salesforce",
       "Created a client-facing, full-stack application for document upload and classification using a custom ML model, also supporting views for internal document requests and matching",
       "Led ML efforts to support Legal by building a compliance and sentiment analysis model for all company calls, with real-time dashboards for analysis and auditability, allowing departments to catch potential issues before external escalation",
-      "Designed workflows to automate both inbound and outbound calls via autonomous agents, with support for tool invocation and database integrations"
-    ]
+      "Designed workflows to automate both inbound and outbound calls via autonomous agents, with support for tool invocation and database integrations",
+    ],
   },
   {
     startDate: "October 2024",
@@ -20,8 +20,8 @@ export const timelineItems = [
     title: "Course Facilitator",
     location: "Stanford Online",
     bullets: [
-      "Teaching XCS229: Machine Learning and XCS221: Principles of AI at Stanford University Center for Global & Online Education (CGOE)"
-    ]
+      "Teaching XCS229: Machine Learning and XCS221: Principles of AI at Stanford University Center for Global & Online Education (CGOE)",
+    ],
   },
   {
     startDate: "August 2024",
@@ -32,8 +32,8 @@ export const timelineItems = [
     bullets: [
       "Engineered a mobile application to streamline data entry, utilizing object detection algorithms, compression techniques, and OCR partners, to reduce manual data processing time by over 10 hours per week per employee",
       "Supported R&D by automating weekly analysis of published journal articles in the bone graft industry",
-      "Ensured HIPAA-compliant use of AI by developing an internal web app to interact with frontier models"
-    ]
+      "Ensured HIPAA-compliant use of AI by developing an internal web app to interact with frontier models",
+    ],
   },
   {
     startDate: "March 2024",
@@ -43,11 +43,17 @@ export const timelineItems = [
     location: "Stanford University",
     bullets: [
       "Completed Graduate Certificate in AI",
-      { text: "Completed CS224N: Natural Language Processing with an A", paper: "/papers/council-gpt-2.pdf" },
-      { text: "Completed CS329H: Machine Learning with Human Preferences with an A", paper: "/papers/tts-optimized-language-generation.pdf" },
+      {
+        text: "Completed CS224N: Natural Language Processing with an A",
+        paper: "/papers/council-gpt-2.pdf",
+      },
+      {
+        text: "Completed CS329H: Machine Learning with Human Preferences with an A",
+        paper: "/papers/tts-optimized-language-generation.pdf",
+      },
       "Completed CS229: Machine Learning with an A+",
-      "Completed CS221: Principles and Techniques in Artificial Intelligence with an A"
-    ]
+      "Completed CS221: Principles and Techniques in Artificial Intelligence with an A",
+    ],
   },
   {
     startDate: "January 2023",
@@ -59,8 +65,8 @@ export const timelineItems = [
       "Automated IT ticket creation, categorization, and assignment with a fine-tuned BERT neural network API and integrated with company-wide internal LLM chatbot, vastly reducing 'traditional' ticket creation",
       "Led the AI Operations team as Scrum Master",
       "Streamlined the embedding, vectorization, and storage of internal knowledge articles to be used in RAG pipelines for internal chatbot",
-      "Collaborated with Manufacturing to create compliance and quality control computer vision models"
-    ]
+      "Collaborated with Manufacturing to create compliance and quality control computer vision models",
+    ],
   },
   {
     startDate: "June 2022",
@@ -71,8 +77,8 @@ export const timelineItems = [
     bullets: [
       "Developed and implemented a predictive ML model in collaboration with HR to enhance employee retention strategies",
       "Automated monthly cloud cost ML forecasts and integrated results with PowerBI reports for L1s",
-      "Reduced technical debt by integrating multiple data sources into a dashboard for IT leadership"
-    ]
+      "Reduced technical debt by integrating multiple data sources into a dashboard for IT leadership",
+    ],
   },
   {
     startDate: "August 2021",
@@ -80,9 +86,7 @@ export const timelineItems = [
     image: "/images/concordia.png",
     title: "Tutor",
     location: "Concordia University Irvine",
-    bullets: [
-      "Tutored Calculus 2 and Programming Languages"
-    ]
+    bullets: ["Tutored Calculus 2 and Programming Languages"],
   },
   {
     startDate: "August 2019",
@@ -92,7 +96,7 @@ export const timelineItems = [
     location: "Concordia University",
     bullets: [
       "Graduated with a Bachelor of Arts in Mathematics, with minors in Computer Science, Business Data Analytics, and Music",
-      "Achieved a 3.94 GPA"
-    ]
+      "Achieved a 3.94 GPA",
+    ],
   },
-]; 
+];

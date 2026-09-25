@@ -1,72 +1,114 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import { papers } from '@/content/papers-data'
+import matter from "gray-matter";
 
-export type WritingType = 'blog' | 'paper'
+import { papers } from "@/content/papers-data";
+
+export type WritingType = "blog" | "paper";
 
 export interface BlogWriting {
-  type: 'blog'
-  slug: string
-  title: string
-  date: string
-  description: string
-  content: string
+  type: "blog";
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+  content: string;
 }
 
 export interface PaperWriting {
-  type: 'paper'
-  title: string
-  date: string
-  description: string
-  pdfUrl: string
+  type: "paper";
+  title: string;
+  date: string;
+  description: string;
+  pdfUrl: string;
 }
 
-export type Writing = BlogWriting | PaperWriting
+export type Writing = BlogWriting | PaperWriting;
 
-const WRITINGS_DIR = path.join(process.cwd(), 'content', 'writings')
+const MARKDOWN_EXTENSION = ".md";
+const ISO_DATE_LENGTH = 10;
 
-function getBlogSlugs(): string[] {
-  return fs
-    .readdirSync(WRITINGS_DIR)
-    .filter((file) => file.endsWith('.md'))
-    .map((file) => file.replace(/\.md$/, ''))
+const blogFiles = import.meta.glob<string>("/content/writings/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+
+interface BlogFrontMatter {
+  title?: string;
+  date?: string;
+  description?: string;
 }
 
-function parseBlogFile(filePath: string): Omit<BlogWriting, 'slug' | 'type'> {
+const readFrontMatterString = (
+  value: string | undefined,
+  fallback: string
+): string => (value !== undefined && value !== "" ? value : fallback);
+
+const todayIsoDate = (): string =>
+  new Date().toISOString().slice(0, ISO_DATE_LENGTH);
+
+export const getBlogSlugs = (): string[] => {
+  const slugs: string[] = [];
+  for (const file of Object.keys(blogFiles)) {
+    const lastSlash = file.lastIndexOf("/");
+    const fileName = lastSlash === -1 ? file : file.slice(lastSlash + 1);
+    if (!fileName.endsWith(MARKDOWN_EXTENSION)) {
+      continue;
+    }
+    slugs.push(fileName.slice(0, -MARKDOWN_EXTENSION.length));
+  }
+  return slugs;
+};
+
+const parseBlogFile = (raw: string): Omit<BlogWriting, "slug" | "type"> => {
   try {
-    const raw = fs.readFileSync(filePath, 'utf8')
-    const { data, content } = matter(raw)
+    const parsed = matter(raw);
+    // SAFETY: gray-matter types `data` as `{ [key: string]: any }`; blog posts only use optional string title, date, and description.
+    const data = parsed.data as BlogFrontMatter;
 
-    const title = data.title || 'Untitled Post'
-    const date = data.date || new Date().toISOString().split('T')[0]
-    const description = data.description || 'No description provided'
-
-    return { title, date, description, content: content.trim() }
-  } catch (error) {
-    console.error(`Error parsing blog file ${filePath}:`, error)
     return {
-      title: 'Error Loading Post',
-      date: new Date().toISOString().split('T')[0],
-      description: 'Error loading post',
-      content: 'There was an error loading this writing.',
+      title: readFrontMatterString(data.title, "Untitled Post"),
+      date: readFrontMatterString(data.date, todayIsoDate()),
+      description: readFrontMatterString(
+        data.description,
+        "No description provided"
+      ),
+      content: parsed.content.trim(),
+    };
+  } catch (error) {
+    console.error("Error parsing blog file:", error);
+    return {
+      title: "Error Loading Post",
+      date: todayIsoDate(),
+      description: "Error loading post",
+      content: "There was an error loading this writing.",
+    };
+  }
+};
+
+export const getBlogWriting = (slug: string): BlogWriting | null => {
+  const raw = blogFiles[`/content/writings/${slug}.md`];
+  if (raw === undefined) {
+    return null;
+  }
+  const { title, date, description, content } = parseBlogFile(raw);
+  return { type: "blog", slug, title, date, description, content };
+};
+
+export const getAllWritings = (): Writing[] => {
+  const blogs: BlogWriting[] = [];
+  for (const slug of getBlogSlugs()) {
+    const writing = getBlogWriting(slug);
+    if (writing !== null) {
+      blogs.push(writing);
     }
   }
-}
 
-export function getBlogWriting(slug: string): BlogWriting {
-  const fullPath = path.join(WRITINGS_DIR, `${slug}.md`)
-  const { title, date, description, content } = parseBlogFile(fullPath)
-  return { type: 'blog', slug, title, date, description, content }
-}
+  const paperWritings: PaperWriting[] = papers.map((paper) => ({
+    type: "paper",
+    ...paper,
+  }));
 
-export function getAllWritings(): Writing[] {
-  const blogs: BlogWriting[] = getBlogSlugs().map((slug) => getBlogWriting(slug))
-  const paperWritings: PaperWriting[] = papers.map((p) => ({ type: 'paper' as const, ...p }))
-
-  return [...blogs, ...paperWritings].sort(
+  return [...blogs, ...paperWritings].toSorted(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
-}
-
-export { getBlogSlugs }
+  );
+};

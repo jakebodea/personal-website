@@ -1,5 +1,9 @@
-import React from "react";
+import type { ReactNode } from "react";
 
-export default function EmphasisText({ children }: { children: React.ReactNode }) {
-  return <span className="text-foreground font-medium bg-accent/20 px-2 py-0.5 rounded">{children}</span>;
-}
+const EmphasisText = ({ children }: { children: ReactNode }) => (
+  <span className="rounded bg-accent/20 px-2 py-0.5 font-medium text-foreground">
+    {children}
+  </span>
+);
+
+export default EmphasisText;

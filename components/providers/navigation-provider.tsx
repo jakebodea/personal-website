@@ -1,78 +1,97 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useRef, useMemo } from "react"
-import type { ReactNode } from "react"
-import { usePathname } from "next/navigation"
-import { navOrder } from "@/lib/nav-config"
+import { createContext, useContext, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 
-type Direction = "left" | "right" | "none"
+import { navOrder } from "@/lib/nav-config";
+import { usePathname } from "@/lib/site-navigation";
+
+type Direction = "left" | "right" | "none";
 
 interface NavigationContextType {
-  direction: Direction
-  setDirection: (direction: Direction) => void
+  direction: Direction;
+  setDirection: (direction: Direction) => void;
 }
+
+const noopSetDirection = (_direction: Direction): void => undefined;
 
 const NavigationContext = createContext<NavigationContextType>({
   direction: "none",
-  setDirection: () => {},
-})
+  setDirection: noopSetDirection,
+});
 
-export function useNavigation() {
-  return useContext(NavigationContext)
-}
+const useNavigation = () => useContext(NavigationContext);
 
-function getNavIndex(pathname: string): number {
-  if (pathname === "/") return 0
-  const baseRoute = "/" + pathname.split("/")[1]
-  return navOrder.indexOf(baseRoute)
-}
+const getNavIndex = (pathname: string): number => {
+  if (pathname === "/") {
+    return 0;
+  }
+  const baseRoute = `/${pathname.split("/")[1]}`;
+  return navOrder.indexOf(baseRoute);
+};
 
-function getPathDepth(pathname: string): number {
-  return pathname.split("/").filter(Boolean).length
-}
+const getPathDepth = (pathname: string): number =>
+  pathname.split("/").filter(Boolean).length;
 
-export function NavigationProvider({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
-  const prevPathRef = useRef(pathname)
-  const directionRef = useRef<Direction>("none")
+const computeDirection = (
+  previousPathname: string,
+  currentPathname: string
+): Direction => {
+  const prevIndex = getNavIndex(previousPathname);
+  const currentIndex = getNavIndex(currentPathname);
 
-  // Calculate direction synchronously during render
-  if (prevPathRef.current !== pathname) {
-    const prevIndex = getNavIndex(prevPathRef.current)
-    const currentIndex = getNavIndex(pathname)
+  if (prevIndex === -1 || currentIndex === -1) {
+    return "none";
+  }
 
-    if (prevIndex !== -1 && currentIndex !== -1) {
-      if (prevIndex !== currentIndex) {
-        // Different main sections
-        directionRef.current = currentIndex > prevIndex ? "right" : "left"
-      } else if (prevIndex === currentIndex) {
-        // Same main section - check path depth for sub-routes
-        const prevDepth = getPathDepth(prevPathRef.current)
-        const currentDepth = getPathDepth(pathname)
-        if (currentDepth > prevDepth) {
-          directionRef.current = "right"
-        } else if (currentDepth < prevDepth) {
-          directionRef.current = "left"
-        }
-      }
-    }
-    prevPathRef.current = pathname
+  if (prevIndex !== currentIndex) {
+    return currentIndex > prevIndex ? "right" : "left";
+  }
+
+  const prevDepth = getPathDepth(previousPathname);
+  const currentDepth = getPathDepth(currentPathname);
+  if (currentDepth > prevDepth) {
+    return "right";
+  }
+  if (currentDepth < prevDepth) {
+    return "left";
+  }
+
+  return "none";
+};
+
+const NavigationProvider = ({ children }: { children: ReactNode }) => {
+  const pathname = usePathname();
+  const [navState, setNavState] = useState<{
+    pathname: string;
+    direction: Direction;
+  }>(() => ({
+    pathname,
+    direction: "none",
+  }));
+
+  if (navState.pathname !== pathname) {
+    setNavState({
+      pathname,
+      direction: computeDirection(navState.pathname, pathname),
+    });
   }
 
   const contextValue = useMemo(
     () => ({
-      direction: directionRef.current,
+      direction: navState.direction,
       setDirection: (dir: Direction) => {
-        directionRef.current = dir
+        setNavState((prev) => ({ ...prev, direction: dir }));
       },
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pathname]
-  )
+    [navState.direction]
+  );
 
   return (
     <NavigationContext.Provider value={contextValue}>
       {children}
     </NavigationContext.Provider>
-  )
-}
+  );
+};
+
+export { NavigationProvider, useNavigation };

@@ -160,7 +160,7 @@ Read the files in this order:
    regression checks using fictional data in a temporary workspace.
 6. [Evidence refresh](../.agents/skills/resume-studio/references/evidence-refresh.md):
    how new observations become proposed evidence changes.
-7. [.gitignore](../.gitignore) and [.vercelignore](../.vercelignore): exclusions
+7. [.gitignore](../.gitignore) and the Worker build-output check: exclusions
    for private files and deployment uploads.
 
 On a Mac with the renderer prerequisites, run from the repository root:
