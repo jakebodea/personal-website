@@ -148,7 +148,9 @@ upload it to an application form as is. Every revision of an application uses
 that same PDF name; the revision page and `manifest.json` carry the revision
 number and hash. Name the other files `{employer}-rev-{NNN}-{file}` in lowercase
 (`haven-rev-012-claims.json`), and upload the TeX as `.tex.txt` because Notion
-rejects `.tex`. Fetch the page and confirm each attachment is present with the
+rejects `.tex`. Also paste the final TeX body into a `latex` code block on the
+revision page: the connector cannot download uploaded files, so this is how a
+later revision starts from this one. Fetch the page and confirm each attachment is present with the
 expected filename. When the connector can download binary
 files, also compare SHA-256 hashes with the manifest; otherwise record
 "byte verification unavailable". Set `Claims used`, `Latest revision`, and
