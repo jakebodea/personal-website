@@ -43,6 +43,10 @@
 
 \pdfgentounicode=1
 
+% Visible links: recruiters scan for blue, underlined text. Use \link for every URL.
+\definecolor{linkblue}{RGB}{0,70,180}
+\newcommand{\link}[2]{\href{#1}{\textcolor{linkblue}{\underline{#2}}}}
+
 \newcommand{\resumeItem}[1]{
   \item\small{
     {#1 \vspace{-2pt}}
@@ -94,7 +98,7 @@
 % Preserve the preamble, typography, margins, and helper commands.
 \begin{center}
   {\Huge \scshape Your Name} \\ \vspace{1pt}
-  Your location $\cdot$ your@email.example
+  Your location $\cdot$ \link{mailto:your@email.example}{your@email.example}
 \end{center}
 
 \section{Experience}

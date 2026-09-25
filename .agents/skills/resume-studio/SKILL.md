@@ -77,7 +77,8 @@ rules). Set the Application's `Variant` and apply its rules: which second projec
 which bullet leads each role, which skills categories. End every `\resumeItem`
 line with its citation, for example `% claim: CL-9` or `% claim: CL-4, CL-6`.
 Use `% claim: profile` only for Education and Skills content taken from the
-Profile. Then run:
+Profile. Write every URL with the template's `\link{url}{text}` macro (blue,
+underlined) so recruiters can spot links at a glance. Then run:
 
     python3 .agents/skills/resume-studio/scripts/check-claims.py draft.tex claims.json
 
