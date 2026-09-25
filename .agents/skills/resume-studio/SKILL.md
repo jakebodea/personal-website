@@ -106,8 +106,16 @@ a new revision; if it changes wording, return to stage 3.
 Create the numbered revision page under the Application with the Match/Gap
 table, questions, writing and critic records, visual findings, and the claim
 IDs used. Attach the TeX, PDF, `claims.json`, `bank.md`, Job Snapshot,
-`manifest.json`, and `quality.json`. Fetch the page and confirm each attachment
-is present with the expected filename. When the connector can download binary
+`manifest.json`, and `quality.json`. Name the PDF
+`Jake_Bodea_Resume_{Employer}.pdf`, where `{Employer}` is the Application's
+`Company` with words joined by underscores and other punctuation dropped
+(`Jake_Bodea_Resume_Haven.pdf`, `Jake_Bodea_Resume_Scale_AI.pdf`), so Jake can
+upload it to an application form as is. Every revision of an application uses
+that same PDF name; the revision page and `manifest.json` carry the revision
+number and hash. Name the other files `{employer}-rev-{NNN}-{file}` in lowercase
+(`haven-rev-012-claims.json`), and upload the TeX as `.tex.txt` because Notion
+rejects `.tex`. Fetch the page and confirm each attachment is present with the
+expected filename. When the connector can download binary
 files, also compare SHA-256 hashes with the manifest; otherwise record
 "byte verification unavailable". Set `Claims used`, `Latest revision`, and
 `Baseline hash`, then delete the temporary workspace. Keep failed and superseded
@@ -116,8 +124,9 @@ revisions.
 ### 7 Approve
 
 `Resume state`: Draft until stage 5 passes, Checked after stage 6, Approved only
-after Jake explicitly approves that exact PDF. Creating a PDF never changes
-`Application stage`.
+after Jake explicitly approves that exact PDF. On approval, attach the same bytes,
+under the same `Jake_Bodea_Resume_{Employer}.pdf` name, to `Approved PDF`.
+Creating a PDF never changes `Application stage`.
 
 ## Evidence refresh
 
