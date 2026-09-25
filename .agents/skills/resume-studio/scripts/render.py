@@ -130,7 +130,8 @@ def page_slack(tex_log):
     if not match:
         raise ValueError("RESUME-FILL marker missing; start the preamble from assets/classic.tex")
     total, goal = float(match[1]), float(match[2])
-    return round((goal - total) / TEX_POINTS_PER_INCH, 2)
+    # Unrounded: a rounded -0.004 would read as 0 and hide a squeezed page.
+    return (goal - total) / TEX_POINTS_PER_INCH
 
 
 def layout_metrics(path, extracted, slack=None):
@@ -154,16 +155,17 @@ def layout_metrics(path, extracted, slack=None):
     widows = [" ".join(w[3] for w in bullet[-1]) for bullet in bullets
               if len(bullet) > 1 and len(bullet[-1]) <= WIDOW_MAX_WORDS]
     bottom_gap = round((height - max(line["y"] for line in lines)) / 72, 2)
-    metrics = {"bottomGapInches": bottom_gap, "slackInches": slack, "bullets": len(bullets),
+    metrics = {"bottomGapInches": bottom_gap,
+               "slackInches": None if slack is None else round(slack, 3), "bullets": len(bullets),
                "linesPerBullet": [len(bullet) for bullet in bullets],
                "longBullets": long_bullets, "widows": widows,
                "hyphenDateRanges": HYPHEN_DATE_RANGE.findall(extracted)}
     findings, warnings = [], []
     if slack is not None and slack < 0:
-        findings.append(f"Content is {-slack} in taller than the page; TeX squeezed the "
+        findings.append(f"Content is {-slack:.3f} in taller than the page; TeX squeezed the "
                         "spacing to fit. Cut content until slack is at least 0")
     elif slack is not None and slack > SLACK_MAX_INCHES:
-        findings.append(f"Page is underfilled: {slack} in of unused height; "
+        findings.append(f"Page is underfilled: {slack:.2f} in of unused height; "
                         f"target 0-{SLACK_MAX_INCHES} in")
     if long_bullets:
         findings.append(f"{len(long_bullets)} bullet(s) exceed {MAX_LINES_PER_BULLET} lines: "
