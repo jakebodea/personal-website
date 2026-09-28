@@ -40,7 +40,8 @@ are unchanged. Original applications and backups remain intact.
   fix or accept. The thresholds are constants at the top of render.py.
 
 Create a private workspace with Python's `tempfile.mkdtemp(prefix="resume-studio-")`
-and resolve its path before invoking the renderer. The output must be a new
+and resolve its path with `os.path.realpath` before invoking the renderer (on macOS
+`/var` is a symlink to `/private/var`, and symlinked destinations are refused). The output must be a new
 `<workspace>/applications/<slug>/revisions/<number>` directory. Repository,
 existing, and symlinked destinations are refused. It contains immutable
 input snapshots, one canonical outer copy of the PDF/text/bounds/preview products,

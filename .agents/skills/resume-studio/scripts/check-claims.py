@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Check that every resume bullet cites Approved claims and keeps their numbers and qualifiers.
+"""Check that every resume bullet cites Approved claims, uses only their numbers, keeps their
+qualifiers, and avoids their banned phrases. Wording is otherwise free.
 
 Each \\resumeItem must end its line with a claim comment, for example:
     \\resumeItem{Cut phone-login latency from ~8s to ~2s.} % claim: CL-7
@@ -63,8 +64,11 @@ def resume_items(source):
 def plain_text(tex):
     text = re.sub(r"(?<!\\)%.*", "", tex)
     text = text.replace("\\%", "%").replace("---", "—").replace("--", "–").replace("\\&", "&")
+    # A bare ~ is TeX's non-breaking space; an approximation is typeset as $\sim$ or \textasciitilde.
+    text = text.replace("~", " ")
+    text = re.sub(r"\$\\sim\$|\\sim\b|\\textasciitilde(?:\{\})?", "~", text)
     text = re.sub(r"\\[a-zA-Z]+\*?", " ", text)
-    return re.sub(r"\s+", " ", text.replace("{", "").replace("}", "").replace("~", " ")).strip()
+    return re.sub(r"\s+", " ", text.replace("{", "").replace("}", "")).strip()
 
 
 def numbers(text):
