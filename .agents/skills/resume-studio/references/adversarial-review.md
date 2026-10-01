@@ -11,8 +11,8 @@ Use three critics with these assignments:
 
 | Critic | Challenge |
 | --- | --- |
-| Evidence | Wording stronger than the cited claim, ambiguous attribution, stale Dated or Live claims, and bullets whose citation does not match their content (numbers, qualifiers, and banned phrases are already enforced by `check-claims.py`) |
-| Job fit | Weak coverage, stronger examples elsewhere in the bank, transferable experience, and questions that could uncover better evidence |
+| Evidence | Each bullet read against its cited claims: meaning changed by rephrasing or keyword substitution, added scope, scale, tools, or ownership, ambiguous attribution, stale Dated or Live claims, and citations that do not match the content (numbers, qualifiers, and banned phrases are already enforced by `check-claims.py`) |
+| Job fit | Weak coverage, the posting's terms missing where a claim supports them (use the coverage table), stronger examples elsewhere in the bank, transferable experience, and questions that could uncover better evidence |
 | Writing | Vague or inflated bullets, repetition, weak ordering, keyword stuffing, and clarity or density problems for a reader |
 
 Select a model below the main agent's capability tier, using the runtime's exposed
@@ -23,6 +23,13 @@ the chosen critic model, and the runtime's basis for treating it as a lower tier
 if that comparison is unavailable, disclose the uncertainty.
 Set the model explicitly when spawning; merely reducing reasoning effort is not
 a lower model tier. Keep orchestration and final decisions with the main agent.
+
+Spawn critics in the foreground (in Claude Code, `run_in_background: false`, several
+in one message to run them in parallel) so each report returns to the agent that
+started it, and have each critic also write its findings to a file in the review
+packet. A background critic's report may never reach a subagent. If a critic's
+reply is unreachable rather than late, record it as lost and run a fresh first
+pass for that role; a lost pass does not count toward the budget.
 
 Start each critic with a fresh context and only its assignment and review packet,
 so the first critiques are independent of the main agent's rationale and each
@@ -79,6 +86,13 @@ checks before marking Checked, without calling the critic review completed.
    missing, needed facts remain unresolved, or disagreement persists at the
    limit, report those issues and present a provisional Draft with next steps.
    Do not keep restarting the loop to obtain an agreement label.
+5. **Confirm last fixes.** When the final recheck raises findings and the only
+   changes after it are the fixes those findings asked for, send just those
+   passages, before and after, to the critics that raised them. This one
+   confirmation turn sits outside the six-turn budget and allows no new edits. If
+   every originating critic confirms, the review closes; any objection or any other
+   change leaves a provisional Draft. A late critic reply is awaited or requested
+   from the same critic; only an unreachable one is replaced (see above).
 
 A first pass with no findings may close without manufactured edits. After any
 wording change, a prior pass cannot stand in for the required recheck. When the
