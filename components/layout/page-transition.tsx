@@ -5,7 +5,7 @@ import { useSyncExternalStore } from "react";
 import type { ReactNode } from "react";
 
 import { useNavigation } from "@/components/providers/navigation-provider";
-import { usePathname } from "@/lib/site-navigation";
+import { useRenderedPathname } from "@/lib/site-navigation";
 
 interface PageTransitionProps {
   children: ReactNode;
@@ -25,6 +25,18 @@ const getIsMobileNavSnapshot = () =>
   window.matchMedia(DESKTOP_NAV_MEDIA_QUERY).matches;
 
 const getIsMobileNavServerSnapshot = () => false;
+
+const unsubscribeFromNothing = (): void => undefined;
+
+const subscribeToNothing = () => unsubscribeFromNothing;
+
+// False while hydrating server HTML, true for every client render after that.
+const useIsHydrated = () =>
+  useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false
+  );
 
 const useIsMobileNav = () =>
   useSyncExternalStore(
@@ -50,21 +62,23 @@ const getInitialX = (
 };
 
 export const PageTransition = ({ children }: PageTransitionProps) => {
-  const pathname = usePathname();
+  const pathname = useRenderedPathname();
   const { direction } = useNavigation();
   const isMobile = useIsMobileNav();
   const initialX = getInitialX(isMobile, direction);
+  // Server-rendered HTML should be visible immediately; only animate client navigations.
+  const isHydrated = useIsHydrated();
 
   return (
     <LazyMotion features={domAnimation}>
       <m.div
         key={pathname}
         className="origin-top"
-        initial={{
-          opacity: 0,
-          x: initialX,
-          scale: isMobile ? 1 : 0.97,
-        }}
+        initial={
+          isHydrated
+            ? { opacity: 0, x: initialX, scale: isMobile ? 1 : 0.97 }
+            : false
+        }
         animate={{
           opacity: 1,
           x: 0,

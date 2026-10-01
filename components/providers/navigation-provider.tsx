@@ -4,7 +4,7 @@ import { createContext, useContext, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
 import { navOrder } from "@/lib/nav-config";
-import { usePathname } from "@/lib/site-navigation";
+import { useRenderedPathname } from "@/lib/site-navigation";
 
 type Direction = "left" | "right" | "none";
 
@@ -61,7 +61,7 @@ const computeDirection = (
 };
 
 const NavigationProvider = ({ children }: { children: ReactNode }) => {
-  const pathname = usePathname();
+  const pathname = useRenderedPathname();
   const [navState, setNavState] = useState<{
     pathname: string;
     direction: Direction;
