@@ -51,7 +51,7 @@ export const PageWrapper = ({
     <div className="min-h-full">
       <div className="container mx-auto max-w-4xl px-6 py-8">
         <div ref={sentinelRef} className="h-0" />
-        <div className="relative sticky top-0 z-50 -mx-6 flex h-14 items-center bg-background px-6">
+        <div className="relative sticky top-[env(safe-area-inset-top)] z-50 -mx-6 flex h-14 items-center bg-background px-6">
           {isStuck ? (
             <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 translate-y-full bg-gradient-to-b from-background to-transparent" />
           ) : null}

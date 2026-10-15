@@ -85,7 +85,7 @@ export const TopNav = () => {
     <>
       <nav
         className={cn(
-          "sticky top-0 z-[80] w-full",
+          "sticky top-0 z-[80] w-full pt-[env(safe-area-inset-top)]",
           hasStickyTitle ? "bg-transparent" : "bg-background"
         )}
       >
