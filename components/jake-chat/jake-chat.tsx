@@ -603,7 +603,7 @@ export const JakeChat = ({
       className={cn(
         "mx-auto flex w-full flex-col",
         variant === "page"
-          ? "h-[calc(100vh-3.5rem)] max-w-2xl px-6 pb-5 pt-10"
+          ? "h-[calc(100dvh-3.5rem)] max-w-2xl px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-10"
           : "h-full max-w-full",
         className
       )}

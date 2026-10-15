@@ -19,14 +19,14 @@ export const JakeChatWidget = () => {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+      <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-50 flex flex-col items-end gap-3 sm:bottom-[max(1.5rem,env(safe-area-inset-bottom))] sm:right-[max(1.5rem,env(safe-area-inset-right))]">
         <AnimatePresence>
           {isOpen ? (
             <m.div
               key="jake-chat-widget-panel"
               animate={{ opacity: 1, scale: 1, y: 0 }}
               className={cn(
-                "flex h-[min(620px,calc(100vh-7rem))] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-lg border border-border/80 bg-background/95 shadow-2xl shadow-black/20 backdrop-blur-xl",
+                "flex h-[min(620px,calc(100dvh-7rem))] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-lg border border-border/80 bg-background/95 shadow-2xl shadow-black/20 backdrop-blur-xl",
                 "sm:w-[420px]"
               )}
               exit={{ opacity: 0, scale: 0.98, y: 8 }}

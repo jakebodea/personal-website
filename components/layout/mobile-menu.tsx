@@ -56,7 +56,7 @@ export const MobileMenu = ({ navItems, isOpen, onClose }: MobileMenuProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.15 } }}
             exit={{ opacity: 0, transition: { duration: 0.1, delay: 0.1 } }}
-            className="fixed inset-0 z-[70] bg-background lg:hidden"
+            className="fixed inset-0 z-[70] bg-background pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[env(safe-area-inset-top)] lg:hidden"
           >
             <div className="h-14" />
 

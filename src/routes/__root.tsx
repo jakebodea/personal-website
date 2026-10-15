@@ -7,6 +7,11 @@ import {
 
 import { JakeChatWidget } from "@/components/jake-chat/jake-chat-widget";
 import { PageTransition } from "@/components/layout/page-transition";
+import {
+  SafariEdges,
+  THEME_COLOR_DARK,
+  THEME_COLOR_LIGHT,
+} from "@/components/layout/safari-edges";
 import { TopNav } from "@/components/layout/top-nav";
 import { NavigationProvider } from "@/components/providers/navigation-provider";
 import { StickyTitleProvider } from "@/components/providers/sticky-title-provider";
@@ -35,13 +40,14 @@ const Root = () => (
               </div>
             )}
             <TopNav />
-            <main className="min-h-[calc(100vh-3.5rem)]">
+            <main className="min-h-[calc(100dvh-3.5rem)]">
               <PageTransition>
                 <Outlet />
               </PageTransition>
             </main>
             <Toaster />
             <JakeChatWidget />
+            <SafariEdges />
           </StickyTitleProvider>
         </NavigationProvider>
       </ThemeProvider>
@@ -54,7 +60,20 @@ export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1, viewport-fit=cover",
+      },
+      {
+        name: "theme-color",
+        media: "(prefers-color-scheme: light)",
+        content: THEME_COLOR_LIGHT,
+      },
+      {
+        name: "theme-color",
+        media: "(prefers-color-scheme: dark)",
+        content: THEME_COLOR_DARK,
+      },
       { title: SITE_NAME },
       { name: "description", content: `${SITE_NAME}'s personal website` },
       { property: "og:title", content: SITE_NAME },
