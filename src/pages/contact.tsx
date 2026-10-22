@@ -11,6 +11,11 @@ const contactLinks = [
     easterEgg: "pls no spam thanks",
   },
   {
+    url: "https://jbolabs.com",
+    display: "jbolabs.com",
+    easterEgg: "need a website?",
+  },
+  {
     url: "https://x.com/jakebodea",
     display: "x.com/jakebodea",
   },

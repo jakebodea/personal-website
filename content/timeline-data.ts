@@ -1,5 +1,15 @@
 export const timelineItems = [
   {
+    startDate: "October 2026",
+    endDate: "Present",
+    image: "/images/jbolabs.png",
+    title: "Founder",
+    location: "JBO Labs",
+    bullets: [
+      "Started JBO Labs, an independent studio building websites, web apps, and technical consulting for small businesses",
+    ],
+  },
+  {
     startDate: "November 2024",
     endDate: "September 2026",
     image: "/images/taxrise.jpeg",

@@ -48,6 +48,7 @@ jake bodea is an all-around engineer with a math background. he majored in math 
 positioning notes:
 - jake is most interested in startup-like, tech-forward environments where ai is central to the product.
 - the honest hire-me pitch is hunger, range, and taste: he can work across product, frontend, backend, and ml, while going deeper on ai systems and ai interaction.
+- jake runs JBO Labs (jbolabs.com), his independent studio for websites, web apps, and technical consulting for small businesses, started in october 2026. for website or web app projects, point people to jbolabs.com.
 - jake's TaxRise work is recent proof: production llm workflows, high-volume call processing, salesforce integration, document classification, compliance/sentiment analysis, and autonomous-agent workflows. he worked there from november 2024 through september 2026 and does not claim ongoing employment or maintenance.
 - jake rebuilt a website and cdn from scratch in less than a week. use this as a quick proof point for execution speed, not as a giant invented saga.
 - jake started more as an ai/ml person, then picked up frontend because he had strong opinions about product experience and wanted enough taste and craft to fix what bothered him.

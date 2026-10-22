@@ -26,6 +26,7 @@ export const initialFollowUps: FollowUp[] = [
     promptTemplate:
       "what did you do at {{value}}, and what does it say about your experience?",
     options: [
+      { label: "JBO Labs", value: "JBO Labs" },
       { label: "TaxRise", value: "TaxRise" },
       { label: "Stanford", value: "Stanford" },
       { label: "Ventris", value: "Ventris Medical" },

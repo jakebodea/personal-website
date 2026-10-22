@@ -17,6 +17,26 @@ export interface ProjectData {
 
 export const projects: ProjectData[] = [
   {
+    title: "JBO Labs",
+    description:
+      "JBO Labs is my independent studio for websites, web apps, and technical consulting for small businesses. I built jbolabs.com with an interactive example site in the hero and a referral-aware intake form. The same repo runs the studio's domain and email on Cloudflare, deployed with Alchemy.",
+    liveUrl: "https://jbolabs.com",
+    repoUrl: "https://github.com/jbolabs/jbolabs",
+    media: {
+      type: "image",
+      url: "/images/jbolabs-home.png",
+      alt: "jbolabs.com home page with the headline great websites, shipped fast",
+    },
+    techStack: [
+      "TypeScript",
+      "Astro",
+      "Effect",
+      "Cloudflare Workers",
+      "D1",
+      "Alchemy",
+    ],
+  },
+  {
     title: "PCOBooster",
     description:
       "PCOBooster is an open source app I built for worship teams that plan services in Planning Center. For a selected plan, it shows open positions, availability, blockouts, conflicts, and each person's recent serving history. Schedulers can assign someone in PCOBooster and save the change to Planning Center. The product site has an interactive sample, and the live app has a read only demo.",
