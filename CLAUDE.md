@@ -2,6 +2,13 @@
 
 Use Bun for installs and scripts. Public site code lives in `src/`, `components/`, `lib/`, `content/`, and `public/`. TanStack Start builds a Cloudflare Worker from `vite.config.ts` and `wrangler.jsonc`.
 
+## Product bar
+
+Build every app and site to the bar of Linear's website or Apple Notes: simple purpose, simple architecture, simple design, simple implementation.
+
+- Cut taglines, helper text and secondary labels. If a screen needs them to make sense, fix the layout.
+- Every decision should improve user experience (UX), developer experience (DX) and agent experience (AX) at once, without breaking anything.
+
 ## Before deployment
 
 1. Run `bun run tsc`, `bun run lint`, `bun run build`, and `bun run check:deploy-output`. This passes when types, lint, build, and the private-content check succeed.
